@@ -9,8 +9,8 @@
 *.dll
 *.so
 *.dylib
-server
-createadmin
+/server
+/createadmin
 
 # Test artifacts
 *.out
