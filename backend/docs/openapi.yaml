@@ -1,0 +1,466 @@
+openapi: 3.0.3
+info:
+  title: Jelajah Trip API
+  version: 2.0.0
+  description: >
+    API Layanan Pemesanan Tur & Wisata Jelajah Trip Nusantara.
+    Menyediakan manajemen destinasi, kuota atomik, sistem pelacakan tiket tanpa login,
+    autentikasi JWT dengan httpOnly cookies, dan peran Admin/Customer.
+servers:
+  - url: http://localhost:8080/api/v1
+    description: Development Server
+  - url: /api/v1
+    description: Relative Path Server
+
+components:
+  securitySchemes:
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: access_token
+      description: JWT Access Token via HTTP-Only Secure Cookie
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Bearer token (alternatif header untuk API client/testing)
+
+  schemas:
+    Meta:
+      type: object
+      properties:
+        total:
+          type: integer
+          example: 45
+        page:
+          type: integer
+          example: 1
+        limit:
+          type: integer
+          example: 12
+        total_pages:
+          type: integer
+          example: 4
+
+    ErrorDetail:
+      type: object
+      properties:
+        field:
+          type: string
+          example: customer_phone
+        message:
+          type: string
+          example: nomor telepon tidak valid (harus nomor Indonesia aktif, misal 08123456789 atau +628123456789)
+
+    ErrorResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: false
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+              example: VALIDATION_ERROR
+            message:
+              type: string
+              example: Validasi data masukan gagal
+            details:
+              type: array
+              items:
+                $ref: '#/components/schemas/ErrorDetail'
+
+    Trip:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        title:
+          type: string
+          example: Raja Ampat Blue Paradise Expedition
+        destination:
+          type: string
+          example: Raja Ampat, Papua Barat
+        duration_days:
+          type: integer
+          example: 4
+        price:
+          type: number
+          example: 8500000
+        quota:
+          type: integer
+          example: 12
+        rating:
+          type: number
+          example: 4.9
+        cover_image:
+          type: string
+          example: https://images.unsplash.com/photo-1516690561799-46d8f74f9abf
+        itinerary:
+          type: array
+          items:
+            type: object
+        facilities:
+          type: array
+          items:
+            type: string
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+
+    Booking:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        booking_code:
+          type: string
+          example: JT-20261119-9X8K7L2M
+        user_id:
+          type: string
+          format: uuid
+          nullable: true
+        trip_id:
+          type: string
+          format: uuid
+        customer_name:
+          type: string
+          example: Budi Santoso
+        customer_email:
+          type: string
+          format: email
+          example: budi.santoso@example.com
+        customer_phone:
+          type: string
+          example: 081234567890
+        travel_date:
+          type: string
+          format: date
+          example: 2026-12-15
+        pax:
+          type: integer
+          example: 2
+        total_price:
+          type: number
+          example: 17000000
+        status:
+          type: string
+          enum: [pending, confirmed, completed, cancelled]
+          example: pending
+        created_at:
+          type: string
+          format: date-time
+        trip:
+          $ref: '#/components/schemas/Trip'
+
+    BookingCreateRequest:
+      type: object
+      required:
+        - trip_id
+        - customer_name
+        - customer_email
+        - customer_phone
+        - travel_date
+        - pax
+      properties:
+        trip_id:
+          type: string
+          format: uuid
+          example: 9de7435b-4ce9-498d-a773-ab1c1e7e4d6d
+        customer_name:
+          type: string
+          example: Siti Rahmawati
+        customer_email:
+          type: string
+          format: email
+          example: siti.rahma@example.com
+        customer_phone:
+          type: string
+          example: 081298765432
+        travel_date:
+          type: string
+          example: 2026-12-20
+        pax:
+          type: integer
+          minimum: 1
+          maximum: 50
+          example: 2
+        notes:
+          type: string
+          example: Minta menu vegetarian
+
+    TrackingRequest:
+      type: object
+      required:
+        - booking_code
+      properties:
+        booking_code:
+          type: string
+          example: JT-20261119-9X8K7L2M
+        customer_email:
+          type: string
+          format: email
+          example: budi.santoso@example.com
+        customer_phone:
+          type: string
+          example: 7890
+
+paths:
+  /health:
+    get:
+      summary: Liveness Probe
+      description: Memeriksa apakah server Fiber aktif
+      responses:
+        '200':
+          description: Server berjalan normal
+          content:
+            application/json:
+              example:
+                status: ok
+                app: Jelajah Trip API
+                version: 2.0.0
+
+  /ready:
+    get:
+      summary: Readiness Probe
+      description: Memeriksa kesiapan basis data PostgreSQL (timeout 2 detik)
+      responses:
+        '200':
+          description: Basis data siap menerima request
+          content:
+            application/json:
+              example:
+                status: ready
+                database: connected
+        '503':
+          description: Basis data tidak dapat dihubungi atau timeout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /trips:
+    get:
+      summary: Katalog Destinasi Tur dengan Pagination & Filter
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+            default: 1
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 12
+            maximum: 100
+        - name: sort
+          in: query
+          schema:
+            type: string
+            enum: [created_at, price, rating, duration_days, title]
+            default: created_at
+        - name: order
+          in: query
+          schema:
+            type: string
+            enum: [asc, desc]
+            default: desc
+        - name: search
+          in: query
+          schema:
+            type: string
+        - name: destination
+          in: query
+          schema:
+            type: string
+        - name: duration
+          in: query
+          schema:
+            type: string
+        - name: min_price
+          in: query
+          schema:
+            type: number
+        - name: max_price
+          in: query
+          schema:
+            type: number
+      responses:
+        '200':
+          description: Daftar paket perjalanan beserta metadata pagination
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Trip'
+                  meta:
+                    $ref: '#/components/schemas/Meta'
+
+  /bookings:
+    post:
+      summary: Buat Pemesanan Baru (Atomik Quota Decrement)
+      description: >
+        Membuat tiket pemesanan perjalanan. Kuota diverifikasi dan dikurangi secara atomik
+        pada level SQL (`UPDATE trips SET quota = quota - ? WHERE id = ? AND quota >= ?`).
+        Harga dihitung murni di server (harga trip * pax).
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BookingCreateRequest'
+      responses:
+        '201':
+          description: Pemesanan berhasil dibuat
+          content:
+            application/json:
+              example:
+                success: true
+                message: Pemesanan perjalanan berhasil dibuat
+                data:
+                  id: e9c1042b-586b-4e89-9831-d8ec8cbfa641
+                  booking_code: JT-20261119-KL987X21
+                  customer_name: Siti Rahmawati
+                  customer_email: siti.rahma@example.com
+                  customer_phone: 081298765432
+                  travel_date: 2026-12-20
+                  pax: 2
+                  total_price: 17000000
+                  status: pending
+        '400':
+          description: Kuota habis atau validasi gagal
+          content:
+            application/json:
+              examples:
+                quota_insufficient:
+                  summary: Kuota Trip Tidak Cukup
+                  value:
+                    success: false
+                    error:
+                      code: QUOTA_INSUFFICIENT
+                      message: Kuota perjalanan tidak mencukupi untuk jumlah pax yang diminta
+                validation_fail:
+                  summary: Validasi Input Gagal
+                  value:
+                    success: false
+                    error:
+                      code: VALIDATION_ERROR
+                      message: Validasi data masukan gagal
+                      details:
+                        - field: CustomerPhone
+                          message: nomor telepon tidak valid (harus nomor Indonesia aktif, misal 08123456789 atau +628123456789)
+
+  /bookings/track:
+    post:
+      summary: Lacak Status Tiket Pesanan (Hardened Verification)
+      description: >
+        Wajib menyertakan `booking_code` dan minimal salah satu verifikasi: `customer_email` ATAU 4 digit terakhir nomor telepon.
+        Jika verifikasi gagal atau booking_code tidak ditemukan, server selalu mengembalikan respons generik identik HTTP 404
+        dengan kode TRACKING_NOT_FOUND untuk mencegah user enumeration. Dilengkapi rate limiter 5 percobaan gagal per 15 menit.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TrackingRequest'
+      responses:
+        '200':
+          description: Data pesanan berhasil diverifikasi
+          content:
+            application/json:
+              example:
+                success: true
+                data:
+                  id: e9c1042b-586b-4e89-9831-d8ec8cbfa641
+                  booking_code: JT-20261119-9X8K7L2M
+                  customer_name: Budi Santoso
+                  customer_email: budi.santoso@example.com
+                  travel_date: 2026-12-15
+                  pax: 2
+                  total_price: 17000000
+                  status: confirmed
+        '404':
+          description: Kode tidak ditemukan atau verifikasi tidak cocok (Respon Byte-Identik)
+          content:
+            application/json:
+              example:
+                success: false
+                error:
+                  code: TRACKING_NOT_FOUND
+                  message: Pesanan tidak ditemukan atau data verifikasi tidak cocok
+        '429':
+          description: Terlalu banyak percobaan gagal pada booking code ini
+          content:
+            application/json:
+              example:
+                success: false
+                error:
+                  code: RATE_LIMIT_EXCEEDED
+                  message: Terlalu banyak percobaan pelacakan gagal untuk kode booking ini. Silakan coba lagi setelah 15 menit.
+
+  /bookings/export/excel:
+    get:
+      summary: Ekspor Rekap Data Pemesanan ke Excel (.xlsx) [Admin Only]
+      description: Menghasilkan berkas spreadsheet Excel resmi (.xlsx) berisi rekapitulasi data pemesanan, waktu pemesanan, data pelanggan, detail paket, dan baris total.
+      security:
+        - BearerAuth: []
+        - CookieAuth: []
+      parameters:
+        - in: query
+          name: status
+          schema:
+            type: string
+            enum: [pending, confirmed, completed, cancelled, all]
+          description: Filter status pesanan
+        - in: query
+          name: search
+          schema:
+            type: string
+          description: Pencarian nama/email/kode booking
+      responses:
+        '200':
+          description: Berkas Excel .xlsx terunduh
+          content:
+            application/vnd.openxmlformats-officedocument.spreadsheetml.sheet:
+              schema:
+                type: string
+                format: binary
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '403':
+          $ref: '#/components/responses/ForbiddenError'
+
+  /trips/export/excel:
+    get:
+      summary: Ekspor Katalog Paket Wisata ke Excel (.xlsx) [Admin Only]
+      description: Menghasilkan berkas spreadsheet Excel resmi (.xlsx) berisi daftar paket wisata, kuota, harga, dan status arsip.
+      security:
+        - BearerAuth: []
+        - CookieAuth: []
+      responses:
+        '200':
+          description: Berkas Excel .xlsx terunduh
+          content:
+            application/vnd.openxmlformats-officedocument.spreadsheetml.sheet:
+              schema:
+                type: string
+                format: binary
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '403':
+          $ref: '#/components/responses/ForbiddenError'

@@ -1,0 +1,23 @@
+# Environment Variables & Secrets
+.env
+.env.*
+!.env.example
+
+# Binaries & Executables
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+server
+createadmin
+
+# Test artifacts
+*.out
+*.test
+*.prof
+
+# Editor directories and files
+.vscode/
+.idea/
+.DS_Store
