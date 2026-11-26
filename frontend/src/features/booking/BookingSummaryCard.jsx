@@ -1,5 +1,5 @@
 import React from 'react';
-import { MapPin, Clock, Calendar, Users } from 'lucide-react';
+import { MapPin, Clock, Calendar, Users, Sparkles } from 'lucide-react';
 
 export default function BookingSummaryCard({ trip, pax, travelDate }) {
   const formatIDR = (n) =>
@@ -19,16 +19,17 @@ export default function BookingSummaryCard({ trip, pax, travelDate }) {
       : '—';
 
   return (
-    <div className="bg-white border border-[#E6E4DD] rounded-2xl p-6 sticky top-24 space-y-5">
+    <div className="bg-white/95 backdrop-blur-xl border border-[#EAE7DF] rounded-3xl p-7 sticky top-28 space-y-6 shadow-xl shadow-[#08261E]/4">
 
       {/* Eyebrow */}
-      <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#D97736]">
-        RINGKASAN PESANAN
-      </p>
+      <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-[#C5A059]">
+        <Sparkles className="w-3.5 h-3.5 text-[#C5A059]" />
+        <span>Ringkasan Reservasi</span>
+      </div>
 
       {/* Trip image thumbnail */}
       {trip?.image_url && (
-        <div className="rounded-xl overflow-hidden aspect-video">
+        <div className="rounded-2xl overflow-hidden aspect-[16/10] border border-[#EAE7DF]">
           <img
             src={trip.image_url}
             alt={trip.title}
@@ -38,66 +39,66 @@ export default function BookingSummaryCard({ trip, pax, travelDate }) {
       )}
 
       {/* Trip title */}
-      <h3 className="text-lg font-semibold text-[#14211D] leading-snug">
+      <h3 className="font-serif text-xl font-bold text-[#08261E] leading-snug">
         {trip?.title}
       </h3>
 
       {/* Details list */}
-      <ul className="space-y-3 text-sm text-[#4A5550]">
+      <ul className="space-y-3.5 text-xs text-[#64748B]">
         <li className="flex items-start gap-2.5">
-          <MapPin className="w-4 h-4 text-[#0F4C3A] flex-shrink-0 mt-0.5" />
-          <span>{trip?.destination || '—'}</span>
+          <MapPin className="w-4 h-4 text-[#C5A059] flex-shrink-0 mt-0.5" />
+          <span className="font-medium text-[#111827]">{trip?.destination || '—'}</span>
         </li>
         <li className="flex items-start gap-2.5">
-          <Clock className="w-4 h-4 text-[#0F4C3A] flex-shrink-0 mt-0.5" />
+          <Clock className="w-4 h-4 text-[#C5A059] flex-shrink-0 mt-0.5" />
           <span>{trip?.duration || '—'}</span>
         </li>
         <li className="flex items-start gap-2.5">
-          <Calendar className="w-4 h-4 text-[#0F4C3A] flex-shrink-0 mt-0.5" />
-          <span>{travelDate ? formatDate(travelDate) : <em className="opacity-50 not-italic">Belum dipilih</em>}</span>
+          <Calendar className="w-4 h-4 text-[#C5A059] flex-shrink-0 mt-0.5" />
+          <span>{travelDate ? formatDate(travelDate) : <em className="opacity-50 not-italic">Belum ditentukan</em>}</span>
         </li>
         <li className="flex items-start gap-2.5">
-          <Users className="w-4 h-4 text-[#0F4C3A] flex-shrink-0 mt-0.5" />
-          <span>{pax ? `${pax} orang` : <em className="opacity-50 not-italic">Belum dipilih</em>}</span>
+          <Users className="w-4 h-4 text-[#C5A059] flex-shrink-0 mt-0.5" />
+          <span>{pax ? `${pax} peserta` : <em className="opacity-50 not-italic">Belum ditentukan</em>}</span>
         </li>
       </ul>
 
       {/* Price breakdown */}
-      <div className="border-t border-[#E6E4DD] pt-4 space-y-2.5">
+      <div className="border-t border-[#EAE7DF]/70 pt-5 space-y-3">
         {hasSelection ? (
           <>
-            <div className="flex justify-between text-sm text-[#4A5550]">
-              <span>Harga per orang</span>
-              <span className="tabular-nums font-medium text-[#14211D]">{formatIDR(pricePerPax)}</span>
+            <div className="flex justify-between text-xs text-[#64748B]">
+              <span>Tarif per orang</span>
+              <span className="tabular-nums font-semibold text-[#111827]">{formatIDR(pricePerPax)}</span>
             </div>
-            <div className="flex justify-between text-sm text-[#4A5550]">
-              <span>× {pax} peserta</span>
-              <span className="tabular-nums font-medium text-[#14211D]">{formatIDR(subtotal)}</span>
+            <div className="flex justify-between text-xs text-[#64748B]">
+              <span>Kuantitas ({pax} peserta)</span>
+              <span className="tabular-nums font-semibold text-[#111827]">{formatIDR(subtotal)}</span>
             </div>
-            <div className="flex justify-between text-sm text-[#4A5550]">
-              <span>Biaya layanan</span>
-              <span className="text-[#0F4C3A] font-medium">Gratis</span>
+            <div className="flex justify-between text-xs text-[#64748B]">
+              <span>Biaya Layanan & Asuransi</span>
+              <span className="text-[#08261E] font-bold">Termasuk</span>
             </div>
-            <div className="border-t border-[#E6E4DD] pt-3 flex justify-between items-baseline">
-              <span className="text-sm font-semibold text-[#14211D]">Total</span>
-              <span className="text-2xl font-bold tabular-nums text-[#14211D]">{formatIDR(subtotal)}</span>
+            <div className="border-t border-[#EAE7DF]/70 pt-4 flex justify-between items-baseline">
+              <span className="text-xs uppercase tracking-wider font-bold text-[#64748B]">Total Pembayaran</span>
+              <span className="text-2xl font-extrabold tabular-nums text-[#08261E] font-sans">{formatIDR(subtotal)}</span>
             </div>
           </>
         ) : (
-          <p className="text-sm text-[#4A5550]/60 italic text-center py-2">
-            Isi formulir untuk melihat total harga
+          <p className="text-xs text-[#64748B]/70 italic text-center py-2 font-light">
+            Lengkapi data formulir untuk menghitung kalkulasi biaya
           </p>
         )}
       </div>
 
       {/* Quota note */}
       {trip?.quota !== undefined && (
-        <p className="text-xs text-[#4A5550] text-center">
+        <p className="text-[11px] text-[#64748B] text-center bg-[#FCFCFA] py-2 px-3 rounded-full border border-[#EAE7DF]">
           Tersisa{' '}
-          <span className={`font-semibold ${trip.quota < 10 ? 'text-[#D97736]' : 'text-[#0F4C3A]'}`}>
+          <span className={`font-bold tabular-nums ${trip.quota < 10 ? 'text-amber-700' : 'text-[#08261E]'}`}>
             {trip.quota} kuota
           </span>{' '}
-          tersedia
+          pada jadwal ini
         </p>
       )}
     </div>

@@ -4,14 +4,43 @@
 
 @layer base {
   body {
-    background-color: #FAF9F6;
-    color: #14211D;
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
-  }
-
-  h1, h2, h3, h4, h5, h6 {
+    background-color: #FCFCFA;
+    color: #111827;
     font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
   }
+
+  h1, h2, h3, h4 {
+    font-family: 'Playfair Display', Georgia, serif;
+    letter-spacing: -0.02em;
+  }
+
+  h5, h6 {
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  }
+}
+
+/* Glassmorphism utilities 2026/2027 */
+.glass-pill {
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow: 0 10px 30px -5px rgba(8, 38, 30, 0.06);
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(234, 231, 223, 0.7);
+  box-shadow: 0 16px 40px -10px rgba(8, 38, 30, 0.05);
+}
+
+.glass-dark {
+  background: rgba(8, 38, 30, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(197, 160, 89, 0.2);
 }
 
 /* Precise subtle scrollbar */
@@ -21,14 +50,14 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: #FAF9F6;
+  background: #FCFCFA;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #D5D2C9;
+  background: #DDD8CD;
   border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #B8B4A7;
+  background: #C5A059;
 }

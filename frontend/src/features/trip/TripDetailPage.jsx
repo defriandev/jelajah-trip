@@ -20,7 +20,7 @@ function StarRating({ rating }) {
         <Star
           key={s}
           className={`w-3.5 h-3.5 ${
-            s <= rating ? 'text-[#D97736] fill-[#D97736]' : 'text-[#E6E4DD] fill-[#E6E4DD]'
+            s <= rating ? 'text-[#C5A059] fill-[#C5A059]' : 'text-[#EAE7DF] fill-[#EAE7DF]'
           }`}
         />
       ))}
@@ -36,7 +36,7 @@ function AvatarInitials({ name }) {
     .join('')
     .toUpperCase();
   return (
-    <div className="w-9 h-9 rounded-full bg-[#0F4C3A] text-white flex items-center justify-center font-bold text-xs flex-shrink-0 shadow-2xs">
+    <div className="w-9 h-9 rounded-full bg-gradient-to-br from-[#08261E] to-[#0D3B2E] text-[#F5E4BE] flex items-center justify-center font-bold text-xs flex-shrink-0 shadow-2xs border border-[#C5A059]/30">
       {initials}
     </div>
   );
@@ -315,34 +315,34 @@ export default function TripDetailPage() {
 
             {/* Title + Meta */}
             <div className="space-y-4">
-              <h1 className="text-3xl md:text-4xl font-display font-bold tracking-[-0.03em] text-[#14211D] leading-tight">
+              <h1 className="text-3xl md:text-5xl font-serif font-normal text-[#08261E] leading-tight">
                 {trip.title}
               </h1>
 
               {/* Meta row */}
               <div className="flex flex-wrap items-center gap-3">
-                <div className="flex items-center gap-1.5 text-sm text-[#4A5550] bg-white px-3 py-1 rounded-lg border border-[#E6E4DD]">
-                  <Clock className="w-4 h-4 text-[#0F4C3A] flex-shrink-0" />
+                <div className="flex items-center gap-1.5 text-xs font-medium text-[#64748B] bg-white px-3.5 py-1.5 rounded-full border border-[#EAE7DF] shadow-2xs">
+                  <Clock className="w-4 h-4 text-[#C5A059] flex-shrink-0" />
                   <span>{trip.duration}</span>
                 </div>
 
-                <div className="flex items-center gap-1.5 text-sm text-[#4A5550] bg-white px-3 py-1 rounded-lg border border-[#E6E4DD]">
-                  <MapPin className="w-4 h-4 text-[#0F4C3A] flex-shrink-0" />
+                <div className="flex items-center gap-1.5 text-xs font-medium text-[#64748B] bg-white px-3.5 py-1.5 rounded-full border border-[#EAE7DF] shadow-2xs">
+                  <MapPin className="w-4 h-4 text-[#C5A059] flex-shrink-0" />
                   <span>{trip.destination}</span>
                 </div>
 
                 <div
-                  className={`flex items-center gap-1.5 text-xs font-semibold px-3 py-1 rounded-lg ${
+                  className={`flex items-center gap-1.5 text-xs font-semibold px-3.5 py-1.5 rounded-full ${
                     lowQuota
                       ? 'bg-amber-50 text-amber-800 border border-amber-200'
-                      : 'bg-emerald-50 text-[#0F4C3A] border border-emerald-200'
+                      : 'bg-[#08261E]/5 text-[#08261E] border border-[#08261E]/15'
                   }`}
                 >
-                  <Users className="w-3.5 h-3.5" />
+                  <Users className="w-3.5 h-3.5 text-[#C5A059]" />
                   <span className="tabular-nums">{trip.quota} sisa kuota</span>
                 </div>
 
-                <span className="tabular-nums text-2xl font-bold text-[#0F4C3A] ml-auto">
+                <span className="tabular-nums text-2xl font-extrabold text-[#08261E] ml-auto font-sans">
                   {formatIDR(trip.price)}
                 </span>
               </div>
@@ -350,8 +350,8 @@ export default function TripDetailPage() {
               {/* Average rating row */}
               <div className="flex items-center gap-2 pt-1">
                 <StarRating rating={Math.round(parseFloat(avgRating))} />
-                <span className="text-sm text-[#4A5550]">
-                  <span className="tabular-nums font-semibold text-[#14211D]">{avgRating}</span>
+                <span className="text-xs text-[#64748B]">
+                  <span className="tabular-nums font-bold text-[#08261E]">{avgRating}</span>
                   &nbsp;({reviewsCount > 0 ? reviewsCount : '12'} ulasan terverifikasi)
                 </span>
               </div>
@@ -359,10 +359,10 @@ export default function TripDetailPage() {
 
             {/* Description */}
             <div className="space-y-3">
-              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#D97736]">
-                Tentang Trip
+              <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#C5A059]">
+                Tentang Ekspedisi
               </p>
-              <p className="leading-[1.7] text-[#4A5550] text-sm md:text-base whitespace-pre-line">
+              <p className="leading-[1.8] text-[#64748B] text-sm md:text-base whitespace-pre-line font-light">
                 {trip.description}
               </p>
             </div>
@@ -370,18 +370,18 @@ export default function TripDetailPage() {
             {/* Facilities */}
             {trip.facilities && trip.facilities.length > 0 && (
               <div className="space-y-4">
-                <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#D97736]">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#C5A059]">
                   Fasilitas Termasuk
                 </p>
-                <div className="bg-white border border-[#E6E4DD] rounded-2xl p-6 shadow-2xs">
+                <div className="bg-white border border-[#EAE7DF] rounded-3xl p-6 shadow-xs">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
                     {trip.facilities.map((facility, idx) => (
                       <div
                         key={idx}
-                        className="flex items-start gap-2.5 text-sm text-[#14211D]"
+                        className="flex items-start gap-2.5 text-sm text-[#08261E]"
                       >
-                        <CheckCircle className="w-4 h-4 text-[#0F4C3A] flex-shrink-0 mt-0.5" />
-                        <span className="leading-[1.65] text-[#4A5550]">{facility}</span>
+                        <CheckCircle className="w-4 h-4 text-[#C5A059] flex-shrink-0 mt-0.5" />
+                        <span className="leading-[1.65] text-[#64748B]">{facility}</span>
                       </div>
                     ))}
                   </div>
@@ -391,16 +391,16 @@ export default function TripDetailPage() {
 
             {/* Reviews */}
             <div className="space-y-5">
-              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#D97736]">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#C5A059]">
                 Ulasan Pelancong
               </p>
 
               {reviewsCount === 0 ? (
-                <div className="bg-white border border-[#E6E4DD] rounded-2xl p-8 text-center space-y-2">
-                  <p className="text-sm font-medium text-[#14211D]">
+                <div className="bg-white border border-[#EAE7DF] rounded-3xl p-8 text-center space-y-2 shadow-xs">
+                  <p className="text-sm font-serif font-bold text-[#08261E]">
                     Belum ada ulasan untuk paket ini.
                   </p>
-                  <p className="text-xs text-[#4A5550]">
+                  <p className="text-xs text-[#64748B]">
                     Jadilah pelancong pertama yang memesan dan membagikan pengalaman berharga Anda!
                   </p>
                 </div>
@@ -409,16 +409,16 @@ export default function TripDetailPage() {
                   {reviews.map((rev) => (
                     <div
                       key={rev.id}
-                      className="bg-white border border-[#E6E4DD] rounded-2xl p-5 space-y-3 shadow-2xs"
+                      className="bg-white border border-[#EAE7DF] rounded-3xl p-6 space-y-3.5 shadow-xs"
                     >
                       <div className="flex items-start justify-between gap-3">
                         <div className="flex items-center gap-3">
                           <AvatarInitials name={rev.user?.name} />
                           <div>
-                            <span className="block text-sm font-semibold text-[#14211D]">
+                            <span className="block text-sm font-semibold text-[#08261E]">
                               {rev.user?.name || 'Pelancong Terverifikasi'}
                             </span>
-                            <span className="block text-[11px] text-[#4A5550]">
+                            <span className="block text-[11px] text-[#64748B]">
                               {new Date(rev.created_at).toLocaleDateString('id-ID', {
                                 day: 'numeric',
                                 month: 'short',
@@ -429,7 +429,7 @@ export default function TripDetailPage() {
                         </div>
                         <StarRating rating={rev.rating} />
                       </div>
-                      <p className="text-sm leading-[1.65] text-[#4A5550]">
+                      <p className="font-serif italic text-sm leading-[1.7] text-[#08261E]">
                         "{rev.comment}"
                       </p>
                     </div>
@@ -441,75 +441,75 @@ export default function TripDetailPage() {
 
           {/* ── RIGHT — Sticky Booking Card (4 cols) ── */}
           <div className="lg:col-span-4">
-            <div className="sticky top-28 bg-white border border-[#E6E4DD] rounded-2xl p-6 space-y-6 shadow-sm">
+            <div className="sticky top-28 bg-white/95 backdrop-blur-xl border border-[#EAE7DF] rounded-3xl p-7 space-y-6 shadow-xl shadow-[#08261E]/5">
 
               {/* Price */}
               <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#4A5550] mb-1">
+                <p className="text-[10px] font-bold uppercase tracking-wider text-[#64748B] mb-1">
                   Tarif All-Inclusive
                 </p>
                 <div className="flex items-baseline gap-1">
-                  <span className="text-3xl font-extrabold tabular-nums text-[#14211D] font-display">
+                  <span className="text-3xl font-extrabold tabular-nums text-[#08261E] font-sans">
                     {formatIDR(trip.price)}
                   </span>
-                  <span className="text-sm text-[#4A5550]">/orang</span>
+                  <span className="text-xs text-[#64748B]">/orang</span>
                 </div>
               </div>
 
               {/* Quota info */}
-              <div className="flex items-center gap-2.5 text-sm text-[#4A5550] bg-[#FAF9F6] p-3 rounded-xl border border-[#E6E4DD]">
-                <Users className="w-4 h-4 text-[#0F4C3A] flex-shrink-0" />
+              <div className="flex items-center gap-2.5 text-xs text-[#64748B] bg-[#FCFCFA] p-3.5 rounded-2xl border border-[#EAE7DF]">
+                <Users className="w-4 h-4 text-[#C5A059] flex-shrink-0" />
                 <span>
                   Sisa kuota keberangkatan:{' '}
-                  <strong className={`tabular-nums ${lowQuota ? 'text-[#D97736]' : 'text-[#14211D]'}`}>
+                  <strong className={`tabular-nums font-bold ${lowQuota ? 'text-amber-700' : 'text-[#08261E]'}`}>
                     {trip.quota} Pax
                   </strong>
                 </span>
               </div>
 
               {/* Assurance points */}
-              <div className="space-y-2.5 border-t border-[#E6E4DD] pt-5">
+              <div className="space-y-3 border-t border-[#EAE7DF]/70 pt-5">
                 {[
                   '100% Berangkat tanpa batasan minimum kuota',
                   'Pemandu lokal berlisensi resmi HPI',
                   'Gratis reschedule hingga H-7 jadwal tour',
                 ].map((point) => (
-                  <div key={point} className="flex items-start gap-2 text-xs text-[#4A5550]">
-                    <CheckCircle className="w-4 h-4 text-[#0F4C3A] flex-shrink-0 mt-0.5" />
-                    <span className="leading-[1.65]">{point}</span>
+                  <div key={point} className="flex items-start gap-2.5 text-xs text-[#64748B]">
+                    <CheckCircle className="w-4 h-4 text-[#C5A059] flex-shrink-0 mt-0.5" />
+                    <span className="leading-relaxed">{point}</span>
                   </div>
                 ))}
               </div>
 
               {/* CTA: Book now - Fixed route to /booking/:tripId */}
               <motion.button
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.97 }}
                 onClick={() => navigate(`/booking/${trip.id}`)}
-                className="bg-[#0F4C3A] hover:bg-[#0A3629] text-white w-full rounded-xl py-3.5 font-semibold flex items-center justify-center gap-2 transition-all text-sm shadow-sm"
+                className="bg-[#08261E] hover:bg-[#0D3B2E] text-[#F5E4BE] w-full rounded-full py-4 font-semibold flex items-center justify-center gap-2 transition-all text-xs shadow-lg shadow-[#08261E]/20 border border-[#C5A059]/40"
               >
                 <span>Pesan Sekarang</span>
-                <ArrowUpRight className="w-4 h-4" />
+                <ArrowUpRight className="w-4 h-4 text-[#C5A059]" />
               </motion.button>
 
               {/* Secondary: WhatsApp + Share */}
-              <div className="flex gap-3">
+              <div className="flex gap-2.5">
                 <a
                   href={waUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex-1 border border-[#14211D]/20 hover:bg-[#FAF9F6] text-[#14211D] rounded-xl px-4 py-2.5 text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors"
+                  className="flex-1 border border-[#EAE7DF] hover:bg-[#FCFCFA] text-[#08261E] rounded-full px-4 py-2.5 text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors"
                 >
                   <span>Tanya WhatsApp</span>
                 </a>
                 <button
                   onClick={handleShare}
                   aria-label="Bagikan"
-                  className="border border-[#14211D]/20 hover:bg-[#FAF9F6] text-[#14211D] rounded-xl px-3.5 py-2.5 flex items-center justify-center transition-colors relative"
+                  className="border border-[#EAE7DF] hover:bg-[#FCFCFA] text-[#08261E] rounded-full px-4 py-2.5 flex items-center justify-center transition-colors relative"
                   title="Salin Tautan"
                 >
                   {copied ? (
-                    <span className="text-[10px] font-bold text-[#0F4C3A]">Tersalin!</span>
+                    <span className="text-[10px] font-bold text-[#C5A059]">Tersalin!</span>
                   ) : (
                     <Share2 className="w-4 h-4" />
                   )}

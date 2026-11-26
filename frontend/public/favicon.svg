@@ -1,4 +1,21 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-  <circle cx="12" cy="12" r="10"/>
-  <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/>
+<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="favBg" x1="0" y1="0" x2="48" y2="48" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stopColor="#08261E" />
+      <stop offset="100%" stopColor="#0D3B2E" />
+    </linearGradient>
+    <linearGradient id="favGold" x1="6" y1="6" x2="42" y2="42" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stopColor="#F5E4BE" />
+      <stop offset="50%" stopColor="#D4AF37" />
+      <stop offset="100%" stopColor="#9A7532" />
+    </linearGradient>
+  </defs>
+  <rect x="2" y="2" width="44" height="44" rx="14" fill="url(#favBg)" stroke="url(#favGold)" stroke-width="1.5" />
+  <path d="M 8 27 C 16 33, 32 33, 40 27" stroke="url(#favGold)" stroke-width="1" stroke-dasharray="2 2" opacity="0.5" />
+  <path d="M 24 10 L 26 21 L 24 24 L 22 21 Z" fill="url(#favGold)" />
+  <path d="M 24 38 L 22 27 L 24 24 L 26 27 Z" fill="url(#favGold)" opacity="0.9" />
+  <path d="M 38 24 L 27 26 L 24 24 L 27 22 Z" fill="url(#favGold)" opacity="0.95" />
+  <path d="M 10 24 L 21 22 L 24 24 L 21 26 Z" fill="url(#favGold)" opacity="0.95" />
+  <circle cx="24" cy="24" r="3.5" fill="#08261E" stroke="url(#favGold)" stroke-width="1.2" />
+  <circle cx="24" cy="24" r="1.2" fill="#F5E4BE" />
 </svg>

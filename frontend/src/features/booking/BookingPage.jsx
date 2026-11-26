@@ -62,9 +62,9 @@ export default function BookingPage() {
   /* ── Loading ── */
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#FAF9F6] flex flex-col items-center justify-center gap-3">
-        <Loader2 className="w-9 h-9 animate-spin text-[#0F4C3A]" />
-        <p className="text-sm text-[#4A5550]">Menyiapkan formulir pemesanan…</p>
+      <div className="min-h-screen bg-[#FCFCFA] flex flex-col items-center justify-center gap-3">
+        <Loader2 className="w-9 h-9 animate-spin text-[#08261E]" />
+        <p className="text-xs text-[#64748B]">Menyiapkan formulir pemesanan…</p>
       </div>
     );
   }
@@ -72,15 +72,15 @@ export default function BookingPage() {
   /* ── Trip not found ── */
   if (!trip) {
     return (
-      <div className="min-h-screen bg-[#FAF9F6] flex flex-col items-center justify-center gap-4 px-4 text-center">
+      <div className="min-h-screen bg-[#FCFCFA] flex flex-col items-center justify-center gap-4 px-4 text-center">
         <AlertCircle className="w-12 h-12 text-rose-500" />
-        <h2 className="text-xl font-display font-bold tracking-[-0.03em] text-[#14211D]">
+        <h2 className="text-xl font-serif font-bold text-[#111827]">
           Paket Wisata Tidak Ditemukan
         </h2>
-        <p className="text-sm text-[#4A5550]">{error || 'Paket yang kamu cari tidak tersedia.'}</p>
+        <p className="text-sm text-[#64748B]">{error || 'Paket yang kamu cari tidak tersedia.'}</p>
         <Link
           to="/trips"
-          className="bg-[#0F4C3A] hover:bg-[#0A3629] text-white rounded-xl px-6 py-3.5 font-semibold text-sm transition-colors"
+          className="bg-[#08261E] hover:bg-[#0D3B2E] text-[#F5E4BE] rounded-full px-7 py-3.5 font-semibold text-xs transition-colors shadow-sm border border-[#C5A059]/30"
         >
           Lihat Katalog Trip
         </Link>
@@ -92,30 +92,30 @@ export default function BookingPage() {
     new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(n);
 
   return (
-    <div className="min-h-screen bg-[#FAF9F6]">
+    <div className="min-h-screen bg-[#FCFCFA]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
 
         {/* Breadcrumb */}
-        <nav className="flex items-center gap-1.5 text-xs text-[#4A5550] mb-8 flex-wrap">
-          <Link to="/" className="hover:text-[#14211D] transition-colors">Beranda</Link>
+        <nav className="flex items-center gap-1.5 text-xs text-[#64748B] mb-8 flex-wrap">
+          <Link to="/" className="hover:text-[#08261E] transition-colors">Beranda</Link>
           <span className="opacity-40">/</span>
-          <Link to="/trips" className="hover:text-[#14211D] transition-colors">Paket Trip</Link>
+          <Link to="/trips" className="hover:text-[#08261E] transition-colors">Paket Trip</Link>
           <span className="opacity-40">/</span>
-          <Link to={`/trips/${trip.id}`} className="hover:text-[#14211D] transition-colors truncate max-w-[180px]">
+          <Link to={`/trips/${trip.id}`} className="hover:text-[#08261E] transition-colors truncate max-w-[180px]">
             {trip.title}
           </Link>
           <span className="opacity-40">/</span>
-          <span className="text-[#14211D] font-medium">Pemesanan</span>
+          <span className="text-[#08261E] font-medium">Pemesanan</span>
         </nav>
 
         {/* Page heading */}
         <div className="mb-8">
-          <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#D97736] mb-1">PEMESANAN</p>
-          <h1 className="text-2xl sm:text-3xl font-display font-bold tracking-[-0.03em] text-[#14211D]">
-            Pesan Paket Trip
+          <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#C5A059] mb-1">RESERVASI EKSKLUSIF</p>
+          <h1 className="text-2xl sm:text-4xl font-serif font-normal text-[#08261E]">
+            Formulir Reservasi Perjalanan
           </h1>
-          <p className="text-sm leading-[1.65] text-[#4A5550] mt-1">
-            Lengkapi data pemesanan di bawah untuk reservasi instan.
+          <p className="text-sm text-[#64748B] mt-1 font-light">
+            Lengkapi data pemesanan di bawah untuk konfirmasi jadwal terjamin.
           </p>
         </div>
 
@@ -152,63 +152,63 @@ export default function BookingPage() {
 
       {/* ── Success Modal ── */}
       {createdBooking && (
-        <div className="fixed inset-0 z-50 bg-black/40 flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl border border-[#E6E4DD] shadow-xl p-8 max-w-md w-full space-y-6 animate-in zoom-in-95 duration-200">
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-white rounded-3xl border border-[#EAE7DF] shadow-2xl p-8 max-w-md w-full space-y-6 animate-in zoom-in-95 duration-200">
 
             {/* Check icon */}
             <div className="flex justify-center">
-              <div className="w-16 h-16 rounded-full bg-[#EBF4F0] flex items-center justify-center">
-                <CheckCircle className="w-9 h-9 text-[#0F4C3A]" />
+              <div className="w-16 h-16 rounded-full bg-[#08261E]/8 flex items-center justify-center border border-[#08261E]/15">
+                <CheckCircle className="w-9 h-9 text-[#08261E]" />
               </div>
             </div>
 
             {/* Heading */}
             <div className="text-center space-y-1">
-              <h3 className="text-2xl font-display font-bold tracking-[-0.03em] text-[#14211D]">
-                Pemesanan Berhasil!
+              <h3 className="text-2xl font-serif font-bold text-[#08261E]">
+                Reservasi Berhasil Diterbitkan!
               </h3>
-              <p className="text-sm leading-[1.65] text-[#4A5550]">
-                Simpan kode ini untuk melacak pesanan Anda.
+              <p className="text-xs text-[#64748B]">
+                Simpan kode unik di bawah ini untuk melacak status pesanan Anda.
               </p>
             </div>
 
             {/* Booking code */}
-            <div className="bg-[#F4F2EC] border border-[#E6E4DD] rounded-xl p-4 text-center space-y-2">
-              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#4A5550]">Kode Pemesanan</p>
+            <div className="bg-[#FCFCFA] border border-[#EAE7DF] rounded-2xl p-4 text-center space-y-2">
+              <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#C5A059]">Kode Pemesanan Resmi</p>
               <div className="flex items-center justify-center gap-3">
-                <span className="font-mono text-lg font-bold text-[#14211D] tracking-widest">
+                <span className="font-mono text-xl font-bold text-[#08261E] tracking-widest">
                   {createdBooking.booking_code}
                 </span>
                 <button
                   onClick={handleCopyCode}
                   title="Salin kode"
-                  className="p-1.5 rounded-lg border border-[#E6E4DD] bg-white hover:bg-[#FAF9F6] text-[#4A5550] transition-colors"
+                  className="p-2 rounded-xl border border-[#EAE7DF] bg-white hover:bg-[#F4F0E8] text-[#08261E] transition-colors shadow-2xs"
                 >
                   {copied ? (
-                    <Check className="w-4 h-4 text-[#0F4C3A]" />
+                    <Check className="w-4 h-4 text-[#C5A059]" />
                   ) : (
                     <Copy className="w-4 h-4" />
                   )}
                 </button>
               </div>
               {copied && (
-                <p className="text-xs text-[#0F4C3A] font-medium">Berhasil disalin!</p>
+                <p className="text-[11px] text-[#C5A059] font-semibold">Kode berhasil disalin ke clipboard!</p>
               )}
             </div>
 
             {/* Brief info */}
-            <div className="space-y-2 text-sm border-t border-[#E6E4DD] pt-4">
+            <div className="space-y-2.5 text-xs border-t border-[#EAE7DF]/70 pt-4">
               <div className="flex justify-between">
-                <span className="text-[#4A5550]">Paket Wisata</span>
-                <span className="font-medium text-[#14211D] truncate max-w-[180px] text-right">{trip.title}</span>
+                <span className="text-[#64748B]">Paket Wisata</span>
+                <span className="font-semibold text-[#08261E] truncate max-w-[180px] text-right">{trip.title}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-[#4A5550]">Atas Nama</span>
-                <span className="font-medium text-[#14211D]">{createdBooking.customer_name}</span>
+                <span className="text-[#64748B]">Atas Nama</span>
+                <span className="font-semibold text-[#08261E]">{createdBooking.customer_name}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-[#4A5550]">Total Tagihan</span>
-                <span className="font-bold tabular-nums text-[#14211D]">
+                <span className="text-[#64748B]">Total Tagihan</span>
+                <span className="font-bold tabular-nums text-[#08261E] text-sm font-sans">
                   {formatIDR(createdBooking.total_price)}
                 </span>
               </div>
@@ -216,22 +216,22 @@ export default function BookingPage() {
 
             {/* Hybrid Checkout: Guest Account Link Banner */}
             {!user && (
-              <div className="bg-[#EBF4F0] border border-[#C5DFD6] rounded-xl p-3.5 text-left space-y-2">
+              <div className="bg-[#08261E]/5 border border-[#08261E]/15 rounded-2xl p-4 text-left space-y-2.5">
                 <div className="flex items-start gap-2.5">
-                  <UserPlus className="w-5 h-5 text-[#0F4C3A] shrink-0 mt-0.5" />
-                  <div className="text-xs text-[#2D3732] leading-relaxed">
-                    <p className="font-semibold text-[#0F4C3A]">Simpan tiket ke akun Anda?</p>
-                    <p className="mt-0.5 text-[#4A5550]">
-                      Buat akun sekarang dengan email <strong className="text-[#14211D]">{createdBooking.customer_email}</strong> agar riwayat perjalanan tersimpan otomatis dan Anda dapat memberikan ulasan setelah trip selesai.
+                  <UserPlus className="w-5 h-5 text-[#C5A059] shrink-0 mt-0.5" />
+                  <div className="text-xs text-[#08261E] leading-relaxed">
+                    <p className="font-bold text-[#08261E]">Simpan tiket ke akun pribadi?</p>
+                    <p className="mt-0.5 text-[#64748B] text-[11px]">
+                      Buat akun sekarang dengan email <strong className="text-[#08261E]">{createdBooking.customer_email}</strong> agar riwayat perjalanan tersimpan otomatis dan Anda dapat memberikan ulasan setelah trip selesai.
                     </p>
                   </div>
                 </div>
                 <div className="pt-0.5">
                   <Link
                     to={`/register?email=${encodeURIComponent(createdBooking.customer_email || '')}&name=${encodeURIComponent(createdBooking.customer_name || '')}`}
-                    className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#0F4C3A] hover:underline"
+                    className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#08261E] hover:text-[#C5A059] transition-colors"
                   >
-                    Daftar Akun Sekarang <ArrowRight className="w-3.5 h-3.5" />
+                    Daftar Akun Sekarang <ArrowRight className="w-3.5 h-3.5 text-[#C5A059]" />
                   </Link>
                 </div>
               </div>
@@ -241,17 +241,17 @@ export default function BookingPage() {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <Link
                 to={`/tracking?code=${createdBooking.booking_code}`}
-                className="flex items-center justify-center gap-2 bg-[#0F4C3A] hover:bg-[#0A3629] text-white rounded-xl px-6 py-3.5 font-semibold text-sm transition-colors"
+                className="flex items-center justify-center gap-2 bg-[#08261E] hover:bg-[#0D3B2E] text-[#F5E4BE] rounded-full px-5 py-3.5 font-semibold text-xs transition-colors shadow-md border border-[#C5A059]/30"
               >
-                Lacak Pesanan
-                <ArrowRight className="w-4 h-4" />
+                <span>Lacak Pesanan</span>
+                <ArrowRight className="w-3.5 h-3.5 text-[#C5A059]" />
               </Link>
               <Link
                 to="/"
-                className="flex items-center justify-center gap-2 border border-[#14211D]/20 hover:bg-[#14211D]/5 text-[#14211D] rounded-xl px-6 py-3.5 font-semibold text-sm transition-colors"
+                className="flex items-center justify-center gap-2 border border-[#EAE7DF] hover:bg-[#FCFCFA] text-[#08261E] rounded-full px-5 py-3.5 font-semibold text-xs transition-colors"
               >
-                <Home className="w-4 h-4" />
-                Kembali ke Beranda
+                <Home className="w-3.5 h-3.5" />
+                <span>Ke Beranda</span>
               </Link>
             </div>
           </div>

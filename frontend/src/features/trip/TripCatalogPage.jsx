@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { Compass, AlertCircle, Loader2, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Compass, AlertCircle, Loader2, ChevronLeft, ChevronRight, Sparkles } from 'lucide-react';
 import { tripService } from '../../services/api';
 import TripCard from './TripCard';
 import TripFilter from './TripFilter';
@@ -81,7 +81,7 @@ export default function TripCatalogPage() {
   }, [filters, currentPage]);
 
   const handleFilterChange = (key, value) => {
-    setCurrentPage(1); // Reset ke halaman 1 saat filter berubah
+    setCurrentPage(1);
     setFilters((prev) => ({ ...prev, [key]: value }));
   };
 
@@ -104,18 +104,19 @@ export default function TripCatalogPage() {
   };
 
   return (
-    <div className="min-h-screen py-10 bg-[#FAF9F6]">
+    <div className="min-h-screen py-12 bg-[#FCFCFA]">
       <div className="max-w-7xl mx-auto px-6 lg:px-10">
         {/* Header Hero */}
-        <div className="text-center max-w-2xl mx-auto mb-10 space-y-2">
-          <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#D97736]">
-            Katalog Destinasi Nusantara
-          </p>
-          <h1 className="text-3xl sm:text-4xl font-extrabold text-[#14211D] tracking-tight font-display">
-            Semua Paket Perjalanan
+        <div className="text-center max-w-3xl mx-auto mb-12 space-y-3">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white border border-[#C5A059]/30 text-[11px] font-semibold text-[#08261E] tracking-wider uppercase shadow-2xs">
+            <Sparkles className="w-3 h-3 text-[#C5A059]" />
+            Koleksi Terkurasi Nusantara
+          </div>
+          <h1 className="font-serif text-3xl sm:text-5xl font-normal text-[#08261E] tracking-tight">
+            Katalog Perjalanan Terpilih
           </h1>
-          <p className="text-sm text-[#4A5550] leading-relaxed">
-            Pilih perjalanan impian Anda dari pulau karang tropis hingga puncak kaldera aktif dengan fasilitas all-inclusive.
+          <p className="text-sm text-[#64748B] leading-relaxed max-w-xl mx-auto">
+            Temukan petualangan impian Anda dari terumbu karang kepulauan terluar hingga puncak kaldera aktif dengan fasilitas all-inclusive.
           </p>
         </div>
 
@@ -129,45 +130,45 @@ export default function TripCatalogPage() {
 
         {/* Content Area */}
         {loading ? (
-          <div className="py-20 flex flex-col items-center justify-center space-y-3 text-[#4A5550]">
-            <Loader2 className="w-8 h-8 animate-spin text-[#0F4C3A]" />
-            <p className="text-xs">Memuat paket perjalanan...</p>
+          <div className="py-24 flex flex-col items-center justify-center space-y-3 text-[#64748B]">
+            <Loader2 className="w-8 h-8 animate-spin text-[#08261E]" />
+            <p className="text-xs font-medium">Memuat katalog ekspedisi...</p>
           </div>
         ) : error ? (
-          <div className="py-16 text-center max-w-md mx-auto space-y-3">
-            <div className="w-10 h-10 rounded-full bg-rose-50 text-rose-600 mx-auto flex items-center justify-center border border-rose-200">
-              <AlertCircle className="w-5 h-5" />
+          <div className="py-16 text-center max-w-md mx-auto space-y-4 bg-white border border-rose-100 rounded-3xl p-8 shadow-sm">
+            <div className="w-12 h-12 rounded-full bg-rose-50 text-rose-600 mx-auto flex items-center justify-center border border-rose-200">
+              <AlertCircle className="w-6 h-6" />
             </div>
-            <p className="text-xs text-[#14211D] font-semibold">{error}</p>
+            <p className="text-sm text-[#111827] font-semibold">{error}</p>
             <button
               onClick={handleReset}
-              className="px-4 py-2 rounded-xl bg-[#0F4C3A] text-white text-xs font-semibold hover:bg-[#0A3629] transition-colors"
+              className="px-6 py-2.5 rounded-full bg-[#08261E] text-white text-xs font-semibold hover:bg-[#0D3B2E] transition-all shadow-sm"
             >
               Muat Ulang
             </button>
           </div>
         ) : trips.length === 0 ? (
-          <div className="py-20 text-center max-w-md mx-auto space-y-3 bg-white border border-[#E6E4DD] rounded-2xl p-8 shadow-sm">
-            <div className="w-10 h-10 rounded-full bg-[#FAF9F6] border border-[#E6E4DD] text-[#4A5550] mx-auto flex items-center justify-center">
-              <Compass className="w-5 h-5" />
+          <div className="py-20 text-center max-w-md mx-auto space-y-4 bg-white border border-[#EAE7DF] rounded-3xl p-10 shadow-sm">
+            <div className="w-12 h-12 rounded-full bg-[#FCFCFA] border border-[#EAE7DF] text-[#C5A059] mx-auto flex items-center justify-center shadow-xs">
+              <Compass className="w-6 h-6" />
             </div>
-            <h3 className="text-base font-bold text-[#14211D] font-display">Tidak Ada Paket Ditemukan</h3>
-            <p className="text-xs text-[#4A5550]">
-              Tidak ada paket trip yang cocok dengan kriteria pencarian Anda. Coba reset filter atau gunakan kata kunci lain.
+            <h3 className="font-serif text-xl font-bold text-[#08261E]">Destinasi Belum Ditemukan</h3>
+            <p className="text-xs text-[#64748B] leading-relaxed">
+              Tidak ada paket trip yang sesuai dengan filter pencarian saat ini. Silakan atur ulang filter atau gunakan kata kunci lain.
             </p>
             <button
               onClick={handleReset}
-              className="mt-2 px-4 py-2 rounded-xl bg-[#0F4C3A] text-white text-xs font-semibold hover:bg-[#0A3629] transition-colors"
+              className="mt-2 px-6 py-2.5 rounded-full bg-[#08261E] text-[#F5E4BE] text-xs font-semibold hover:bg-[#0D3B2E] transition-all shadow-sm border border-[#C5A059]/30"
             >
               Tampilkan Semua Trip
             </button>
           </div>
         ) : (
           <div>
-            <div className="flex items-center justify-between mb-6 text-xs text-[#4A5550]">
+            <div className="flex items-center justify-between mb-8 text-xs text-[#64748B]">
               <span>
-                Menampilkan <strong className="text-[#14211D] tabular-nums">{trips.length}</strong> dari{' '}
-                <strong className="text-[#14211D] tabular-nums">{meta.total}</strong> paket perjalanan (Halaman {meta.page} dari {meta.total_pages})
+                Menampilkan <strong className="text-[#08261E] tabular-nums font-semibold">{trips.length}</strong> dari{' '}
+                <strong className="text-[#08261E] tabular-nums font-semibold">{meta.total}</strong> paket wisata (Halaman {meta.page} dari {meta.total_pages})
               </span>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -178,17 +179,17 @@ export default function TripCatalogPage() {
 
             {/* Server-Side Pagination Controls */}
             {meta.total_pages > 1 && (
-              <div className="mt-12 flex items-center justify-center gap-2">
+              <div className="mt-16 flex items-center justify-center gap-2">
                 <button
                   onClick={() => handlePageChange(currentPage - 1)}
                   disabled={currentPage <= 1}
-                  className="px-3.5 py-2 rounded-xl border border-[#E6E4DD] bg-white text-xs font-medium text-[#14211D] hover:bg-[#FAF9F6] disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-1 shadow-sm transition-colors"
+                  className="px-4 py-2 rounded-full border border-[#EAE7DF] bg-white text-xs font-semibold text-[#08261E] hover:bg-[#F4F0E8] disabled:opacity-30 disabled:cursor-not-allowed flex items-center gap-1.5 shadow-2xs transition-all"
                 >
                   <ChevronLeft className="w-4 h-4" />
                   Sebelumnya
                 </button>
 
-                <div className="flex items-center gap-1 px-2">
+                <div className="flex items-center gap-1.5 px-2">
                   {Array.from({ length: meta.total_pages }, (_, i) => i + 1)
                     .filter((p) => p === 1 || p === meta.total_pages || Math.abs(p - currentPage) <= 1)
                     .map((p, idx, arr) => {
@@ -196,13 +197,13 @@ export default function TripCatalogPage() {
                       const isGap = prev && p - prev > 1;
                       return (
                         <React.Fragment key={p}>
-                          {isGap && <span className="px-1 text-xs text-[#4A5550]">...</span>}
+                          {isGap && <span className="px-1 text-xs text-[#64748B]">...</span>}
                           <button
                             onClick={() => handlePageChange(p)}
-                            className={`w-8 h-8 rounded-xl text-xs font-semibold transition-colors ${
+                            className={`w-9 h-9 rounded-full text-xs font-semibold transition-all ${
                               currentPage === p
-                                ? 'bg-[#0F4C3A] text-white shadow-sm'
-                                : 'bg-white border border-[#E6E4DD] text-[#14211D] hover:bg-[#FAF9F6]'
+                                ? 'bg-[#08261E] text-[#F5E4BE] shadow-md border border-[#C5A059]/40'
+                                : 'bg-white border border-[#EAE7DF] text-[#08261E] hover:bg-[#F4F0E8]'
                             }`}
                           >
                             {p}
@@ -215,7 +216,7 @@ export default function TripCatalogPage() {
                 <button
                   onClick={() => handlePageChange(currentPage + 1)}
                   disabled={currentPage >= meta.total_pages}
-                  className="px-3.5 py-2 rounded-xl border border-[#E6E4DD] bg-white text-xs font-medium text-[#14211D] hover:bg-[#FAF9F6] disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-1 shadow-sm transition-colors"
+                  className="px-4 py-2 rounded-full border border-[#EAE7DF] bg-white text-xs font-semibold text-[#08261E] hover:bg-[#F4F0E8] disabled:opacity-30 disabled:cursor-not-allowed flex items-center gap-1.5 shadow-2xs transition-all"
                 >
                   Selanjutnya
                   <ChevronRight className="w-4 h-4" />

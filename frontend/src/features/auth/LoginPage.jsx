@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Eye, EyeOff, Loader2, Shield, User, AlertCircle, Sparkles } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
+import BrandLogo from '../../components/BrandLogo';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
@@ -41,9 +42,9 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="flex-1 min-h-[calc(100vh-4rem)] bg-[#FAF9F6] flex flex-col lg:flex-row">
+    <div className="flex-1 min-h-[calc(100vh-4rem)] bg-[#FCFCFA] flex flex-col lg:flex-row">
       {/* Left decorative brand panel */}
-      <div className="hidden lg:flex lg:w-1/2 bg-[#0F382A] text-white flex-col justify-between p-12 lg:p-16 relative overflow-hidden">
+      <div className="hidden lg:flex lg:w-1/2 bg-[#08261E] text-white flex-col justify-between p-12 lg:p-16 relative overflow-hidden">
         {/* Subtle geometric circles */}
         <div className="absolute inset-0 opacity-10 pointer-events-none">
           <div className="absolute top-16 left-16 w-72 h-72 rounded-full border border-white" />
@@ -51,56 +52,57 @@ export default function LoginPage() {
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-52 h-52 rounded-full border border-white" />
         </div>
 
-        {/* Top: Monogram */}
+        {/* Top: Artisan Brand Logo */}
         <div className="relative z-10">
-          <div className="w-12 h-12 rounded-xl bg-white/10 border border-white/20 flex items-center justify-center">
-            <span className="text-white font-bold text-lg font-display tracking-tight">JT</span>
-          </div>
+          <BrandLogo inverted size="large" />
         </div>
 
-        {/* Middle: Inspiring copy without dashes */}
+        {/* Middle: Inspiring copy */}
         <div className="relative z-10 max-w-md space-y-6">
           <div className="space-y-3">
-            <h2 className="text-3xl lg:text-4xl font-bold font-display text-white tracking-tight">
-              Mulai Petualangan Anda
+            <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#C5A059]">
+              Gerbang Eksplorasi Nusantara
+            </p>
+            <h2 className="font-serif text-3xl lg:text-5xl font-normal text-white leading-tight">
+              Mulai Petualangan Berkelas Anda
             </h2>
-            <p className="text-white/80 leading-relaxed text-sm">
-              Temukan destinasi impian Anda bersama Jelajah Trip untuk perjalanan istimewa yang tak terlupakan di setiap sudut nusantara.
+            <p className="text-white/75 leading-relaxed text-xs sm:text-sm font-light">
+              Masuk ke akun Anda untuk memantau status voucher, riwayat perjalanan terkurasi, dan konsultasi privat bersama tim kurator kami.
             </p>
           </div>
 
-          <div className="bg-white/10 backdrop-blur-xs border border-white/15 rounded-2xl p-5 text-left">
-            <p className="text-white/90 italic text-sm leading-relaxed">
+          <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-5 text-left">
+            <p className="font-serif italic text-white/90 text-sm leading-relaxed">
               "Dunia adalah buku, dan mereka yang tidak bepergian hanya membaca satu halaman."
             </p>
-            <p className="text-emerald-300 text-xs font-semibold mt-3">
+            <p className="text-[#C5A059] text-xs font-semibold mt-3">
               Santo Agustinus
             </p>
           </div>
         </div>
 
         {/* Bottom footer text */}
-        <div className="relative z-10 text-white/50 text-xs">
-          Platform Kurasi Wisata Nusantara Terpercaya
+        <div className="relative z-10 text-white/40 text-xs">
+          © {new Date().getFullYear()} Jelajah Trip • Archipelago Atelier
         </div>
       </div>
 
       {/* Right form panel */}
       <div className="w-full lg:w-1/2 flex items-center justify-center px-4 sm:px-8 py-10 lg:py-16 my-auto">
         <div className="w-full max-w-md">
-          <div className="bg-white border border-[#E6E4DD] rounded-2xl p-7 sm:p-9 shadow-sm">
+          <div className="bg-white/95 backdrop-blur-xl border border-[#EAE7DF] rounded-3xl p-7 sm:p-9 shadow-xl shadow-[#08261E]/4">
             {/* Eyebrow & Title */}
-            <p className="text-xs font-semibold uppercase tracking-wider text-[#D97736] mb-1.5">
-              MASUK AKUN
+            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#C5A059] mb-1.5">
+              AUTENTIKASI AKUN
             </p>
-            <h1 className="font-display font-bold text-2xl text-[#14211D] mb-6 tracking-tight">
+            <h1 className="font-serif font-normal text-2xl sm:text-3xl text-[#08261E] mb-6">
               Selamat Datang Kembali
             </h1>
 
             {/* Error Banner */}
             {error && (
-              <div className="bg-rose-50 border border-rose-200 text-rose-700 text-xs rounded-xl p-3.5 flex items-start gap-2.5 mb-5 animate-in fade-in">
-                <AlertCircle className="w-4 h-4 flex-shrink-0 mt-0.5" />
+              <div className="bg-rose-50 border border-rose-200 text-rose-700 text-xs rounded-2xl p-4 flex items-start gap-2.5 mb-5 animate-in fade-in">
+                <AlertCircle className="w-4 h-4 shrink-0 mt-0.5 text-rose-500" />
                 <span className="leading-relaxed">{error}</span>
               </div>
             )}
@@ -108,7 +110,7 @@ export default function LoginPage() {
             <form onSubmit={handleSubmit} className="space-y-4">
               {/* Email Input */}
               <div>
-                <label className="block text-xs font-semibold text-[#14211D] mb-1.5">
+                <label className="block text-xs font-semibold text-[#08261E] mb-1.5">
                   Alamat Email
                 </label>
                 <input
@@ -118,14 +120,14 @@ export default function LoginPage() {
                   placeholder="nama@email.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="bg-white border border-[#D5D2C9] focus:border-[#0F4C3A] focus:outline-none focus:ring-2 focus:ring-[#0F4C3A]/15 rounded-xl text-[#14211D] px-3.5 py-2.5 sm:py-3 w-full text-sm placeholder-[#4A5550]/40 transition-colors"
+                  className="bg-[#FCFCFA] border border-[#EAE7DF] focus:border-[#08261E] focus:outline-none focus:ring-1 focus:ring-[#08261E] rounded-2xl text-[#111827] px-4 py-3 w-full text-xs placeholder-[#64748B]/40 transition-all font-medium"
                 />
               </div>
 
               {/* Password Input */}
               <div>
                 <div className="flex items-center justify-between mb-1.5">
-                  <label className="block text-xs font-semibold text-[#14211D]">
+                  <label className="block text-xs font-semibold text-[#08261E]">
                     Kata Sandi
                   </label>
                 </div>
@@ -137,12 +139,12 @@ export default function LoginPage() {
                     placeholder="Masukkan kata sandi"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="bg-white border border-[#D5D2C9] focus:border-[#0F4C3A] focus:outline-none focus:ring-2 focus:ring-[#0F4C3A]/15 rounded-xl text-[#14211D] px-3.5 py-2.5 sm:py-3 w-full pr-11 text-sm placeholder-[#4A5550]/40 transition-colors"
+                    className="bg-[#FCFCFA] border border-[#EAE7DF] focus:border-[#08261E] focus:outline-none focus:ring-1 focus:ring-[#08261E] rounded-2xl text-[#111827] px-4 py-3 w-full pr-11 text-xs placeholder-[#64748B]/40 transition-all font-medium"
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword((v) => !v)}
-                    className="absolute right-3.5 top-1/2 -translate-y-1/2 text-[#4A5550] hover:text-[#14211D] transition-colors p-1"
+                    className="absolute right-3.5 top-1/2 -translate-y-1/2 text-[#64748B] hover:text-[#08261E] transition-colors p-1"
                     title={showPassword ? 'Sembunyikan' : 'Tampilkan'}
                   >
                     {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
@@ -154,52 +156,52 @@ export default function LoginPage() {
               <button
                 type="submit"
                 disabled={loading}
-                className="bg-[#0F4C3A] hover:bg-[#0A3629] text-white rounded-xl px-6 py-3 font-semibold text-sm w-full flex items-center justify-center gap-2 transition-all shadow-xs disabled:opacity-60 cursor-pointer mt-2"
+                className="bg-[#08261E] hover:bg-[#0D3B2E] text-[#F5E4BE] rounded-full px-6 py-3.5 font-semibold text-xs w-full flex items-center justify-center gap-2 transition-all shadow-lg shadow-[#08261E]/15 disabled:opacity-50 border border-[#C5A059]/40 cursor-pointer mt-3"
               >
                 {loading ? (
                   <>
-                    <Loader2 className="w-4 h-4 animate-spin" />
-                    Memverifikasi...
+                    <Loader2 className="w-4 h-4 animate-spin text-[#C5A059]" />
+                    Memverifikasi Kredensial...
                   </>
                 ) : (
-                  'Masuk'
+                  'Masuk ke Akun'
                 )}
               </button>
             </form>
 
             {/* Quick Demo Credentials */}
             {import.meta.env.VITE_ENABLE_DEMO_LOGIN === 'true' && import.meta.env.MODE !== 'production' && (
-              <div className="mt-5 pt-4 border-t border-[#E6E4DD]">
-                <div className="flex items-center gap-1.5 text-xs font-semibold text-[#4A5550] mb-2.5">
-                  <Sparkles className="w-3.5 h-3.5 text-[#D97736]" />
+              <div className="mt-6 pt-5 border-t border-[#EAE7DF]/70">
+                <div className="flex items-center gap-1.5 text-[11px] font-bold text-[#64748B] mb-3">
+                  <Sparkles className="w-3.5 h-3.5 text-[#C5A059]" />
                   <span>Akses Cepat Demo Pengujian</span>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                   <button
                     type="button"
                     onClick={() => fillDemo('admin@jelajahtrip.com', 'admin123')}
-                    className="flex items-center gap-2.5 p-2 rounded-xl bg-[#F7F6F2] hover:bg-[#EBF4F0] border border-[#E6E4DD] hover:border-[#0F4C3A]/30 transition-all text-left cursor-pointer group"
+                    className="flex items-center gap-2.5 p-2.5 rounded-2xl bg-[#FCFCFA] hover:bg-[#F4F0E8] border border-[#EAE7DF] hover:border-[#08261E]/30 transition-all text-left cursor-pointer group"
                   >
-                    <div className="w-7 h-7 rounded-lg bg-[#0F4C3A]/10 text-[#0F4C3A] flex items-center justify-center shrink-0">
-                      <Shield className="w-3.5 h-3.5" />
+                    <div className="w-7 h-7 rounded-xl bg-[#08261E]/10 text-[#08261E] flex items-center justify-center shrink-0">
+                      <Shield className="w-3.5 h-3.5 text-[#C5A059]" />
                     </div>
                     <div className="min-w-0 flex-1">
-                      <p className="text-[11px] font-bold text-[#14211D]">Akun Admin</p>
-                      <p className="text-[10px] text-[#4A5550] truncate">admin@jelajahtrip.com</p>
+                      <p className="text-[11px] font-bold text-[#08261E]">Akun Admin</p>
+                      <p className="text-[10px] text-[#64748B] truncate">admin@jelajahtrip.com</p>
                     </div>
                   </button>
 
                   <button
                     type="button"
                     onClick={() => fillDemo('budi@example.com', 'password123')}
-                    className="flex items-center gap-2.5 p-2 rounded-xl bg-[#F7F6F2] hover:bg-[#EBF4F0] border border-[#E6E4DD] hover:border-[#0F4C3A]/30 transition-all text-left cursor-pointer group"
+                    className="flex items-center gap-2.5 p-2.5 rounded-2xl bg-[#FCFCFA] hover:bg-[#F4F0E8] border border-[#EAE7DF] hover:border-[#08261E]/30 transition-all text-left cursor-pointer group"
                   >
-                    <div className="w-7 h-7 rounded-lg bg-[#0F4C3A]/10 text-[#0F4C3A] flex items-center justify-center shrink-0">
-                      <User className="w-3.5 h-3.5" />
+                    <div className="w-7 h-7 rounded-xl bg-[#08261E]/10 text-[#08261E] flex items-center justify-center shrink-0">
+                      <User className="w-3.5 h-3.5 text-[#C5A059]" />
                     </div>
                     <div className="min-w-0 flex-1">
-                      <p className="text-[11px] font-bold text-[#14211D]">Akun Customer</p>
-                      <p className="text-[10px] text-[#4A5550] truncate">budi@example.com</p>
+                      <p className="text-[11px] font-bold text-[#08261E]">Akun Customer</p>
+                      <p className="text-[10px] text-[#64748B] truncate">budi@example.com</p>
                     </div>
                   </button>
                 </div>
@@ -207,9 +209,9 @@ export default function LoginPage() {
             )}
 
             {/* Register link */}
-            <p className="text-center text-xs text-[#4A5550] mt-6">
-              Belum punya akun?{' '}
-              <Link to="/register" className="font-semibold text-[#0F4C3A] hover:underline underline-offset-2">
+            <p className="text-center text-xs text-[#64748B] mt-6">
+              Belum memiliki akun?{' '}
+              <Link to="/register" className="font-semibold text-[#08261E] hover:text-[#C5A059] transition-colors">
                 Daftar sekarang
               </Link>
             </p>

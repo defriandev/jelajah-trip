@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Loader2 } from 'lucide-react';
+import { Loader2, Sparkles, ArrowRight } from 'lucide-react';
 import { bookingService } from '../../services/api';
 import { validateIndonesianPhone } from '../../utils/validation';
 
@@ -42,11 +42,11 @@ export default function BookingForm({ trip, user, onSuccess, onFormChange }) {
     const newErrors = {};
 
     if (!formData.customer_name.trim()) {
-      newErrors.customer_name = 'Nama lengkap wajib diisi.';
+      newErrors.customer_name = 'Nama lengkap pemesan wajib diisi.';
     }
 
     if (!formData.customer_email.trim()) {
-      newErrors.customer_email = 'Email wajib diisi.';
+      newErrors.customer_email = 'Alamat email wajib diisi.';
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.customer_email)) {
       newErrors.customer_email = 'Format email tidak valid.';
     }
@@ -64,7 +64,7 @@ export default function BookingForm({ trip, user, onSuccess, onFormChange }) {
     if (!formData.pax || formData.pax < 1) {
       newErrors.pax = 'Jumlah peserta minimal 1 orang.';
     } else if (trip?.quota && formData.pax > trip.quota) {
-      newErrors.pax = `Jumlah peserta melebihi kuota tersedia (${trip.quota}).`;
+      newErrors.pax = `Jumlah peserta melebihi sisa kuota (${trip.quota}).`;
     }
 
     return newErrors;
@@ -76,18 +76,18 @@ export default function BookingForm({ trip, user, onSuccess, onFormChange }) {
       ...prev,
       [name]: name === 'pax' ? Number(value) : value,
     }));
-    // Clear field error on change
     if (errors[name]) {
       setErrors((prev) => ({ ...prev, [name]: undefined }));
     }
   };
 
-  const handlePaxStep = (delta) => {
-    setFormData((prev) => {
-      const next = Math.max(1, Math.min(trip?.quota || 99, prev.pax + delta));
-      return { ...prev, pax: next };
-    });
-    if (errors.pax) setErrors((prev) => ({ ...prev, pax: undefined }));
+  const handlePaxStep = (step) => {
+    const nextPax = Math.max(1, (formData.pax || 1) + step);
+    if (trip?.quota && nextPax > trip.quota) return;
+    setFormData((prev) => ({ ...prev, pax: nextPax }));
+    if (errors.pax) {
+      setErrors((prev) => ({ ...prev, pax: undefined }));
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -118,7 +118,7 @@ export default function BookingForm({ trip, user, onSuccess, onFormChange }) {
         setSubmitError(res.message || 'Gagal membuat pesanan. Coba lagi.');
       }
     } catch (err) {
-      setSubmitError(err.message || 'Terjadi kesalahan. Silakan coba lagi.');
+      setSubmitError(err.message || 'Terjadi kesalahan sistem. Silakan coba lagi.');
     } finally {
       setIsSubmitting(false);
     }
@@ -128,20 +128,23 @@ export default function BookingForm({ trip, user, onSuccess, onFormChange }) {
     <form
       onSubmit={handleSubmit}
       noValidate
-      className="bg-white border border-[#E6E4DD] rounded-2xl p-6 space-y-6"
+      className="bg-white/95 backdrop-blur-xl border border-[#EAE7DF] rounded-3xl p-7 sm:p-8 space-y-6 shadow-xs"
     >
       {/* Section header */}
       <div>
-        <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#D97736] mb-1">LANGKAH 1</p>
-        <h2 className="text-xl font-display font-bold tracking-[-0.03em] text-[#14211D]">Data Pemesan</h2>
-        <p className="text-sm leading-[1.65] text-[#4A5550] mt-1">
-          Pastikan kontak aktif untuk pengiriman voucher dan konfirmasi jadwal via WhatsApp.
+        <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-[#C5A059] mb-1.5">
+          <Sparkles className="w-3.5 h-3.5 text-[#C5A059]" />
+          <span>Langkah 1 Dari 2</span>
+        </div>
+        <h2 className="font-serif text-2xl font-bold text-[#08261E]">Data Pemesan & Jadwal</h2>
+        <p className="text-xs text-[#64748B] mt-1 font-light">
+          Pastikan kontak aktif untuk pengiriman voucher resmi dan koordinasi pemandu via WhatsApp.
         </p>
       </div>
 
       {/* Global submit error */}
       {submitError && (
-        <div className="bg-rose-50 border border-rose-200 text-rose-700 text-sm rounded-xl p-3">
+        <div className="bg-rose-50 border border-rose-200 text-rose-700 text-xs rounded-2xl p-4">
           {submitError}
         </div>
       )}
@@ -149,8 +152,8 @@ export default function BookingForm({ trip, user, onSuccess, onFormChange }) {
       <div className="space-y-5">
         {/* Nama Lengkap */}
         <div>
-          <label className="block text-sm font-medium text-[#14211D] mb-1">
-            Nama Lengkap <span className="text-rose-500">*</span>
+          <label className="block text-xs font-semibold text-[#08261E] mb-1.5">
+            Nama Lengkap Sesuai KTP/Paspor <span className="text-rose-500">*</span>
           </label>
           <input
             type="text"
@@ -158,35 +161,35 @@ export default function BookingForm({ trip, user, onSuccess, onFormChange }) {
             placeholder="Contoh: Budi Santoso"
             value={formData.customer_name}
             onChange={handleChange}
-            className="bg-[#FAF9F6] border border-[#E6E4DD] focus:border-[#0F4C3A] focus:outline-none focus:ring-1 focus:ring-[#0F4C3A] rounded-xl text-[#14211D] px-4 py-3 w-full text-sm placeholder:text-[#4A5550]/50 transition-colors"
+            className="bg-[#FCFCFA] border border-[#EAE7DF] focus:border-[#08261E] focus:outline-none focus:ring-1 focus:ring-[#08261E] rounded-2xl text-[#111827] px-4 py-3 w-full text-xs placeholder:text-[#64748B]/40 transition-all font-medium"
           />
           {errors.customer_name && (
-            <p className="text-sm text-rose-600 mt-1">{errors.customer_name}</p>
+            <p className="text-xs text-rose-600 mt-1">{errors.customer_name}</p>
           )}
         </div>
 
         {/* Email */}
         <div>
-          <label className="block text-sm font-medium text-[#14211D] mb-1">
-            Email <span className="text-rose-500">*</span>
+          <label className="block text-xs font-semibold text-[#08261E] mb-1.5">
+            Alamat Email Aktif <span className="text-rose-500">*</span>
           </label>
           <input
             type="email"
             name="customer_email"
-            placeholder="Contoh: budi@gmail.com"
+            placeholder="Contoh: budi@example.com"
             value={formData.customer_email}
             onChange={handleChange}
-            className="bg-[#FAF9F6] border border-[#E6E4DD] focus:border-[#0F4C3A] focus:outline-none focus:ring-1 focus:ring-[#0F4C3A] rounded-xl text-[#14211D] px-4 py-3 w-full text-sm placeholder:text-[#4A5550]/50 transition-colors"
+            className="bg-[#FCFCFA] border border-[#EAE7DF] focus:border-[#08261E] focus:outline-none focus:ring-1 focus:ring-[#08261E] rounded-2xl text-[#111827] px-4 py-3 w-full text-xs placeholder:text-[#64748B]/40 transition-all font-medium"
           />
           {errors.customer_email && (
-            <p className="text-sm text-rose-600 mt-1">{errors.customer_email}</p>
+            <p className="text-xs text-rose-600 mt-1">{errors.customer_email}</p>
           )}
         </div>
 
         {/* No. WhatsApp */}
         <div>
-          <label className="block text-sm font-medium text-[#14211D] mb-1">
-            No. WhatsApp <span className="text-rose-500">*</span>
+          <label className="block text-xs font-semibold text-[#08261E] mb-1.5">
+            Nomor WhatsApp Aktif <span className="text-rose-500">*</span>
           </label>
           <input
             type="tel"
@@ -194,13 +197,13 @@ export default function BookingForm({ trip, user, onSuccess, onFormChange }) {
             placeholder="Contoh: 081234567890"
             value={formData.customer_phone}
             onChange={handleChange}
-            className="bg-[#FAF9F6] border border-[#E6E4DD] focus:border-[#0F4C3A] focus:outline-none focus:ring-1 focus:ring-[#0F4C3A] rounded-xl text-[#14211D] px-4 py-3 w-full text-sm placeholder:text-[#4A5550]/50 transition-colors"
+            className="bg-[#FCFCFA] border border-[#EAE7DF] focus:border-[#08261E] focus:outline-none focus:ring-1 focus:ring-[#08261E] rounded-2xl text-[#111827] px-4 py-3 w-full text-xs placeholder:text-[#64748B]/40 transition-all font-medium"
           />
           {errors.customer_phone ? (
-            <p className="text-sm text-rose-600 mt-1">{errors.customer_phone}</p>
+            <p className="text-xs text-rose-600 mt-1">{errors.customer_phone}</p>
           ) : (
-            <p className="text-xs text-[#4A5550]/70 mt-1">
-              Nomor ini digunakan tim pemandu untuk membuat grup koordinasi keberangkatan.
+            <p className="text-[11px] text-[#64748B]/70 mt-1">
+              Nomor ini digunakan tim kurator untuk membuat grup koordinasi penjemputan bandara.
             </p>
           )}
         </div>
@@ -209,7 +212,7 @@ export default function BookingForm({ trip, user, onSuccess, onFormChange }) {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {/* Tanggal Keberangkatan */}
           <div>
-            <label className="block text-sm font-medium text-[#14211D] mb-1">
+            <label className="block text-xs font-semibold text-[#08261E] mb-1.5">
               Tanggal Keberangkatan <span className="text-rose-500">*</span>
             </label>
             <input
@@ -218,64 +221,67 @@ export default function BookingForm({ trip, user, onSuccess, onFormChange }) {
               min={minDate}
               value={formData.travel_date}
               onChange={handleChange}
-              className="bg-[#FAF9F6] border border-[#E6E4DD] focus:border-[#0F4C3A] focus:outline-none focus:ring-1 focus:ring-[#0F4C3A] rounded-xl text-[#14211D] px-4 py-3 w-full text-sm transition-colors"
+              className="bg-[#FCFCFA] border border-[#EAE7DF] focus:border-[#08261E] focus:outline-none focus:ring-1 focus:ring-[#08261E] rounded-2xl text-[#111827] px-4 py-3 w-full text-xs transition-all font-medium cursor-pointer"
             />
             {errors.travel_date && (
-              <p className="text-sm text-rose-600 mt-1">{errors.travel_date}</p>
+              <p className="text-xs text-rose-600 mt-1">{errors.travel_date}</p>
             )}
           </div>
 
           {/* Jumlah Pax */}
           <div>
-            <label className="block text-sm font-medium text-[#14211D] mb-1">
-              Jumlah Pax <span className="text-rose-500">*</span>
+            <label className="block text-xs font-semibold text-[#08261E] mb-1.5">
+              Jumlah Peserta (Pax) <span className="text-rose-500">*</span>
             </label>
             <div className="flex items-center gap-2">
               <button
                 type="button"
                 onClick={() => handlePaxStep(-1)}
                 disabled={formData.pax <= 1}
-                className="w-11 h-11 flex items-center justify-center rounded-xl bg-[#FAF9F6] border border-[#E6E4DD] text-[#14211D] text-lg font-bold hover:bg-[#F0EDE6] disabled:opacity-40 transition-colors"
+                className="w-12 h-11 flex items-center justify-center rounded-2xl bg-[#FCFCFA] border border-[#EAE7DF] text-[#08261E] text-base font-bold hover:bg-[#F4F0E8] disabled:opacity-30 transition-colors shadow-2xs"
               >
                 −
               </button>
-              <div className="flex-1 py-3 text-center bg-[#FAF9F6] border border-[#E6E4DD] rounded-xl font-semibold text-[#14211D] text-sm tabular-nums select-none">
-                {formData.pax} Pax
+              <div className="flex-1 py-3 text-center bg-[#FCFCFA] border border-[#EAE7DF] rounded-2xl font-bold text-[#08261E] text-xs tabular-nums select-none shadow-2xs">
+                {formData.pax} Peserta
               </div>
               <button
                 type="button"
                 onClick={() => handlePaxStep(1)}
                 disabled={trip?.quota ? formData.pax >= trip.quota : false}
-                className="w-11 h-11 flex items-center justify-center rounded-xl bg-[#FAF9F6] border border-[#E6E4DD] text-[#14211D] text-lg font-bold hover:bg-[#F0EDE6] disabled:opacity-40 transition-colors"
+                className="w-12 h-11 flex items-center justify-center rounded-2xl bg-[#FCFCFA] border border-[#EAE7DF] text-[#08261E] text-base font-bold hover:bg-[#F4F0E8] disabled:opacity-30 transition-colors shadow-2xs"
               >
                 +
               </button>
             </div>
             {errors.pax && (
-              <p className="text-sm text-rose-600 mt-1">{errors.pax}</p>
+              <p className="text-xs text-rose-600 mt-1">{errors.pax}</p>
             )}
           </div>
         </div>
       </div>
 
       {/* Info note */}
-      <div className="bg-[#F4F2EC] border border-[#E6E4DD] rounded-xl p-4 text-sm leading-[1.65] text-[#4A5550]">
-        Pesanan Anda tersimpan dengan status <strong className="text-[#14211D]">Pending</strong>. Lakukan pembayaran via Transfer Bank / QRIS dan lacak perkembangannya di halaman <strong className="text-[#14211D]">Cek Pesanan</strong>.
+      <div className="bg-[#08261E]/5 border border-[#08261E]/12 rounded-2xl p-4 text-xs leading-relaxed text-[#64748B]">
+        Pesanan Anda disimpan dengan status <strong className="text-[#08261E]">Pending</strong>. Anda dapat melakukan pembayaran via Transfer Bank / QRIS dan melacak seluruh riwayat di menu <strong className="text-[#08261E]">Cek Pesanan</strong>.
       </div>
 
       {/* Submit button */}
       <button
         type="submit"
         disabled={isSubmitting}
-        className="w-full flex items-center justify-center gap-2 bg-[#0F4C3A] hover:bg-[#0A3629] disabled:opacity-60 disabled:cursor-not-allowed text-white rounded-xl px-6 py-3.5 font-semibold text-sm transition-colors"
+        className="w-full flex items-center justify-center gap-2 bg-[#08261E] hover:bg-[#0D3B2E] disabled:opacity-50 text-[#F5E4BE] rounded-full px-6 py-4 font-semibold text-xs transition-all shadow-xl shadow-[#08261E]/20 border border-[#C5A059]/40 cursor-pointer"
       >
         {isSubmitting ? (
           <>
-            <Loader2 className="w-4 h-4 animate-spin" />
-            Memproses…
+            <Loader2 className="w-4 h-4 animate-spin text-[#C5A059]" />
+            Memproses Reservasi Anda…
           </>
         ) : (
-          'Konfirmasi & Buat Pesanan'
+          <>
+            <span>Konfirmasi & Terbitkan Kode Booking</span>
+            <ArrowRight className="w-4 h-4 text-[#C5A059]" />
+          </>
         )}
       </button>
     </form>

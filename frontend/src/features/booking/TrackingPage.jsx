@@ -2,23 +2,23 @@ import React, { useState, useEffect } from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
 import {
   Search, MapPin, Calendar, Users, Phone, Mail,
-  CheckCircle, Clock, MessageCircle, ArrowRight, Loader2, AlertCircle, ShieldCheck
+  CheckCircle, Clock, MessageCircle, ArrowRight, Loader2, AlertCircle, ShieldCheck, Sparkles
 } from 'lucide-react';
 import { bookingService } from '../../services/api';
 
 /* ─── Status helpers ──────────────────────────────────────────────── */
 const STATUS_BADGE = {
-  pending: 'bg-amber-50 text-amber-700 border border-amber-200',
-  confirmed: 'bg-emerald-50 text-[#0F4C3A] border border-emerald-200',
-  cancelled: 'bg-rose-50 text-rose-700 border border-rose-200',
-  completed: 'bg-blue-50 text-blue-700 border border-blue-200',
+  pending: 'bg-amber-50 text-amber-800 border border-amber-200/80',
+  confirmed: 'bg-[#08261E]/8 text-[#08261E] border border-[#08261E]/20',
+  cancelled: 'bg-rose-50 text-rose-700 border border-rose-200/80',
+  completed: 'bg-blue-50 text-blue-700 border border-blue-200/80',
 };
 
 const STATUS_LABEL = {
-  pending: 'Menunggu Verifikasi',
-  confirmed: 'Terkonfirmasi',
+  pending: 'Menunggu Verifikasi Pembayaran',
+  confirmed: 'Jadwal Terkonfirmasi (Siap Berangkat)',
   cancelled: 'Dibatalkan',
-  completed: 'Selesai',
+  completed: 'Perjalanan Selesai',
 };
 
 /* ─── Timeline step definitions ──────────────────────────────────── */
@@ -29,17 +29,15 @@ const STEPS = [
   { key: 'done',      label: 'Selesai' },
 ];
 
-/** Returns 0-based index of the "current" active step given booking status */
 function activeStepIndex(status) {
   switch (status) {
     case 'confirmed':  return 1;
     case 'completed':  return 3;
-    case 'cancelled':  return -1; // show nothing active
-    default:           return 0;  // pending
+    case 'cancelled':  return -1;
+    default:           return 0; // pending
   }
 }
 
-/* ─── Formatting ─────────────────────────────────────────────────── */
 const formatIDR = (num) =>
   new Intl.NumberFormat('id-ID', {
     style: 'currency',
@@ -47,7 +45,6 @@ const formatIDR = (num) =>
     maximumFractionDigits: 0,
   }).format(num);
 
-/* ═══════════════════════════════════════════════════════════════════ */
 export default function TrackingPage() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [bookingCode, setBookingCode] = useState(searchParams.get('code') || '');
@@ -83,7 +80,6 @@ export default function TrackingPage() {
     }
   };
 
-  /* Auto-trigger if ?code= and ?verification= are present in URL */
   useEffect(() => {
     const initialCode = searchParams.get('code');
     const initialVerif = searchParams.get('verification');
@@ -92,7 +88,6 @@ export default function TrackingPage() {
       setVerification(initialVerif);
       fetchTracking(initialCode, initialVerif);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleSearchSubmit = (e) => {
@@ -103,76 +98,77 @@ export default function TrackingPage() {
   const stepIdx = booking ? activeStepIndex(booking.status) : -1;
 
   return (
-    <div className="min-h-screen bg-[#FAF9F6] py-16 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-[#FCFCFA] py-16 px-4 sm:px-6 lg:px-8">
       <div className="max-w-4xl mx-auto space-y-10">
 
         {/* ── Hero ─────────────────────────────────────────────────── */}
         <div className="text-center max-w-2xl mx-auto space-y-3">
-          <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#D97736]">
-            Lacak Pesanan
-          </p>
-          <h1 className="font-display font-bold tracking-[-0.03em] text-[#14211D] text-3xl sm:text-4xl">
-            Cek Status Pesanan Anda
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white border border-[#C5A059]/30 text-[11px] font-semibold text-[#08261E] tracking-wider uppercase shadow-2xs">
+            <Sparkles className="w-3 h-3 text-[#C5A059]" />
+            Lacak Status Reservasi
+          </div>
+          <h1 className="font-serif text-3xl sm:text-5xl font-normal text-[#08261E]">
+            Pantau Perjalanan Anda
           </h1>
-          <p className="leading-[1.65] text-[#4A5550] text-sm">
-            Masukkan kode pemesanan dan verifikasi keamanan (email atau 4 digit terakhir nomor telepon) untuk memantau status voucher perjalanan Anda.
+          <p className="leading-relaxed text-[#64748B] text-xs sm:text-sm max-w-xl mx-auto font-light">
+            Masukkan kode pemesanan resmi dan verifikasi keamanan (email atau 4 digit terakhir nomor WhatsApp) untuk memantau status konfirmasi tiket Anda.
           </p>
         </div>
 
         {/* ── Search card ──────────────────────────────────────────── */}
-        <div className="max-w-lg mx-auto bg-white border border-[#E6E4DD] rounded-2xl p-6 shadow-sm">
-          <form onSubmit={handleSearchSubmit} className="space-y-4">
+        <div className="max-w-xl mx-auto bg-white/95 backdrop-blur-xl border border-[#EAE7DF] rounded-3xl p-7 sm:p-8 shadow-xl shadow-[#08261E]/4">
+          <form onSubmit={handleSearchSubmit} className="space-y-5">
             <div>
-              <label className="block text-xs font-semibold text-[#14211D] mb-1.5 uppercase tracking-wider">
-                Kode Pemesanan
+              <label className="block text-[11px] font-bold text-[#08261E] mb-2 uppercase tracking-wider">
+                Kode Pemesanan Resmi
               </label>
               <div className="relative">
-                <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#4A5550]" />
+                <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#C5A059]" />
                 <input
                   type="text"
                   value={bookingCode}
                   onChange={(e) => setBookingCode(e.target.value.toUpperCase())}
                   placeholder="TRIP-20261118-XXXXXXXX"
                   required
-                  className="w-full pl-11 pr-4 py-3 bg-[#FAF9F6] border border-[#E6E4DD] focus:border-[#0F4C3A] focus:outline-none focus:ring-1 focus:ring-[#0F4C3A] rounded-xl text-[#14211D] font-mono text-sm uppercase tracking-widest placeholder-[#4A5550]/40 transition"
+                  className="w-full pl-11 pr-4 py-3 bg-[#FCFCFA] border border-[#EAE7DF] focus:border-[#08261E] focus:outline-none focus:ring-1 focus:ring-[#08261E] rounded-2xl text-[#08261E] font-mono text-xs uppercase tracking-widest placeholder-[#64748B]/40 transition"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-[#14211D] mb-1.5 uppercase tracking-wider">
+              <label className="block text-[11px] font-bold text-[#08261E] mb-2 uppercase tracking-wider">
                 Verifikasi Pemesan (Email / 4 Digit No. HP)
               </label>
               <div className="relative">
-                <ShieldCheck className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#4A5550]" />
+                <ShieldCheck className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#C5A059]" />
                 <input
                   type="text"
                   value={verification}
                   onChange={(e) => setVerification(e.target.value)}
                   placeholder="Contoh: budi@gmail.com atau 7890"
                   required
-                  className="w-full pl-11 pr-4 py-3 bg-[#FAF9F6] border border-[#E6E4DD] focus:border-[#0F4C3A] focus:outline-none focus:ring-1 focus:ring-[#0F4C3A] rounded-xl text-[#14211D] text-sm placeholder-[#4A5550]/40 transition"
+                  className="w-full pl-11 pr-4 py-3 bg-[#FCFCFA] border border-[#EAE7DF] focus:border-[#08261E] focus:outline-none focus:ring-1 focus:ring-[#08261E] rounded-2xl text-[#111827] text-xs placeholder-[#64748B]/40 transition"
                 />
               </div>
-              <p className="text-[11px] text-[#4A5550]/70 mt-1">
-                *Demi privasi transaksi, masukkan email pemesan atau 4 digit terakhir nomor telepon pemesan.
+              <p className="text-[11px] text-[#64748B]/70 mt-1.5">
+                *Demi privasi transaksi, masukkan alamat email atau 4 digit nomor telepon saat pemesanan.
               </p>
             </div>
 
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-[#0F4C3A] hover:bg-[#0A3629] disabled:opacity-60 text-white rounded-xl px-6 py-3.5 font-semibold text-sm flex items-center justify-center gap-2 transition-colors mt-2"
+              className="w-full bg-[#08261E] hover:bg-[#0D3B2E] disabled:opacity-50 text-[#F5E4BE] rounded-full px-6 py-4 font-semibold text-xs flex items-center justify-center gap-2 transition-all shadow-lg shadow-[#08261E]/15 border border-[#C5A059]/40 mt-3 cursor-pointer"
             >
               {loading ? (
                 <>
-                  <Loader2 className="w-4 h-4 animate-spin" />
-                  Memverifikasi & Mencari…
+                  <Loader2 className="w-4 h-4 animate-spin text-[#C5A059]" />
+                  Memverifikasi Data…
                 </>
               ) : (
                 <>
-                  <Search className="w-4 h-4" />
-                  Lacak Pesanan
+                  <Search className="w-4 h-4 text-[#C5A059]" />
+                  Lacak Status Pemesanan
                 </>
               )}
             </button>
@@ -180,63 +176,56 @@ export default function TrackingPage() {
         </div>
 
         {/* ── States ───────────────────────────────────────────────── */}
-
-        {/* Not searched yet */}
         {!searched && !loading && (
           <div className="flex flex-col items-center gap-4 py-12 text-center">
-            <Search className="w-20 h-20 text-[#E6E4DD]" strokeWidth={1.2} />
-            <p className="text-sm text-[#4A5550]/60">
-              Hasil pencarian akan muncul di sini.
+            <div className="w-16 h-16 rounded-full bg-white border border-[#EAE7DF] flex items-center justify-center text-[#C5A059] shadow-xs">
+              <Search className="w-7 h-7" strokeWidth={1.5} />
+            </div>
+            <p className="text-xs text-[#64748B]">
+              Masukkan kode pesanan Anda di atas untuk melihat detail perjalanan.
             </p>
           </div>
         )}
 
         {/* Loading skeleton */}
         {loading && (
-          <div className="bg-white border border-[#E6E4DD] rounded-2xl p-6 md:p-8 space-y-5 animate-pulse">
+          <div className="bg-white border border-[#EAE7DF] rounded-3xl p-8 space-y-6 animate-pulse shadow-sm">
             <div className="flex items-center justify-between">
-              <div className="h-5 w-48 bg-[#E6E4DD] rounded-lg" />
-              <div className="h-6 w-24 bg-[#E6E4DD] rounded-full" />
+              <div className="h-6 w-48 bg-[#EAE7DF] rounded-full" />
+              <div className="h-7 w-28 bg-[#EAE7DF] rounded-full" />
             </div>
-            <div className="h-px bg-[#E6E4DD]" />
+            <div className="h-px bg-[#EAE7DF]" />
             <div className="space-y-3">
-              <div className="h-4 w-3/4 bg-[#E6E4DD] rounded" />
-              <div className="h-4 w-1/2 bg-[#E6E4DD] rounded" />
-              <div className="h-4 w-2/3 bg-[#E6E4DD] rounded" />
-            </div>
-            <div className="h-px bg-[#E6E4DD]" />
-            <div className="grid grid-cols-2 gap-4">
-              {[...Array(4)].map((_, i) => (
-                <div key={i} className="h-4 bg-[#E6E4DD] rounded" />
-              ))}
+              <div className="h-5 w-3/4 bg-[#EAE7DF] rounded-lg" />
+              <div className="h-4 w-1/2 bg-[#EAE7DF] rounded-lg" />
             </div>
           </div>
         )}
 
         {/* Error */}
         {error && !loading && (
-          <div className="max-w-lg mx-auto bg-rose-50 border border-rose-200 rounded-2xl p-6 flex items-start gap-3">
-            <AlertCircle className="w-5 h-5 text-rose-500 flex-shrink-0 mt-0.5" />
-            <p className="text-sm text-rose-700 leading-[1.65]">{error}</p>
+          <div className="max-w-xl mx-auto bg-rose-50 border border-rose-200 rounded-3xl p-6 flex items-start gap-3.5 shadow-xs">
+            <AlertCircle className="w-5 h-5 text-rose-500 shrink-0 mt-0.5" />
+            <p className="text-xs text-rose-700 leading-relaxed font-medium">{error}</p>
           </div>
         )}
 
         {/* ── Result card ──────────────────────────────────────────── */}
         {booking && !loading && (
-          <div className="bg-white border border-[#E6E4DD] rounded-2xl p-6 md:p-8 space-y-7">
+          <div className="bg-white/95 backdrop-blur-xl border border-[#EAE7DF] rounded-3xl p-7 sm:p-10 space-y-8 shadow-xl shadow-[#08261E]/4">
 
             {/* Header: code + status */}
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div className="space-y-1">
-                <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#4A5550]">
+                <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#C5A059]">
                   Kode Pemesanan
                 </p>
-                <span className="font-mono text-sm bg-[#F4F2EC] rounded-lg px-3 py-1 text-[#14211D] font-semibold tracking-widest">
+                <span className="font-mono text-base bg-[#FCFCFA] rounded-full px-4 py-1.5 text-[#08261E] font-bold tracking-widest border border-[#EAE7DF] inline-block shadow-2xs">
                   {booking.booking_code}
                 </span>
                 {booking.created_at && (
-                  <p className="text-xs text-[#4A5550]/60 pt-0.5">
-                    Dipesan pada{' '}
+                  <p className="text-[11px] text-[#64748B] pt-1">
+                    Diterbitkan pada{' '}
                     {new Date(booking.created_at).toLocaleString('id-ID', {
                       dateStyle: 'long',
                       timeStyle: 'short',
@@ -245,7 +234,7 @@ export default function TrackingPage() {
                 )}
               </div>
               <span
-                className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold self-start ${
+                className={`inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-semibold self-start shadow-2xs ${
                   STATUS_BADGE[booking.status] ?? STATUS_BADGE.pending
                 }`}
               >
@@ -258,74 +247,62 @@ export default function TrackingPage() {
 
             {/* Trip info */}
             {booking.trip && (
-              <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#D97736] mb-3">
-                  Detail Perjalanan
+              <div className="bg-[#FCFCFA] p-6 rounded-3xl border border-[#EAE7DF]">
+                <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#C5A059] mb-2">
+                  Detail Ekspedisi
                 </p>
-                <div className="space-y-1.5">
-                  <h3 className="font-display font-bold tracking-[-0.03em] text-[#14211D] text-lg">
+                <div className="space-y-2">
+                  <h3 className="font-serif text-xl font-bold text-[#08261E]">
                     {booking.trip.title}
                   </h3>
-                  <div className="flex items-center gap-1.5 text-sm text-[#4A5550]">
-                    <MapPin className="w-4 h-4 flex-shrink-0 text-[#D97736]" />
-                    <span>{booking.trip.destination}</span>
-                  </div>
-                  <div className="flex items-center gap-1.5 text-sm text-[#4A5550]">
-                    <Calendar className="w-4 h-4 flex-shrink-0 text-[#D97736]" />
-                    <span>{booking.travel_date}</span>
+                  <div className="flex flex-wrap items-center gap-4 text-xs text-[#64748B] pt-1">
+                    <span className="flex items-center gap-1.5">
+                      <MapPin className="w-3.5 h-3.5 text-[#C5A059]" />
+                      {booking.trip.destination}
+                    </span>
+                    <span className="flex items-center gap-1.5">
+                      <Calendar className="w-3.5 h-3.5 text-[#C5A059]" />
+                      {booking.travel_date}
+                    </span>
+                    <span className="flex items-center gap-1.5">
+                      <Users className="w-3.5 h-3.5 text-[#C5A059]" />
+                      {booking.pax} Peserta (Pax)
+                    </span>
                   </div>
                 </div>
               </div>
             )}
 
-            <hr className="border-[#E6E4DD]" />
+            {/* Customer & Payment info */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-2">
+              <div className="space-y-2">
+                <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#C5A059]">
+                  Informasi Pemesan
+                </p>
+                <div className="text-xs text-[#64748B] space-y-1.5">
+                  <p><strong className="text-[#08261E]">{booking.customer_name}</strong></p>
+                  <p>{booking.customer_email}</p>
+                  <p>{booking.customer_phone}</p>
+                </div>
+              </div>
 
-            {/* Customer info */}
-            <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#D97736] mb-3">
-                Informasi Pemesan
-              </p>
-              <ul className="space-y-2 text-sm text-[#4A5550]">
-                <li className="flex items-center gap-2">
-                  <Users className="w-4 h-4 flex-shrink-0 text-[#4A5550]/50" />
-                  <span className="font-medium text-[#14211D]">{booking.customer_name}</span>
-                </li>
-                <li className="flex items-center gap-2">
-                  <Mail className="w-4 h-4 flex-shrink-0 text-[#4A5550]/50" />
-                  <span>{booking.customer_email}</span>
-                </li>
-                <li className="flex items-center gap-2">
-                  <Phone className="w-4 h-4 flex-shrink-0 text-[#4A5550]/50" />
-                  <span>{booking.customer_phone}</span>
-                </li>
-                <li className="flex items-center gap-2">
-                  <Users className="w-4 h-4 flex-shrink-0 text-[#4A5550]/50" />
-                  <span>
-                    Jumlah Orang:{' '}
-                    <span className="font-semibold text-[#14211D] tabular-nums">
-                      {booking.pax} Pax
-                    </span>
-                  </span>
-                </li>
-              </ul>
+              <div className="space-y-2 sm:text-right">
+                <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#C5A059]">
+                  Total Biaya All-Inclusive
+                </p>
+                <p className="text-2xl font-extrabold tabular-nums text-[#08261E] font-sans">
+                  {formatIDR(booking.total_price)}
+                </p>
+                <p className="text-[11px] text-[#64748B]">Termasuk PPN, Guide & Asuransi</p>
+              </div>
             </div>
 
-            <hr className="border-[#E6E4DD]" />
-
-            {/* Total price */}
-            <div className="flex items-center justify-between">
-              <p className="text-sm text-[#4A5550]">Total Pembayaran</p>
-              <p className="text-2xl font-bold tabular-nums text-[#14211D]">
-                {formatIDR(booking.total_price)}
-              </p>
-            </div>
-
-            <hr className="border-[#E6E4DD]" />
+            <hr className="border-[#EAE7DF]/70" />
 
             {/* Timeline stepper */}
             <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#4A5550] mb-6">
-                Tahapan Pesanan
+              <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#64748B] mb-6">
+                Progres Tahapan Pemesanan
               </p>
               <div className="relative flex items-start justify-between">
                 {STEPS.map((step, idx) => {
@@ -335,37 +312,35 @@ export default function TrackingPage() {
 
                   return (
                     <React.Fragment key={step.key}>
-                      {/* Connector line (before each step except first) */}
                       {idx > 0 && (
                         <div
-                          className={`flex-1 h-0.5 mt-5 mx-1 ${
+                          className={`flex-1 h-0.5 mt-5 mx-1 transition-colors ${
                             isCompleted || (stepIdx >= idx)
-                              ? 'bg-[#0F4C3A]'
-                              : 'bg-[#E6E4DD]'
+                              ? 'bg-[#08261E]'
+                              : 'bg-[#EAE7DF]'
                           }`}
                         />
                       )}
 
-                      {/* Step node */}
-                      <div className="flex flex-col items-center gap-2 min-w-[56px]">
+                      <div className="flex flex-col items-center gap-2 min-w-[60px]">
                         <div
-                          className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-semibold transition-colors ${
+                          className={`w-10 h-10 rounded-full flex items-center justify-center text-xs font-semibold transition-all shadow-2xs ${
                             isCompleted
-                              ? 'bg-[#0F4C3A] text-white'
+                              ? 'bg-[#08261E] text-[#F5E4BE]'
                               : isCurrent
-                              ? 'border-2 border-[#0F4C3A] text-[#0F4C3A] bg-white'
-                              : 'bg-[#E6E4DD] text-[#4A5550]'
+                              ? 'border-2 border-[#08261E] text-[#08261E] bg-white font-bold'
+                              : 'bg-[#FCFCFA] border border-[#EAE7DF] text-[#64748B]/50'
                           }`}
                         >
                           {isCompleted ? (
-                            <CheckCircle className="w-5 h-5" />
+                            <CheckCircle className="w-4 h-4 text-[#C5A059]" />
                           ) : (
                             <span>{idx + 1}</span>
                           )}
                         </div>
                         <span
                           className={`text-[10px] text-center leading-tight font-medium ${
-                            isFuture ? 'text-[#4A5550]/50' : 'text-[#14211D]'
+                            isFuture ? 'text-[#64748B]/50' : 'text-[#08261E] font-semibold'
                           }`}
                         >
                           {step.label}
@@ -378,24 +353,24 @@ export default function TrackingPage() {
             </div>
 
             {/* Actions */}
-            <div className="flex flex-col sm:flex-row gap-3 pt-2">
+            <div className="flex flex-col sm:flex-row gap-3 pt-4">
               <a
                 href={`https://wa.me/6281234567890?text=${encodeURIComponent(
                   `Halo Admin Jelajah Trip, saya ingin konfirmasi pembayaran untuk kode pesanan: ${booking.booking_code}.`
                 )}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex-1 flex items-center justify-center gap-2 bg-[#0F4C3A] hover:bg-[#0A3629] text-white rounded-xl px-6 py-3.5 font-semibold text-sm transition-colors"
+                className="flex-1 flex items-center justify-center gap-2 bg-[#08261E] hover:bg-[#0D3B2E] text-[#F5E4BE] rounded-full px-6 py-4 font-semibold text-xs transition-all shadow-lg shadow-[#08261E]/15 border border-[#C5A059]/40"
               >
-                <MessageCircle className="w-4 h-4" />
-                Konfirmasi via WhatsApp
+                <MessageCircle className="w-4 h-4 text-[#C5A059]" />
+                Konfirmasi Pembayaran via WhatsApp
               </a>
               <Link
                 to="/trips"
-                className="flex items-center justify-center gap-2 border border-[#14211D]/20 hover:bg-[#14211D]/5 text-[#14211D] rounded-xl px-6 py-3.5 font-semibold text-sm transition-colors"
+                className="flex items-center justify-center gap-2 border border-[#EAE7DF] hover:bg-[#FCFCFA] text-[#08261E] rounded-full px-6 py-4 font-semibold text-xs transition-colors"
               >
-                Lihat Paket Lain
-                <ArrowRight className="w-4 h-4" />
+                Lihat Destinasi Lain
+                <ArrowRight className="w-4 h-4 text-[#C5A059]" />
               </Link>
             </div>
           </div>

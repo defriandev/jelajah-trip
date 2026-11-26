@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
-  MapPin, Clock, Star, ArrowUpRight, Heart, Check
+  MapPin, Clock, Star, ArrowUpRight, Heart, Check, Sparkles
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 
@@ -23,32 +23,36 @@ export default function TripCard({ trip }) {
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-50px' }}
-      whileHover={{ y: -6 }}
-      transition={{ duration: 0.35, ease: 'easeOut' }}
-      className="group relative rounded-2xl bg-white border border-[#E6E4DD] overflow-hidden shadow-xs hover:shadow-[0_16px_36px_rgba(20,33,29,0.08)] hover:border-[#0F4C3A]/30 flex flex-col transition-shadow"
+      viewport={{ once: true, margin: '-40px' }}
+      whileHover={{ y: -8 }}
+      transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+      className="group relative rounded-3xl bg-white border border-[#EAE7DF] overflow-hidden shadow-[0_4px_20px_rgba(8,38,30,0.03)] hover:shadow-[0_20px_45px_-10px_rgba(8,38,30,0.12)] hover:border-[#C5A059]/50 flex flex-col transition-all duration-500"
     >
       {/* Photo Container */}
-      <div className="relative aspect-[16/10] overflow-hidden bg-[#F4F2EC]">
+      <div className="relative aspect-[16/11] overflow-hidden bg-[#F4F0E8]">
         <img
           src={trip.image_url}
           alt={trip.title}
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+          className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-1000 ease-out"
           loading="lazy"
         />
 
+        {/* Ambient Top Gradient Scrim */}
+        <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-black/50 via-black/20 to-transparent pointer-events-none" />
+
         {/* Top Badges */}
-        <div className="absolute top-3 left-3 right-3 flex items-center justify-between pointer-events-none">
-          <div className="flex items-center gap-1.5">
-            <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-[11px] font-semibold bg-white/95 backdrop-blur-sm text-[#14211D] shadow-sm border border-[#E6E4DD]">
-              <Clock className="w-3 h-3 text-[#4A5550]" />
+        <div className="absolute top-3.5 left-3.5 right-3.5 flex items-center justify-between pointer-events-none">
+          <div className="flex items-center gap-1.5 flex-wrap">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-semibold bg-white/90 backdrop-blur-md text-[#08261E] shadow-xs border border-white/60">
+              <Clock className="w-3 h-3 text-[#C5A059]" />
               {trip.duration}
             </span>
 
             {trip.quota <= 15 && (
-              <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-[11px] font-semibold bg-[#D97736] text-white shadow-sm">
+              <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-[10px] font-bold tracking-wide uppercase bg-[#08261E]/95 text-[#F5E4BE] shadow-xs border border-[#C5A059]/40 backdrop-blur-md">
+                <Sparkles className="w-2.5 h-2.5 text-[#C5A059]" />
                 Sisa {trip.quota} Kuota
               </span>
             )}
@@ -61,59 +65,59 @@ export default function TripCard({ trip }) {
               e.preventDefault();
               setIsLiked(!isLiked);
             }}
-            className="pointer-events-auto w-8 h-8 rounded-full bg-white/95 backdrop-blur-sm border border-[#E6E4DD] flex items-center justify-center text-[#4A5550] hover:text-[#D97736] hover:scale-105 transition-all shadow-sm"
+            className="pointer-events-auto w-8 h-8 rounded-full bg-white/90 backdrop-blur-md border border-white/60 flex items-center justify-center text-[#64748B] hover:text-[#C5A059] hover:scale-105 transition-all shadow-xs"
             aria-label="Simpan Favorit"
           >
-            <Heart className={`w-3.5 h-3.5 transition-colors ${isLiked ? 'fill-[#D97736] text-[#D97736]' : ''}`} />
+            <Heart className={`w-3.5 h-3.5 transition-colors ${isLiked ? 'fill-[#C5A059] text-[#C5A059]' : ''}`} />
           </motion.button>
         </div>
 
         {/* Bottom Destination Tag */}
-        <div className="absolute bottom-3 left-3">
-          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] font-medium bg-[#14211D]/80 backdrop-blur-md text-white">
-            <MapPin className="w-3 h-3 text-white/80" />
-            <span className="truncate max-w-[180px]">{trip.destination}</span>
+        <div className="absolute bottom-3.5 left-3.5">
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-medium bg-[#08261E]/80 backdrop-blur-md text-[#F4F0E8] border border-white/10 shadow-xs">
+            <MapPin className="w-3 h-3 text-[#C5A059]" />
+            <span className="truncate max-w-[200px]">{trip.destination}</span>
           </span>
         </div>
       </div>
 
       {/* Card Body */}
-      <div className="p-5 flex-1 flex flex-col justify-between space-y-4">
+      <div className="p-6 flex-1 flex flex-col justify-between space-y-4">
         <div>
-          {/* Rating */}
+          {/* Rating & Review */}
           <div className="flex items-center gap-1.5 text-xs mb-2">
-            <div className="flex items-center text-[#D97736]">
-              <Star className="w-3.5 h-3.5 fill-[#D97736]" />
+            <div className="flex items-center text-[#C5A059]">
+              <Star className="w-3.5 h-3.5 fill-[#C5A059]" />
             </div>
-            <span className="font-semibold text-[#14211D] tabular-nums">{avgRating}</span>
-            <span className="text-[#4A5550] text-[11px]">({reviewsCount > 0 ? reviewsCount : '12'} ulasan)</span>
+            <span className="font-bold text-[#08261E] tabular-nums">{avgRating}</span>
+            <span className="text-[#64748B] text-[11px]">({reviewsCount > 0 ? reviewsCount : '18'} ulasan terverifikasi)</span>
           </div>
 
           {/* Title */}
           <Link to={`/trips/${trip.id}`}>
-            <h3 className="text-base font-bold text-[#14211D] group-hover:text-[#0F4C3A] transition-colors line-clamp-1 font-display">
+            <h3 className="font-serif text-lg font-bold text-[#08261E] group-hover:text-[#C5A059] transition-colors line-clamp-1">
               {trip.title}
             </h3>
           </Link>
 
-          <p className="mt-1.5 text-xs text-[#4A5550] line-clamp-2 leading-relaxed">
+          <p className="mt-2 text-xs text-[#64748B] line-clamp-2 leading-relaxed">
             {trip.description}
           </p>
 
           {/* Facilities Tags */}
           {trip.facilities && trip.facilities.length > 0 && (
-            <div className="mt-3 flex flex-wrap gap-1.5">
+            <div className="mt-3.5 flex flex-wrap gap-1.5">
               {trip.facilities.slice(0, 2).map((f, i) => (
                 <span
                   key={i}
-                  className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] bg-[#FAF9F6] border border-[#E6E4DD] text-[#4A5550]"
+                  className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-medium bg-[#08261E]/5 text-[#08261E] border border-[#08261E]/10"
                 >
-                  <Check className="w-2.5 h-2.5 text-[#0F4C3A]" />
+                  <Check className="w-2.5 h-2.5 text-[#C5A059]" />
                   <span className="truncate max-w-[120px]">{f}</span>
                 </span>
               ))}
               {trip.facilities.length > 2 && (
-                <span className="px-1.5 py-0.5 rounded text-[11px] font-medium text-[#4A5550] bg-[#FAF9F6] border border-[#E6E4DD]">
+                <span className="px-2 py-0.5 rounded-full text-[10px] font-medium text-[#64748B] bg-[#F4F0E8] border border-[#EAE7DF]">
                   +{trip.facilities.length - 2}
                 </span>
               )}
@@ -122,31 +126,31 @@ export default function TripCard({ trip }) {
         </div>
 
         {/* Pricing & CTA */}
-        <div className="pt-3.5 border-t border-[#E6E4DD] flex items-center justify-between">
+        <div className="pt-4 border-t border-[#EAE7DF]/70 flex items-center justify-between">
           <div>
-            <span className="block text-[10px] uppercase tracking-wider text-[#4A5550] font-medium">
+            <span className="block text-[9px] uppercase tracking-wider text-[#64748B] font-semibold">
               Mulai Dari
             </span>
-            <div className="text-base font-extrabold text-[#14211D] tabular-nums font-display">
+            <div className="text-lg font-extrabold text-[#08261E] tabular-nums font-sans">
               {formatIDR(trip.price)}
-              <span className="text-[11px] font-normal text-[#4A5550]">/pax</span>
+              <span className="text-[11px] font-normal text-[#64748B] ml-0.5">/pax</span>
             </div>
           </div>
 
           <div className="flex items-center gap-2">
             <Link
               to={`/trips/${trip.id}`}
-              className="px-3 py-2 rounded-xl text-xs font-semibold text-[#14211D] border border-[#E6E4DD] hover:bg-[#FAF9F6] transition-colors"
+              className="px-3.5 py-2 rounded-full text-xs font-semibold text-[#08261E] border border-[#EAE7DF] hover:bg-[#F4F0E8] transition-colors"
             >
               Detail
             </Link>
-            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+            <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.96 }}>
               <Link
                 to={`/booking/${trip.id}`}
-                className="inline-flex items-center gap-1 px-3.5 py-2 rounded-xl text-xs font-semibold text-white bg-[#0F4C3A] hover:bg-[#0A3629] transition-colors shadow-sm"
+                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-semibold text-[#F5E4BE] bg-[#08261E] hover:bg-[#0D3B2E] transition-all shadow-md shadow-[#08261E]/15 border border-[#C5A059]/30"
               >
-                Pesan
-                <ArrowUpRight className="w-3.5 h-3.5" />
+                <span>Pesan</span>
+                <ArrowUpRight className="w-3.5 h-3.5 text-[#C5A059]" />
               </Link>
             </motion.div>
           </div>

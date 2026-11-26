@@ -1,5 +1,5 @@
 import React from 'react';
-import { Search, RotateCcw } from 'lucide-react';
+import { Search, RotateCcw, SlidersHorizontal } from 'lucide-react';
 
 export default function TripFilter({
   filters,
@@ -8,36 +8,36 @@ export default function TripFilter({
   onReset,
 }) {
   return (
-    <div className="bg-white border border-[#E6E4DD] rounded-2xl p-5 shadow-sm mb-8">
+    <div className="bg-white/95 backdrop-blur-xl border border-[#EAE7DF] rounded-3xl p-5 sm:p-6 shadow-[0_10px_35px_-8px_rgba(8,38,30,0.04)] mb-10">
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {/* Pencarian Kata Kunci */}
-        <div className="space-y-1">
-          <label className="text-[10px] font-semibold uppercase tracking-wider text-[#4A5550]">
+        <div className="space-y-1.5">
+          <label className="text-[10px] font-bold uppercase tracking-wider text-[#64748B] flex items-center gap-1.5">
+            <Search className="w-3 h-3 text-[#C5A059]" />
             Cari Destinasi / Trip
           </label>
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#4A5550]" />
             <input
               type="text"
               placeholder="Contoh: Raja Ampat, Bromo..."
               value={filters.search}
               onChange={(e) => onFilterChange('search', e.target.value)}
-              className="w-full pl-9 pr-3 py-2 rounded-xl bg-[#FAF9F6] border border-[#E6E4DD] text-xs text-[#14211D] placeholder-[#4A5550]/60 focus:outline-none focus:border-[#0F4C3A] transition-colors"
+              className="w-full px-4 py-2.5 rounded-full bg-[#FCFCFA] border border-[#EAE7DF] text-xs text-[#08261E] placeholder-[#64748B]/50 focus:outline-none focus:border-[#08261E] focus:ring-1 focus:ring-[#08261E] transition-all"
             />
           </div>
         </div>
 
         {/* Filter Destinasi */}
-        <div className="space-y-1">
-          <label className="text-[10px] font-semibold uppercase tracking-wider text-[#4A5550]">
+        <div className="space-y-1.5">
+          <label className="text-[10px] font-bold uppercase tracking-wider text-[#64748B]">
             Wilayah Destinasi
           </label>
           <select
             value={filters.destination}
             onChange={(e) => onFilterChange('destination', e.target.value)}
-            className="w-full px-3 py-2 rounded-xl bg-[#FAF9F6] border border-[#E6E4DD] text-xs text-[#14211D] focus:outline-none focus:border-[#0F4C3A] transition-colors cursor-pointer"
+            className="w-full px-4 py-2.5 rounded-full bg-[#FCFCFA] border border-[#EAE7DF] text-xs text-[#08261E] focus:outline-none focus:border-[#08261E] focus:ring-1 focus:ring-[#08261E] transition-all cursor-pointer font-medium"
           >
-            <option value="">Semua Wilayah</option>
+            <option value="">Semua Wilayah Indonesia</option>
             {destinations.map((dest, i) => (
               <option key={i} value={dest}>
                 {dest}
@@ -47,14 +47,14 @@ export default function TripFilter({
         </div>
 
         {/* Filter Durasi */}
-        <div className="space-y-1">
-          <label className="text-[10px] font-semibold uppercase tracking-wider text-[#4A5550]">
+        <div className="space-y-1.5">
+          <label className="text-[10px] font-bold uppercase tracking-wider text-[#64748B]">
             Durasi Perjalanan
           </label>
           <select
             value={filters.duration}
             onChange={(e) => onFilterChange('duration', e.target.value)}
-            className="w-full px-3 py-2 rounded-xl bg-[#FAF9F6] border border-[#E6E4DD] text-xs text-[#14211D] focus:outline-none focus:border-[#0F4C3A] transition-colors cursor-pointer"
+            className="w-full px-4 py-2.5 rounded-full bg-[#FCFCFA] border border-[#EAE7DF] text-xs text-[#08261E] focus:outline-none focus:border-[#08261E] focus:ring-1 focus:ring-[#08261E] transition-all cursor-pointer font-medium"
           >
             <option value="">Semua Durasi</option>
             <option value="2D1N">2 Hari 1 Malam (2D1N)</option>
@@ -64,27 +64,27 @@ export default function TripFilter({
         </div>
 
         {/* Urutkan / Sort By */}
-        <div className="space-y-1">
-          <label className="text-[10px] font-semibold uppercase tracking-wider text-[#4A5550]">
+        <div className="space-y-1.5">
+          <label className="text-[10px] font-bold uppercase tracking-wider text-[#64748B]">
             Urutkan
           </label>
           <div className="flex gap-2">
             <select
               value={filters.sortBy}
               onChange={(e) => onFilterChange('sortBy', e.target.value)}
-              className="flex-1 px-3 py-2 rounded-xl bg-[#FAF9F6] border border-[#E6E4DD] text-xs text-[#14211D] focus:outline-none focus:border-[#0F4C3A] transition-colors cursor-pointer"
+              className="flex-1 px-4 py-2.5 rounded-full bg-[#FCFCFA] border border-[#EAE7DF] text-xs text-[#08261E] focus:outline-none focus:border-[#08261E] focus:ring-1 focus:ring-[#08261E] transition-all cursor-pointer font-medium"
             >
               <option value="newest">Terpopuler & Terbaru</option>
-              <option value="price_asc">Harga: Rendah ke Tinggi</option>
-              <option value="price_desc">Harga: Tinggi ke Rendah</option>
+              <option value="price_asc">Harga: Terjangkau ke Tinggi</option>
+              <option value="price_desc">Harga: Tertinggi ke Rendah</option>
             </select>
 
             <button
               onClick={onReset}
               title="Reset Filter"
-              className="px-3 py-2 rounded-xl bg-[#FAF9F6] hover:bg-[#E6E4DD] border border-[#E6E4DD] text-[#4A5550] hover:text-[#14211D] transition-colors flex items-center justify-center"
+              className="px-3.5 py-2.5 rounded-full bg-[#FCFCFA] hover:bg-[#F4F0E8] border border-[#EAE7DF] text-[#64748B] hover:text-[#08261E] transition-colors flex items-center justify-center shrink-0"
             >
-              <RotateCcw className="w-3.5 h-3.5" />
+              <RotateCcw className="w-4 h-4" />
             </button>
           </div>
         </div>
