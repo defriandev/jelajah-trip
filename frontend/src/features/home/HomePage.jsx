@@ -75,13 +75,13 @@ export default function HomePage() {
 
   return (
     <div className="bg-[#FCFCFA] text-[#111827] overflow-x-hidden">
-      {/* 1. HERO SECTION (Minimalist Luxury Atelier Stage with Translucent Gradients) */}
-      <section className="relative px-4 sm:px-6 lg:px-8 pt-2 pb-10 lg:pb-14 max-w-7xl mx-auto">
+      {/* 1. HERO SECTION (Minimalist Luxury Atelier Stage with Search Below Image) */}
+      <section className="relative px-4 sm:px-6 lg:px-8 pt-2 pb-10 lg:pb-14 max-w-7xl mx-auto space-y-6 sm:space-y-8">
         {/* Subtle Ambient Radial Backlight */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-gradient-to-r from-[#C5A059]/15 via-[#08261E]/20 to-[#C5A059]/15 blur-3xl -z-10 rounded-full pointer-events-none" />
+        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-gradient-to-r from-[#C5A059]/15 via-[#08261E]/20 to-[#C5A059]/15 blur-3xl -z-10 rounded-full pointer-events-none" />
 
-        {/* The Clean Panoramic Showcase Frame */}
-        <div className="relative rounded-[2rem] sm:rounded-[2.5rem] lg:rounded-[3rem] overflow-hidden border border-[#EAE7DF] bg-[#08261E] shadow-[0_25px_70px_-20px_rgba(8,38,30,0.25)] min-h-[480px] sm:min-h-[520px] lg:min-h-[540px] flex flex-col justify-center items-center py-12 sm:py-16 px-6 sm:px-10 lg:px-12 text-center">
+        {/* The Clean Panoramic Showcase Frame (Gambar di Tengah dengan Gradasi Tembus Pandang) */}
+        <div className="relative rounded-[2rem] sm:rounded-[2.5rem] lg:rounded-[3rem] overflow-hidden border border-[#EAE7DF] bg-[#08261E] shadow-[0_20px_60px_-15px_rgba(8,38,30,0.22)] min-h-[380px] sm:min-h-[440px] lg:min-h-[480px] flex flex-col justify-center items-center py-16 sm:py-20 px-6 sm:px-10 lg:px-12 text-center">
           
           {/* Panoramic Hero Photo (Wayag, Raja Ampat) */}
           <img
@@ -94,8 +94,8 @@ export default function HomePage() {
           <div className="absolute inset-0 bg-gradient-to-t from-[#08261E]/90 via-[#08261E]/55 to-[#08261E]/40 pointer-events-none" />
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_transparent_35%,_rgba(8,38,30,0.6)_100%)] pointer-events-none" />
 
-          {/* CENTER TYPOGRAPHY */}
-          <div className="relative z-10 max-w-3xl mx-auto space-y-4 mb-8 sm:mb-10">
+          {/* CENTER TYPOGRAPHY (Inside the Image with Translucent Gradient) */}
+          <div className="relative z-10 max-w-3xl mx-auto space-y-4">
             <motion.h1
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
@@ -117,81 +117,81 @@ export default function HomePage() {
               Biro perjalanan butik ke pulau-pulau rahasia, puncak kaldera fajar, dan warisan budaya nusantara.
             </motion.p>
           </div>
-
-          {/* CLEAN FLOATING SEARCH CAPSULE (Kaca Tembus Pandang) */}
-          <motion.div
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="relative z-10 w-full max-w-4xl mx-auto"
-          >
-            <form
-              onSubmit={handleSearchSubmit}
-              className="bg-white/95 backdrop-blur-2xl border border-white/90 rounded-2xl lg:rounded-full p-2.5 sm:p-3 shadow-[0_20px_50px_rgba(0,0,0,0.35)] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-2 items-center"
-            >
-              {/* Destinasi */}
-              <div className="lg:col-span-4 px-4 py-2.5 rounded-xl lg:rounded-full bg-[#FCFCFA] border border-[#EAE7DF] hover:border-[#08261E]/30 focus-within:border-[#08261E] transition-all text-left">
-                <label className="block text-[9px] font-bold uppercase tracking-wider text-[#64748B] mb-0.5">
-                  Destinasi Impian
-                </label>
-                <select
-                  value={searchDestination}
-                  onChange={(e) => setSearchDestination(e.target.value)}
-                  className="w-full bg-transparent text-xs font-semibold text-[#08261E] focus:outline-none cursor-pointer"
-                >
-                  <option value="">Semua Destinasi Indonesia</option>
-                  <option value="Raja Ampat">Raja Ampat, Papua Barat Daya</option>
-                  <option value="Labuan Bajo">Labuan Bajo, NTT</option>
-                  <option value="Bromo">Gunung Bromo, Jawa Timur</option>
-                  <option value="Nusa Penida">Nusa Penida, Bali</option>
-                  <option value="Danau Toba">Danau Toba, Sumatera Utara</option>
-                  <option value="Yogyakarta">DI Yogyakarta Heritage</option>
-                </select>
-              </div>
-
-              {/* Tanggal */}
-              <div className="lg:col-span-3 px-4 py-2.5 rounded-xl lg:rounded-full bg-[#FCFCFA] border border-[#EAE7DF] hover:border-[#08261E]/30 focus-within:border-[#08261E] transition-all text-left">
-                <label className="block text-[9px] font-bold uppercase tracking-wider text-[#64748B] mb-0.5">
-                  Tanggal Berangkat
-                </label>
-                <input
-                  type="date"
-                  value={searchDate}
-                  onChange={(e) => setSearchDate(e.target.value)}
-                  className="w-full bg-transparent text-xs font-semibold text-[#08261E] focus:outline-none cursor-pointer"
-                />
-              </div>
-
-              {/* Peserta */}
-              <div className="lg:col-span-2 px-4 py-2.5 rounded-xl lg:rounded-full bg-[#FCFCFA] border border-[#EAE7DF] hover:border-[#08261E]/30 focus-within:border-[#08261E] transition-all text-left">
-                <label className="block text-[9px] font-bold uppercase tracking-wider text-[#64748B] mb-0.5">
-                  Peserta
-                </label>
-                <select
-                  value={searchPax}
-                  onChange={(e) => setSearchPax(Number(e.target.value))}
-                  className="w-full bg-transparent text-xs font-semibold text-[#08261E] focus:outline-none cursor-pointer"
-                >
-                  <option value={1}>1 Orang</option>
-                  <option value={2}>2 Orang</option>
-                  <option value={4}>3 - 5 Orang</option>
-                  <option value={8}>Grup (6+)</option>
-                </select>
-              </div>
-
-              {/* Tombol Search */}
-              <div className="lg:col-span-3">
-                <button
-                  type="submit"
-                  className="w-full py-3.5 px-6 rounded-xl lg:rounded-full font-semibold text-xs text-[#08261E] bg-[#C5A059] hover:bg-[#d6b26b] transition-all shadow-md flex items-center justify-center gap-2 active:scale-95"
-                >
-                  <Search className="w-4 h-4 text-[#08261E]" />
-                  <span>Cari Paket Trip</span>
-                </button>
-              </div>
-            </form>
-          </motion.div>
         </div>
+
+        {/* DI BAWAH GAMBAR: SEARCH CAPSULE (Sitting cleanly below the image) */}
+        <motion.div
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="w-full max-w-5xl mx-auto px-2"
+        >
+          <form
+            onSubmit={handleSearchSubmit}
+            className="bg-white border border-[#EAE7DF] rounded-2xl lg:rounded-full p-2.5 sm:p-3 shadow-[0_12px_40px_-10px_rgba(8,38,30,0.08)] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-2 items-center"
+          >
+            {/* Destinasi */}
+            <div className="lg:col-span-4 px-4 py-2.5 rounded-xl lg:rounded-full bg-[#FCFCFA] border border-[#EAE7DF] hover:border-[#08261E]/30 focus-within:border-[#08261E] transition-all text-left">
+              <label className="block text-[9px] font-bold uppercase tracking-wider text-[#64748B] mb-0.5">
+                Destinasi Impian
+              </label>
+              <select
+                value={searchDestination}
+                onChange={(e) => setSearchDestination(e.target.value)}
+                className="w-full bg-transparent text-xs font-semibold text-[#08261E] focus:outline-none cursor-pointer"
+              >
+                <option value="">Semua Destinasi Indonesia</option>
+                <option value="Raja Ampat">Raja Ampat, Papua Barat Daya</option>
+                <option value="Labuan Bajo">Labuan Bajo, NTT</option>
+                <option value="Bromo">Gunung Bromo, Jawa Timur</option>
+                <option value="Nusa Penida">Nusa Penida, Bali</option>
+                <option value="Danau Toba">Danau Toba, Sumatera Utara</option>
+                <option value="Yogyakarta">DI Yogyakarta Heritage</option>
+              </select>
+            </div>
+
+            {/* Tanggal */}
+            <div className="lg:col-span-3 px-4 py-2.5 rounded-xl lg:rounded-full bg-[#FCFCFA] border border-[#EAE7DF] hover:border-[#08261E]/30 focus-within:border-[#08261E] transition-all text-left">
+              <label className="block text-[9px] font-bold uppercase tracking-wider text-[#64748B] mb-0.5">
+                Tanggal Berangkat
+              </label>
+              <input
+                type="date"
+                value={searchDate}
+                onChange={(e) => setSearchDate(e.target.value)}
+                className="w-full bg-transparent text-xs font-semibold text-[#08261E] focus:outline-none cursor-pointer"
+              />
+            </div>
+
+            {/* Peserta */}
+            <div className="lg:col-span-2 px-4 py-2.5 rounded-xl lg:rounded-full bg-[#FCFCFA] border border-[#EAE7DF] hover:border-[#08261E]/30 focus-within:border-[#08261E] transition-all text-left">
+              <label className="block text-[9px] font-bold uppercase tracking-wider text-[#64748B] mb-0.5">
+                Peserta
+              </label>
+              <select
+                value={searchPax}
+                onChange={(e) => setSearchPax(Number(e.target.value))}
+                className="w-full bg-transparent text-xs font-semibold text-[#08261E] focus:outline-none cursor-pointer"
+              >
+                <option value={1}>1 Orang</option>
+                <option value={2}>2 Orang</option>
+                <option value={4}>3 - 5 Orang</option>
+                <option value={8}>Grup (6+)</option>
+              </select>
+            </div>
+
+            {/* Tombol Search */}
+            <div className="lg:col-span-3">
+              <button
+                type="submit"
+                className="w-full py-3.5 px-6 rounded-xl lg:rounded-full font-semibold text-xs text-[#08261E] bg-[#C5A059] hover:bg-[#d6b26b] transition-all shadow-md flex items-center justify-center gap-2 active:scale-95"
+              >
+                <Search className="w-4 h-4 text-[#08261E]" />
+                <span>Cari Paket Trip</span>
+              </button>
+            </div>
+          </form>
+        </motion.div>
       </section>
 
       {/* 2. ACCREDITATION & TRUST ARCHITECTURE */}
