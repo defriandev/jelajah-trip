@@ -12,6 +12,7 @@ export default function TripCatalogPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
+  const [refreshTrigger, setRefreshTrigger] = useState(0);
   const [meta, setMeta] = useState({ total: 0, page: 1, limit: 12, total_pages: 1 });
 
   const [filters, setFilters] = useState({
@@ -34,7 +35,7 @@ export default function TripCatalogPage() {
       }
     };
     fetchDestinations();
-  }, []);
+  }, [refreshTrigger]);
 
   // Fetch Trips based on filters & pagination
   useEffect(() => {
@@ -78,11 +79,16 @@ export default function TripCatalogPage() {
     };
 
     fetchTrips();
-  }, [filters, currentPage]);
+  }, [filters, currentPage, refreshTrigger]);
 
   const handleFilterChange = (key, value) => {
     setCurrentPage(1);
     setFilters((prev) => ({ ...prev, [key]: value }));
+  };
+
+  const handleRetry = () => {
+    setError(null);
+    setRefreshTrigger((prev) => prev + 1);
   };
 
   const handleReset = () => {
@@ -94,6 +100,7 @@ export default function TripCatalogPage() {
       sortBy: 'newest',
     });
     setSearchParams({});
+    setRefreshTrigger((prev) => prev + 1);
   };
 
   const handlePageChange = (newPage) => {
@@ -139,13 +146,24 @@ export default function TripCatalogPage() {
             <div className="w-12 h-12 rounded-full bg-rose-50 text-rose-600 mx-auto flex items-center justify-center border border-rose-200">
               <AlertCircle className="w-6 h-6" />
             </div>
-            <p className="text-sm text-[#111827] font-semibold">{error}</p>
-            <button
-              onClick={handleReset}
-              className="px-6 py-2.5 rounded-full bg-[#08261E] text-white text-xs font-semibold hover:bg-[#0D3B2E] transition-all shadow-sm"
-            >
-              Muat Ulang
-            </button>
+            <div className="space-y-1">
+              <h3 className="font-serif text-lg font-bold text-[#08261E]">Gagal Memuat Katalog</h3>
+              <p className="text-xs text-[#64748B] leading-relaxed max-w-xs mx-auto">{error}</p>
+            </div>
+            <div className="flex items-center justify-center gap-3 pt-2">
+              <button
+                onClick={handleRetry}
+                className="px-6 py-2.5 rounded-full bg-[#08261E] text-[#C5A059] text-xs font-semibold hover:bg-[#0D3B2E] transition-all shadow-sm active:scale-95"
+              >
+                Coba Muat Ulang
+              </button>
+              <button
+                onClick={handleReset}
+                className="px-5 py-2.5 rounded-full border border-[#EAE7DF] text-[#08261E] text-xs font-medium hover:bg-[#FCFCFA] transition-all"
+              >
+                Reset Filter
+              </button>
+            </div>
           </div>
         ) : trips.length === 0 ? (
           <div className="py-20 text-center max-w-md mx-auto space-y-4 bg-white border border-[#EAE7DF] rounded-3xl p-10 shadow-sm">

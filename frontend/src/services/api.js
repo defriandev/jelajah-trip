@@ -81,9 +81,16 @@ api.interceptors.response.use(
         });
     }
 
+    const isNetworkError =
+      error.message === 'Network Error' ||
+      error.code === 'ERR_NETWORK' ||
+      error.code === 'ECONNREFUSED';
+
     const message =
       extractErrorMessage(error.response?.data) ||
-      error.message ||
+      (isNetworkError
+        ? 'Gagal terhubung ke server backend (Network Error). Pastikan server backend sedang aktif di port 8080.'
+        : error.message) ||
       'Terjadi kesalahan sistem';
     return Promise.reject(new Error(message));
   }
