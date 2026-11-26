@@ -35,6 +35,10 @@ export default function TripCard({ trip }) {
         <img
           src={trip.image_url}
           alt={trip.title}
+          onError={(e) => {
+            e.target.onerror = null;
+            e.target.src = 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80';
+          }}
           className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-1000 ease-out"
           loading="lazy"
         />

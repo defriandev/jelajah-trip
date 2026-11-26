@@ -5,6 +5,7 @@ import {
   Camera, Check
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { tripService, reviewService } from '../../services/api';
 
 const formatIDR = (num) =>
   new Intl.NumberFormat('id-ID', {
@@ -45,7 +46,7 @@ function AvatarInitials({ name }) {
 /* ─── Skeleton ─── */
 function SkeletonPage() {
   return (
-    <div className="min-h-screen bg-[#FAF9F6] py-8">
+    <div className="min-h-screen bg-[#FCFCFA] py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 animate-pulse">
         <div className="h-4 w-56 bg-[#E6E4DD] rounded" />
         <div className="w-full aspect-[16/9] max-h-[480px] bg-[#E6E4DD] rounded-2xl" />
@@ -74,20 +75,20 @@ function SkeletonPage() {
 /* ─── Error ─── */
 function ErrorPage({ message }) {
   return (
-    <div className="min-h-screen bg-[#FAF9F6] flex items-center justify-center px-4">
+    <div className="min-h-screen bg-[#FCFCFA] flex items-center justify-center px-4">
       <div className="max-w-sm w-full text-center space-y-5">
         <div className="w-14 h-14 rounded-full bg-rose-50 border border-rose-200 flex items-center justify-center mx-auto">
           <Users className="w-7 h-7 text-rose-500" />
         </div>
-        <h2 className="text-xl font-display font-bold tracking-[-0.03em] text-[#14211D]">
+        <h2 className="text-xl font-serif font-bold tracking-tight text-[#08261E]">
           Paket Wisata Tidak Ditemukan
         </h2>
-        <p className="text-sm leading-[1.65] text-[#4A5550]">
+        <p className="text-sm leading-relaxed text-[#64748B]">
           {message || 'Paket trip yang Anda cari tidak tersedia atau telah dihapus.'}
         </p>
         <Link
           to="/trips"
-          className="inline-flex items-center gap-2 bg-[#0F4C3A] hover:bg-[#0A3629] text-white rounded-xl px-6 py-3.5 font-semibold text-sm transition-colors shadow-sm"
+          className="inline-flex items-center gap-2 bg-[#08261E] hover:bg-[#08261E]/90 text-[#C5A059] rounded-2xl px-6 py-3.5 font-semibold text-sm transition-all shadow-sm active:scale-95"
         >
           Kembali ke Katalog
         </Link>
@@ -117,11 +118,19 @@ const destinationGalleries = {
       url: 'https://images.unsplash.com/photo-1588668214407-6ea9a6d8c272?auto=format&fit=crop&w=1200&q=80',
       title: 'Kaldera Bromo & Lautan Pasir',
     },
+    {
+      url: 'https://images.unsplash.com/photo-1517411032315-54ef2cb783bb?auto=format&fit=crop&w=1200&q=80',
+      title: 'Lembah Fajar Bromo Tengger',
+    },
   ],
   rajaampat: [
     {
       url: 'https://images.unsplash.com/photo-1516690561799-46d8f74f9abf?auto=format&fit=crop&w=1200&q=80',
       title: 'Gugusan Karst Kepulauan Wayag',
+    },
+    {
+      url: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80',
+      title: 'Laguna Terumbu Karang Pianemo',
     },
   ],
   labuanbajo: [
@@ -129,17 +138,53 @@ const destinationGalleries = {
       url: 'https://images.unsplash.com/photo-1544644181-1484b3fdfc62?auto=format&fit=crop&w=1200&q=80',
       title: 'Puncak Pulau Padar Saat Fajar',
     },
+    {
+      url: 'https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?auto=format&fit=crop&w=1200&q=80',
+      title: 'Sailing Phinisi di Pink Beach',
+    },
   ],
   nusapenida: [
     {
       url: 'https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=1200&q=80',
       title: 'Kelingking Beach T-Rex Cliff',
     },
+    {
+      url: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80',
+      title: 'Tangga Tebing Diamond Beach',
+    },
   ],
   danautoba: [
     {
       url: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80',
       title: 'Panorama Danau Toba & Pulau Samosir',
+    },
+    {
+      url: 'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=1200&q=80',
+      title: 'Perbukitan Hijau Holbung Toba',
+    },
+  ],
+  derawan: [
+    {
+      url: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80',
+      title: 'Danau Ubur-ubur Kakaban & Laguna Maratua',
+    },
+  ],
+  toraja: [
+    {
+      url: 'https://images.unsplash.com/photo-1605647540924-852290f6b0d5?auto=format&fit=crop&w=1200&q=80',
+      title: 'Tongkonan Adat & Perbukitan Batutumonga',
+    },
+  ],
+  belitung: [
+    {
+      url: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80',
+      title: 'Batu Granit Tanjung Tinggi & Pulau Lengkuas',
+    },
+  ],
+  sumba: [
+    {
+      url: 'https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?auto=format&fit=crop&w=1200&q=80',
+      title: 'Savana Warinding & Laguna Danau Weekuri',
     },
   ],
 };
@@ -161,17 +206,17 @@ export default function TripDetailPage() {
     setError(null);
 
     Promise.all([
-      fetch(`http://localhost:8080/api/v1/trips/${id}`).then((r) => r.json()),
-      fetch(`http://localhost:8080/api/v1/trips/${id}/reviews`).then((r) => r.json()),
+      tripService.getTripByID(id),
+      reviewService.getReviewsByTrip(id).catch(() => ({ data: [] })),
     ])
       .then(([tripRes, reviewsRes]) => {
-        if (tripRes.success && tripRes.data) {
+        if (tripRes && tripRes.data) {
           setTrip(tripRes.data);
           setActivePhoto(tripRes.data.image_url);
         } else {
-          setError(tripRes.message || 'Gagal memuat detail paket trip');
+          setError(tripRes?.message || 'Gagal memuat detail paket trip');
         }
-        if (reviewsRes.success && Array.isArray(reviewsRes.data)) {
+        if (reviewsRes && Array.isArray(reviewsRes.data)) {
           setReviews(reviewsRes.data);
         }
       })
@@ -231,26 +276,30 @@ export default function TripDetailPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#FAF9F6]">
+    <div className="min-h-screen bg-[#FCFCFA]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
 
         {/* ── 1. Breadcrumb ── */}
-        <nav className="flex items-center gap-1.5 text-xs text-[#4A5550]">
-          <Link to="/" className="hover:text-[#14211D] transition-colors">Beranda</Link>
+        <nav className="flex items-center gap-1.5 text-xs text-[#64748B]">
+          <Link to="/" className="hover:text-[#08261E] transition-colors">Beranda</Link>
           <span>/</span>
-          <Link to="/trips" className="hover:text-[#14211D] transition-colors">Katalog Trip</Link>
+          <Link to="/trips" className="hover:text-[#08261E] transition-colors">Katalog Trip</Link>
           <span>/</span>
-          <span className="text-[#14211D] font-semibold truncate max-w-[240px]">{trip.title}</span>
+          <span className="text-[#08261E] font-semibold truncate max-w-[240px]">{trip.title}</span>
         </nav>
 
         {/* ── 2. Hero Image Showcase + Interactive Gallery ── */}
         <div className="space-y-4">
-          <div className="relative w-full aspect-[16/9] max-h-[500px] rounded-2xl overflow-hidden bg-[#E6E4DD] border border-[#E6E4DD] shadow-sm group">
+          <div className="relative w-full aspect-[16/9] max-h-[500px] rounded-3xl overflow-hidden bg-[#08261E] border border-[#EAE7DF] shadow-md group">
             <AnimatePresence mode="wait">
               <motion.img
                 key={currentPhoto}
                 src={currentPhoto}
                 alt={trip.title}
+                onError={(e) => {
+                  e.target.onerror = null;
+                  e.target.src = 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80';
+                }}
                 initial={{ opacity: 0.6, scale: 1.02 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0.6 }}
@@ -259,12 +308,12 @@ export default function TripDetailPage() {
               />
             </AnimatePresence>
 
-            <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-transparent to-transparent pointer-events-none" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#08261E]/80 via-transparent to-transparent pointer-events-none" />
 
             {/* Destination badge bottom-left */}
             <div className="absolute bottom-5 left-5 flex items-center gap-2">
-              <span className="text-xs font-semibold uppercase tracking-[0.14em] text-[#FAF9F6] bg-[#0F4C3A]/90 backdrop-blur-md px-3 py-1 rounded-lg border border-white/20 shadow-sm flex items-center gap-1.5">
-                <MapPin className="w-3.5 h-3.5 text-[#D97736]" />
+              <span className="text-xs font-semibold uppercase tracking-[0.18em] text-[#FCFCFA] bg-[#08261E]/85 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-white/20 shadow-sm flex items-center gap-1.5">
+                <MapPin className="w-3.5 h-3.5 text-[#C5A059]" />
                 {trip.destination}
               </span>
             </div>
@@ -273,8 +322,8 @@ export default function TripDetailPage() {
           {/* Gallery Thumbnails Strip (terutama untuk Yogyakarta & destinasi lainnya) */}
           {gallery.length > 1 && (
             <div className="space-y-2">
-              <div className="flex items-center gap-2 text-xs font-semibold text-[#4A5550]">
-                <Camera className="w-3.5 h-3.5 text-[#0F4C3A]" />
+              <div className="flex items-center gap-2 text-xs font-semibold text-[#08261E]/70">
+                <Camera className="w-3.5 h-3.5 text-[#C5A059]" />
                 <span>Galeri Foto Destinasi:</span>
               </div>
 
@@ -287,15 +336,19 @@ export default function TripDetailPage() {
                       whileHover={{ scale: 1.04 }}
                       whileTap={{ scale: 0.96 }}
                       onClick={() => setActivePhoto(item.url)}
-                      className={`relative flex-shrink-0 w-28 h-20 rounded-xl overflow-hidden border-2 transition-all shadow-2xs ${
+                      className={`relative flex-shrink-0 w-28 h-20 rounded-2xl overflow-hidden border-2 transition-all shadow-2xs ${
                         isSelected
-                          ? 'border-[#0F4C3A] ring-2 ring-[#0F4C3A]/30 scale-102'
-                          : 'border-[#E6E4DD] opacity-75 hover:opacity-100'
+                          ? 'border-[#C5A059] ring-2 ring-[#C5A059]/30 scale-102'
+                          : 'border-[#EAE7DF] opacity-75 hover:opacity-100'
                       }`}
                     >
                       <img
                         src={item.url}
                         alt={item.title}
+                        onError={(e) => {
+                          e.target.onerror = null;
+                          e.target.src = 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80';
+                        }}
                         className="w-full h-full object-cover"
                       />
                       <div className="absolute inset-0 bg-black/20 hover:bg-transparent transition-colors" />
