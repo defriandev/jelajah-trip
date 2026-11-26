@@ -75,13 +75,13 @@ export default function HomePage() {
 
   return (
     <div className="bg-[#FCFCFA] text-[#111827] overflow-x-hidden">
-      {/* 1. HERO SECTION (Immersive Centered Atelier Stage with Translucent Gradients) */}
-      <section className="relative px-4 sm:px-6 lg:px-8 pt-2 pb-12 lg:pb-16 max-w-7xl mx-auto">
+      {/* 1. HERO SECTION (Minimalist Luxury Atelier Stage with Translucent Gradients) */}
+      <section className="relative px-4 sm:px-6 lg:px-8 pt-2 pb-10 lg:pb-14 max-w-7xl mx-auto">
         {/* Subtle Ambient Radial Backlight */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-gradient-to-r from-[#C5A059]/15 via-[#08261E]/20 to-[#C5A059]/15 blur-3xl -z-10 rounded-full pointer-events-none" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-gradient-to-r from-[#C5A059]/15 via-[#08261E]/20 to-[#C5A059]/15 blur-3xl -z-10 rounded-full pointer-events-none" />
 
-        {/* The Unified Immersive Showcase Frame (Gambar di Tengah dengan Gradasi Tembus Pandang) */}
-        <div className="relative rounded-[2rem] sm:rounded-[2.5rem] lg:rounded-[3rem] overflow-hidden border border-[#EAE7DF] bg-[#08261E] shadow-[0_30px_90px_-20px_rgba(8,38,30,0.28)] min-h-[620px] sm:min-h-[660px] lg:min-h-[700px] flex flex-col justify-between p-6 sm:p-10 lg:p-12">
+        {/* The Clean Panoramic Showcase Frame */}
+        <div className="relative rounded-[2rem] sm:rounded-[2.5rem] lg:rounded-[3rem] overflow-hidden border border-[#EAE7DF] bg-[#08261E] shadow-[0_25px_70px_-20px_rgba(8,38,30,0.25)] min-h-[480px] sm:min-h-[520px] lg:min-h-[540px] flex flex-col justify-center items-center py-12 sm:py-16 px-6 sm:px-10 lg:px-12 text-center">
           
           {/* Panoramic Hero Photo (Wayag, Raja Ampat) */}
           <img
@@ -90,47 +90,17 @@ export default function HomePage() {
             className="absolute inset-0 w-full h-full object-cover object-center scale-105 transition-transform duration-1000 ease-out"
           />
 
-          {/* GRADIASI TEMBUS PANDANG (Atmospheric Multi-layer Scrim) */}
-          {/* Lapisan 1: Gradasi vertikal tembus pandang (bawah gelap obsidian, atas bernapas lembut) */}
-          <div className="absolute inset-0 bg-gradient-to-t from-[#08261E] via-[#08261E]/65 to-[#08261E]/40 pointer-events-none" />
+          {/* GRADIASI TEMBUS PANDANG (Atmospheric Translucent Scrim) */}
+          <div className="absolute inset-0 bg-gradient-to-t from-[#08261E]/90 via-[#08261E]/55 to-[#08261E]/40 pointer-events-none" />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_transparent_35%,_rgba(8,38,30,0.6)_100%)] pointer-events-none" />
 
-          {/* Lapisan 2: Gradasi vignette radial tembus pandang */}
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_transparent_30%,_rgba(8,38,30,0.65)_100%)] pointer-events-none" />
-
-          {/* Lapisan 3: Ambient Golden Reflex */}
-          <div className="absolute -top-20 -right-20 w-80 h-80 bg-[#C5A059]/15 blur-3xl rounded-full pointer-events-none" />
-
-          {/* TOP ROW: Luxury Pills */}
-          <div className="relative z-10 flex flex-wrap items-center justify-between gap-3">
-            <motion.div
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 backdrop-blur-xl border border-white/20 text-[#F5E4BE] text-xs font-semibold tracking-wider uppercase shadow-md"
-            >
-              <Sparkles className="w-3.5 h-3.5 text-[#C5A059]" />
-              <span>Kurasi Eksklusif Nusantara • Edisi 2026/2027</span>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-              className="hidden sm:inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#08261E]/60 backdrop-blur-xl border border-white/15 text-white/90 text-xs font-medium shadow-md"
-            >
-              <ShieldCheck className="w-4 h-4 text-[#C5A059]" />
-              <span>100% Garansi Keberangkatan Pasti</span>
-            </motion.div>
-          </div>
-
-          {/* CENTER TYPOGRAPHY & RATINGS STACK */}
-          <div className="relative z-10 my-auto py-6 sm:py-8 text-center max-w-3xl mx-auto space-y-5">
-            {/* H1 Title */}
+          {/* CENTER TYPOGRAPHY */}
+          <div className="relative z-10 max-w-3xl mx-auto space-y-4 mb-8 sm:mb-10">
             <motion.h1
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.15 }}
-              className="font-serif text-3xl sm:text-5xl lg:text-6xl font-normal leading-[1.1] text-white tracking-tight drop-shadow-sm"
+              transition={{ duration: 0.6 }}
+              className="font-serif text-3xl sm:text-5xl lg:text-6xl font-normal leading-[1.12] text-white tracking-tight drop-shadow-sm"
             >
               Kemurnian Alam Indonesia,{' '}
               <span className="italic font-serif font-light text-[#C5A059] block sm:inline">
@@ -138,80 +108,29 @@ export default function HomePage() {
               </span>
             </motion.h1>
 
-            {/* Subtitle */}
             <motion.p
-              initial={{ opacity: 0, y: 15 }}
+              initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.25 }}
-              className="text-xs sm:text-sm lg:text-base leading-relaxed text-white/80 max-w-xl mx-auto font-normal"
+              transition={{ duration: 0.6, delay: 0.1 }}
+              className="text-xs sm:text-sm lg:text-base leading-relaxed text-white/80 max-w-lg mx-auto font-normal"
             >
-              Biro perjalanan butik yang menghubungkan Anda dengan pulau-pulau rahasia, puncak kaldera fajar, dan warisan budaya nusantara dengan pemandu berlisensi resmi.
+              Biro perjalanan butik ke pulau-pulau rahasia, puncak kaldera fajar, dan warisan budaya nusantara.
             </motion.p>
-
-            {/* Quick Action Exploration Pills */}
-            <motion.div
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-              className="flex flex-wrap items-center justify-center gap-3 pt-1"
-            >
-              <Link
-                to="/trips"
-                className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 font-semibold text-xs text-[#08261E] bg-[#C5A059] hover:bg-[#d6b26b] transition-all shadow-md active:scale-95"
-              >
-                <span>Eksplorasi Katalog Trip</span>
-                <ArrowUpRight className="w-3.5 h-3.5" />
-              </Link>
-              <Link
-                to="/tracking"
-                className="inline-flex items-center gap-2 border border-white/20 bg-white/10 hover:bg-white/20 text-white rounded-full px-4 py-2.5 font-medium text-xs transition-all backdrop-blur-md"
-              >
-                <Search className="w-3.5 h-3.5 text-[#C5A059]" />
-                <span>Lacak Kode Booking</span>
-              </Link>
-            </motion.div>
-
-            {/* Rating & Trust Strip */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-              className="inline-flex flex-wrap items-center justify-center gap-3 sm:gap-5 px-4 py-1.5 rounded-full bg-black/25 backdrop-blur-md border border-white/15 text-[11px] sm:text-xs text-white/85 shadow-sm"
-            >
-              <div className="flex items-center gap-1.5">
-                <div className="flex items-center text-[#C5A059]">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="w-3 h-3 fill-[#C5A059]" />
-                  ))}
-                </div>
-                <span className="font-bold text-white tabular-nums">4.9 / 5.0</span>
-              </div>
-              <div className="h-3 w-px bg-white/20 hidden sm:block" />
-              <div className="text-white/80">
-                <strong className="text-white font-semibold tabular-nums">3.200+</strong> Pelancong
-              </div>
-              <div className="h-3 w-px bg-white/20 hidden sm:block" />
-              <div className="text-[#F5E4BE] font-medium flex items-center gap-1.5">
-                <ShieldCheck className="w-3.5 h-3.5 text-[#C5A059]" />
-                <span>Kemenparekraf & ASITA Certified</span>
-              </div>
-            </motion.div>
           </div>
 
-          {/* BOTTOM SEARCH CAPSULE & POPULAR CHIPS */}
+          {/* CLEAN FLOATING SEARCH CAPSULE (Kaca Tembus Pandang) */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.45 }}
-            className="relative z-10 pt-2"
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="relative z-10 w-full max-w-4xl mx-auto"
           >
-            {/* FLOATING SEARCH CAPSULE (Kaca Tembus Pandang) */}
             <form
               onSubmit={handleSearchSubmit}
-              className="bg-white/95 backdrop-blur-2xl border border-white/90 rounded-2xl lg:rounded-full p-2.5 sm:p-3 shadow-[0_20px_50px_rgba(0,0,0,0.35)] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-2 items-center max-w-4xl mx-auto"
+              className="bg-white/95 backdrop-blur-2xl border border-white/90 rounded-2xl lg:rounded-full p-2.5 sm:p-3 shadow-[0_20px_50px_rgba(0,0,0,0.35)] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-2 items-center"
             >
               {/* Destinasi */}
-              <div className="lg:col-span-4 px-4 py-2.5 rounded-xl lg:rounded-full bg-[#FCFCFA] border border-[#EAE7DF] hover:border-[#08261E]/30 focus-within:border-[#08261E] transition-all">
+              <div className="lg:col-span-4 px-4 py-2.5 rounded-xl lg:rounded-full bg-[#FCFCFA] border border-[#EAE7DF] hover:border-[#08261E]/30 focus-within:border-[#08261E] transition-all text-left">
                 <label className="block text-[9px] font-bold uppercase tracking-wider text-[#64748B] mb-0.5">
                   Destinasi Impian
                 </label>
@@ -231,7 +150,7 @@ export default function HomePage() {
               </div>
 
               {/* Tanggal */}
-              <div className="lg:col-span-3 px-4 py-2.5 rounded-xl lg:rounded-full bg-[#FCFCFA] border border-[#EAE7DF] hover:border-[#08261E]/30 focus-within:border-[#08261E] transition-all">
+              <div className="lg:col-span-3 px-4 py-2.5 rounded-xl lg:rounded-full bg-[#FCFCFA] border border-[#EAE7DF] hover:border-[#08261E]/30 focus-within:border-[#08261E] transition-all text-left">
                 <label className="block text-[9px] font-bold uppercase tracking-wider text-[#64748B] mb-0.5">
                   Tanggal Berangkat
                 </label>
@@ -244,7 +163,7 @@ export default function HomePage() {
               </div>
 
               {/* Peserta */}
-              <div className="lg:col-span-2 px-4 py-2.5 rounded-xl lg:rounded-full bg-[#FCFCFA] border border-[#EAE7DF] hover:border-[#08261E]/30 focus-within:border-[#08261E] transition-all">
+              <div className="lg:col-span-2 px-4 py-2.5 rounded-xl lg:rounded-full bg-[#FCFCFA] border border-[#EAE7DF] hover:border-[#08261E]/30 focus-within:border-[#08261E] transition-all text-left">
                 <label className="block text-[9px] font-bold uppercase tracking-wider text-[#64748B] mb-0.5">
                   Peserta
                 </label>
@@ -271,24 +190,6 @@ export default function HomePage() {
                 </button>
               </div>
             </form>
-
-            {/* Quick Inspiration Pills */}
-            <div className="mt-3 flex flex-wrap items-center justify-center gap-2 text-xs text-white/80">
-              <span className="text-[11px] font-medium text-white/60">Destinasi Populer:</span>
-              {['Raja Ampat', 'Labuan Bajo', 'Gunung Bromo', 'Nusa Penida'].map((d, i) => (
-                <button
-                  key={i}
-                  type="button"
-                  onClick={() => {
-                    setSearchDestination(d);
-                    navigate(`/trips?destination=${encodeURIComponent(d)}`);
-                  }}
-                  className="px-3 py-1 rounded-full text-[11px] font-medium bg-white/10 hover:bg-white/20 border border-white/20 text-[#F5E4BE] transition-all backdrop-blur-md shadow-2xs"
-                >
-                  {d}
-                </button>
-              ))}
-            </div>
           </motion.div>
         </div>
       </section>
