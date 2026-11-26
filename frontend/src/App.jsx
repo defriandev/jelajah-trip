@@ -23,7 +23,7 @@ function AppLayout() {
   const isAuthRoute = location.pathname === '/login' || location.pathname === '/register';
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#FAF9F6] text-[#14211D] selection:bg-[#0F4C3A] selection:text-white">
+    <div className="flex flex-col min-h-screen bg-[#FCFCFA] text-[#08261E] selection:bg-[#C5A059] selection:text-[#08261E]">
       {!isAdminRoute && <Navbar />}
       <main className="flex-1 flex flex-col">
         <Routes>
