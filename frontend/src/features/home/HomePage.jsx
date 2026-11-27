@@ -303,12 +303,12 @@ export default function HomePage() {
 
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
             {[
-              { name: 'Raja Ampat', img: 'https://images.unsplash.com/photo-1516690561799-46d8f74f9abf?auto=format&fit=crop&w=400&q=80', desc: 'Papua Barat Daya' },
-              { name: 'Labuan Bajo', img: 'https://images.unsplash.com/photo-1544644181-1484b3fdfc62?auto=format&fit=crop&w=400&q=80', desc: 'Nusa Tenggara Timur' },
-              { name: 'Bromo', img: 'https://images.unsplash.com/photo-1588668214407-6ea9a6d8c272?auto=format&fit=crop&w=400&q=80', desc: 'Jawa Timur' },
-              { name: 'Nusa Penida', img: 'https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=400&q=80', desc: 'Bali' },
-              { name: 'Danau Toba', img: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80', desc: 'Sumatera Utara' },
-              { name: 'Yogyakarta', img: 'https://images.unsplash.com/photo-1596402184320-417e7178b2cd?auto=format&fit=crop&w=600&q=80', desc: 'D.I. Yogyakarta' },
+              { name: 'Raja Ampat', img: 'https://commons.wikimedia.org/wiki/Special:FilePath/Piaynemo_Raja_Ampat.jpg?width=800', desc: 'Papua Barat Daya' },
+              { name: 'Labuan Bajo', img: 'https://commons.wikimedia.org/wiki/Special:FilePath/Padar_Island.jpg?width=800', desc: 'Nusa Tenggara Timur' },
+              { name: 'Bromo', img: 'https://commons.wikimedia.org/wiki/Special:FilePath/Gunung_Bromo_sunrise_-_Indonesia.jpg?width=800', desc: 'Jawa Timur' },
+              { name: 'Nusa Penida', img: 'https://commons.wikimedia.org/wiki/Special:FilePath/Kelingking_Beach,_Nusa_Penida.jpg?width=800', desc: 'Bali' },
+              { name: 'Danau Toba', img: 'https://commons.wikimedia.org/wiki/Special:FilePath/Danau_Toba_dan_Pulau_Samosir.jpg?width=800', desc: 'Sumatera Utara' },
+              { name: 'Yogyakarta', img: 'https://commons.wikimedia.org/wiki/Special:FilePath/Borobudur_Sunrise.jpg?width=800', desc: 'D.I. Yogyakarta' },
             ].map((d, i) => (
               <motion.div
                 key={i}

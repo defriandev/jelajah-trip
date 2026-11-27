@@ -54,7 +54,7 @@ func main() {
 				"Pemandu Lokal Berlisensi HPI",
 			},
 			Quota:    12,
-			ImageURL: "https://images.unsplash.com/photo-1516690561799-46d8f74f9abf?auto=format&fit=crop&w=1200&q=80",
+			ImageURL: "https://commons.wikimedia.org/wiki/Special:FilePath/Piaynemo_Raja_Ampat.jpg?width=1200",
 		},
 		{
 			Title:       "Komodo Dragon & Padar Island Luxury Sailing",
@@ -72,7 +72,7 @@ func main() {
 				"Free Flow Kopi Flores & Buah Segar",
 			},
 			Quota:    14,
-			ImageURL: "https://images.unsplash.com/photo-1544644181-1484b3fdfc62?auto=format&fit=crop&w=1200&q=80",
+			ImageURL: "https://commons.wikimedia.org/wiki/Special:FilePath/Padar_Island.jpg?width=1200",
 		},
 		{
 			Title:       "Golden Sunrise Bromo, Lautan Pasir & Madakaripura",
@@ -90,7 +90,7 @@ func main() {
 				"Antar-Jemput Surabaya / Malang PP",
 			},
 			Quota:    18,
-			ImageURL: "https://images.unsplash.com/photo-1588668214407-6ea9a6d8c272?auto=format&fit=crop&w=1200&q=80",
+			ImageURL: "https://commons.wikimedia.org/wiki/Special:FilePath/Gunung_Bromo_sunrise_-_Indonesia.jpg?width=1200",
 		},
 		{
 			Title:       "Pesona Tebing Karst Nusa Penida & Diamond Beach",
@@ -108,7 +108,7 @@ func main() {
 				"Bantuan Foto di Setiap Spot Ikonik",
 			},
 			Quota:    20,
-			ImageURL: "https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=1200&q=80",
+			ImageURL: "https://commons.wikimedia.org/wiki/Special:FilePath/Kelingking_Beach,_Nusa_Penida.jpg?width=1200",
 		},
 		{
 			Title:       "Keajaiban Kaldera Danau Toba & Samosir Cultural Retreat",
@@ -126,7 +126,7 @@ func main() {
 				"Asuransi Perjalanan",
 			},
 			Quota:    16,
-			ImageURL: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80",
+			ImageURL: "https://commons.wikimedia.org/wiki/Special:FilePath/Danau_Toba_dan_Pulau_Samosir.jpg?width=1200",
 		},
 		{
 			Title:       "Heritage Borobudur Sunrise, Prambanan & Lava Tour Merapi",
@@ -144,7 +144,7 @@ func main() {
 				"Antar-Jemput Stasiun Tugu / Bandara YIA",
 			},
 			Quota:    22,
-			ImageURL: "https://images.unsplash.com/photo-1596402184320-417e7178b2cd?auto=format&fit=crop&w=1200&q=80",
+			ImageURL: "https://commons.wikimedia.org/wiki/Special:FilePath/Borobudur_Sunrise.jpg?width=1200",
 		},
 		{
 			Title:       "Eksplorasi Derawan, Maratua Blue Lagoon & Ubur-ubur Kakaban",
@@ -162,7 +162,7 @@ func main() {
 				"Antar-Jemput Bandara Berau PP",
 			},
 			Quota:    14,
-			ImageURL: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80",
+			ImageURL: "https://commons.wikimedia.org/wiki/Special:FilePath/Pulau_derawan.jpg?width=1200",
 		},
 		{
 			Title:       "Tana Toraja Cultural Expedition & Batutumonga Misty Hills",
@@ -180,7 +180,7 @@ func main() {
 				"Asuransi Perjalanan",
 			},
 			Quota:    16,
-			ImageURL: "https://images.unsplash.com/photo-1605647540924-852290f6b0d5?auto=format&fit=crop&w=1200&q=80",
+			ImageURL: "https://commons.wikimedia.org/wiki/Special:FilePath/Tana_Toraja,_Kete_Kesu,_tongkonan_(6823189476).jpg?width=1200",
 		},
 		{
 			Title:       "Pulau Belitung, Geopark Granit & Mercusuar Lengkuas",
@@ -198,7 +198,7 @@ func main() {
 				"Antar-Jemput Bandara H.A.S. Hanandjoeddin PP",
 			},
 			Quota:    18,
-			ImageURL: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80",
+			ImageURL: "https://commons.wikimedia.org/wiki/Special:FilePath/Tanjung_Tinggi,_Belitung.jpg?width=1200",
 		},
 		{
 			Title:       "Eksotisme Sumba: Savana Purba, Weekuri Lagoon & Desa Ratenggaro",
@@ -216,7 +216,7 @@ func main() {
 				"Antar-Jemput Bandara Tambolaka / Waingapu PP",
 			},
 			Quota:    12,
-			ImageURL: "https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?auto=format&fit=crop&w=1200&q=80",
+			ImageURL: "https://commons.wikimedia.org/wiki/Special:FilePath/Bukit_Wairinding,_Sumba_Timur.jpg?width=1200",
 		},
 		{
 			Title:       "Midnight Blue Fire Kawah Ijen & Safari Savana Baluran",
@@ -234,7 +234,7 @@ func main() {
 				"Dokumentasi Foto Kawah & Safari",
 			},
 			Quota:    20,
-			ImageURL: "https://images.unsplash.com/photo-1578632767115-351597cf2477?auto=format&fit=crop&w=1200&q=80",
+			ImageURL: "https://commons.wikimedia.org/wiki/Special:FilePath/Kawah_Ijen_crater_-_Indonesia_1.jpg?width=1200",
 		},
 		{
 			Title:       "Wakatobi Undersea Paradise & Hoga Island Coral Sanctuary",
@@ -252,7 +252,7 @@ func main() {
 				"Antar-Jemput Bandara Matahora Wangi-Wangi PP",
 			},
 			Quota:    12,
-			ImageURL: "https://images.unsplash.com/photo-1682687220063-4742bd7fd538?auto=format&fit=crop&w=1200&q=80",
+			ImageURL: "https://commons.wikimedia.org/wiki/Special:FilePath/Wakatobi-188.jpg?width=1200",
 		},
 		{
 			Title:       "Banda Neira: Kejayaan Rempah Dunia, Benteng Belgica & Hatta Island",
@@ -270,7 +270,7 @@ func main() {
 				"Alat Snorkeling Lengkap",
 			},
 			Quota:    12,
-			ImageURL: "https://images.unsplash.com/photo-1544644181-1484b3fdfc62?auto=format&fit=crop&w=1200&q=80",
+			ImageURL: "https://commons.wikimedia.org/wiki/Special:FilePath/Fort_Belgica_(48250814991).jpg?width=1200",
 		},
 		{
 			Title:       "Pesona Sejuk Priangan: Kawah Putih, Glamping Patenggang & Kebun Teh",
@@ -288,7 +288,7 @@ func main() {
 				"Wisata Belanja Oleh-Oleh Khas Bandung",
 			},
 			Quota:    20,
-			ImageURL: "https://images.unsplash.com/photo-1588668214407-6ea9a6d8c272?auto=format&fit=crop&w=1200&q=80",
+			ImageURL: "https://commons.wikimedia.org/wiki/Special:FilePath/Kawah_Putih_Bandung.jpg?width=1200",
 		},
 		{
 			Title:       "Eksplorasi Morotai: Pulau Dodola, Jejak Perang Dunia II & Pasir Putih",
@@ -306,7 +306,7 @@ func main() {
 				"Antar-Jemput Bandara Pitu Morotai PP",
 			},
 			Quota:    14,
-			ImageURL: "https://images.unsplash.com/photo-1516690561799-46d8f74f9abf?auto=format&fit=crop&w=1200&q=80",
+			ImageURL: "https://commons.wikimedia.org/wiki/Special:FilePath/A_beach_on_dodola_island.jpg?width=1200",
 		},
 		{
 			Title:       "Taman Nasional Bunaken & Tangkoko Wildlife Safari",
@@ -324,7 +324,7 @@ func main() {
 				"Antar-Jemput Bandara Sam Ratulangi PP",
 			},
 			Quota:    18,
-			ImageURL: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80",
+			ImageURL: "https://commons.wikimedia.org/wiki/Special:FilePath/Bunaken01.JPG?width=1200",
 		},
 	}
 
@@ -386,18 +386,18 @@ func main() {
 	}
 	log.Printf("[EnrichCatalog] Sukses menyemai %d paket wisata kurasi premium nusantara.\n", len(curated))
 
-	// 4. Perbarui juga paket dummy 'Eksplorasi Nusantara #...' agar jika diakses tetap memiliki deskripsi & gambar profesional
+	// 4. Perbarui juga paket dummy 'Eksplorasi Nusantara #...' agar jika diakses tetap memiliki deskripsi & gambar asli destinasi
 	destinationImages := map[string]string{
-		"Bali":       "https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=1200&q=80",
-		"Labuan":     "https://images.unsplash.com/photo-1544644181-1484b3fdfc62?auto=format&fit=crop&w=1200&q=80",
-		"Raja":       "https://images.unsplash.com/photo-1516690561799-46d8f74f9abf?auto=format&fit=crop&w=1200&q=80",
-		"Bromo":      "https://images.unsplash.com/photo-1588668214407-6ea9a6d8c272?auto=format&fit=crop&w=1200&q=80",
-		"Yogyakarta": "https://images.unsplash.com/photo-1596402184320-417e7178b2cd?auto=format&fit=crop&w=1200&q=80",
-		"Derawan":    "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80",
-		"Wakatobi":   "https://images.unsplash.com/photo-1682687220063-4742bd7fd538?auto=format&fit=crop&w=1200&q=80",
-		"Toraja":     "https://images.unsplash.com/photo-1605647540924-852290f6b0d5?auto=format&fit=crop&w=1200&q=80",
-		"Belitung":   "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80",
-		"Lombok":     "https://images.unsplash.com/photo-1578632767115-351597cf2477?auto=format&fit=crop&w=1200&q=80",
+		"Bali":       "https://commons.wikimedia.org/wiki/Special:FilePath/Kelingking_Beach,_Nusa_Penida.jpg?width=1200",
+		"Labuan":     "https://commons.wikimedia.org/wiki/Special:FilePath/Padar_Island.jpg?width=1200",
+		"Raja":       "https://commons.wikimedia.org/wiki/Special:FilePath/Piaynemo_Raja_Ampat.jpg?width=1200",
+		"Bromo":      "https://commons.wikimedia.org/wiki/Special:FilePath/Gunung_Bromo_sunrise_-_Indonesia.jpg?width=1200",
+		"Yogyakarta": "https://commons.wikimedia.org/wiki/Special:FilePath/Borobudur_Sunrise.jpg?width=1200",
+		"Derawan":    "https://commons.wikimedia.org/wiki/Special:FilePath/Pulau_derawan.jpg?width=1200",
+		"Wakatobi":   "https://commons.wikimedia.org/wiki/Special:FilePath/Wakatobi-188.jpg?width=1200",
+		"Toraja":     "https://commons.wikimedia.org/wiki/Special:FilePath/Tana_Toraja,_Kete_Kesu,_tongkonan_(6823189476).jpg?width=1200",
+		"Belitung":   "https://commons.wikimedia.org/wiki/Special:FilePath/Tanjung_Tinggi,_Belitung.jpg?width=1200",
+		"Lombok":     "https://commons.wikimedia.org/wiki/Special:FilePath/Bukit_Wairinding,_Sumba_Timur.jpg?width=1200",
 	}
 
 	var dummyTrips []domain.Trip

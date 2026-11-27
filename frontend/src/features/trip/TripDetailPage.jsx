@@ -97,94 +97,90 @@ function ErrorPage({ message }) {
   );
 }
 
-/* ─── Destination Photo Presets ─── */
+/* ─── Destination Photo Presets (100% Foto Asli Destinasi Nusantara) ─── */
 const destinationGalleries = {
   yogyakarta: [
     {
-      url: 'https://images.unsplash.com/photo-1596402184320-417e7178b2cd?auto=format&fit=crop&w=1200&q=80',
-      title: 'Candi Prambanan Megah',
-    },
-    {
-      url: 'https://images.unsplash.com/photo-1584810359583-96fc3448beaa?auto=format&fit=crop&w=1200&q=80',
+      url: 'https://commons.wikimedia.org/wiki/Special:FilePath/Borobudur_Sunrise.jpg?width=1200',
       title: 'Sunrise Candi Borobudur',
     },
     {
-      url: 'https://images.unsplash.com/photo-1541872703-74c5e44368f9?auto=format&fit=crop&w=1200&q=80',
-      title: 'Keagungan Stupa & Lembah Menoreh',
+      url: 'https://commons.wikimedia.org/wiki/Special:FilePath/Borobudur_Panoramic_View.jpg?width=1200',
+      title: 'Panorama Candi Borobudur',
     },
   ],
   bromo: [
     {
-      url: 'https://images.unsplash.com/photo-1588668214407-6ea9a6d8c272?auto=format&fit=crop&w=1200&q=80',
-      title: 'Kaldera Bromo & Lautan Pasir',
+      url: 'https://commons.wikimedia.org/wiki/Special:FilePath/Gunung_Bromo_sunrise_-_Indonesia.jpg?width=1200',
+      title: 'Sunrise Kaldera Gunung Bromo & Semeru',
     },
     {
-      url: 'https://images.unsplash.com/photo-1517411032315-54ef2cb783bb?auto=format&fit=crop&w=1200&q=80',
-      title: 'Lembah Fajar Bromo Tengger',
+      url: 'https://commons.wikimedia.org/wiki/Special:FilePath/Sunrise_on_Mount_Bromo.jpg?width=1200',
+      title: 'Fajar Kawah Tengger Bromo',
     },
   ],
   rajaampat: [
     {
-      url: 'https://images.unsplash.com/photo-1516690561799-46d8f74f9abf?auto=format&fit=crop&w=1200&q=80',
-      title: 'Gugusan Karst Kepulauan Wayag',
+      url: 'https://commons.wikimedia.org/wiki/Special:FilePath/Piaynemo_Raja_Ampat.jpg?width=1200',
+      title: 'Laguna Karst Piaynemo Raja Ampat',
     },
     {
-      url: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80',
-      title: 'Laguna Terumbu Karang Pianemo',
+      url: 'https://commons.wikimedia.org/wiki/Special:FilePath/Wayag_Island.jpg?width=1200',
+      title: 'Gugusan Pulau Wayag Raja Ampat',
     },
   ],
   labuanbajo: [
     {
-      url: 'https://images.unsplash.com/photo-1544644181-1484b3fdfc62?auto=format&fit=crop&w=1200&q=80',
-      title: 'Puncak Pulau Padar Saat Fajar',
+      url: 'https://commons.wikimedia.org/wiki/Special:FilePath/Padar_Island.jpg?width=1200',
+      title: 'Puncak Pulau Padar Labuan Bajo',
     },
     {
-      url: 'https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?auto=format&fit=crop&w=1200&q=80',
-      title: 'Sailing Phinisi di Pink Beach',
+      url: 'https://commons.wikimedia.org/wiki/Special:FilePath/Pulau_Padar_1.jpg?width=1200',
+      title: 'Teluk Tiga Warna Pulau Padar',
     },
   ],
   nusapenida: [
     {
-      url: 'https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=1200&q=80',
-      title: 'Kelingking Beach T-Rex Cliff',
-    },
-    {
-      url: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80',
-      title: 'Tangga Tebing Diamond Beach',
+      url: 'https://commons.wikimedia.org/wiki/Special:FilePath/Kelingking_Beach,_Nusa_Penida.jpg?width=1200',
+      title: 'Tebing Kelingking Beach Nusa Penida',
     },
   ],
   danautoba: [
     {
-      url: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80',
+      url: 'https://commons.wikimedia.org/wiki/Special:FilePath/Danau_Toba_dan_Pulau_Samosir.jpg?width=1200',
       title: 'Panorama Danau Toba & Pulau Samosir',
     },
     {
-      url: 'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=1200&q=80',
-      title: 'Perbukitan Hijau Holbung Toba',
+      url: 'https://commons.wikimedia.org/wiki/Special:FilePath/Danau_Toba_dari_Samosir.jpg?width=1200',
+      title: 'Pemandangan Danau Toba dari Samosir',
     },
   ],
   derawan: [
     {
-      url: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80',
-      title: 'Danau Ubur-ubur Kakaban & Laguna Maratua',
+      url: 'https://commons.wikimedia.org/wiki/Special:FilePath/Pulau_derawan.jpg?width=1200',
+      title: 'Pulau Derawan Kalimantan Timur',
     },
   ],
   toraja: [
     {
-      url: 'https://images.unsplash.com/photo-1605647540924-852290f6b0d5?auto=format&fit=crop&w=1200&q=80',
-      title: 'Tongkonan Adat & Perbukitan Batutumonga',
+      url: 'https://commons.wikimedia.org/wiki/Special:FilePath/Tana_Toraja,_Kete_Kesu,_tongkonan_(6823189476).jpg?width=1200',
+      title: 'Rumah Adat Tongkonan Kete Kesu Toraja',
     },
   ],
   belitung: [
     {
-      url: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80',
-      title: 'Batu Granit Tanjung Tinggi & Pulau Lengkuas',
+      url: 'https://commons.wikimedia.org/wiki/Special:FilePath/Tanjung_Tinggi,_Belitung.jpg?width=1200',
+      title: 'Pantai Batu Granit Tanjung Tinggi Belitung',
+    },
+    {
+      url: 'https://commons.wikimedia.org/wiki/Special:FilePath/Pulau_Lengkuas_Belitung.jpg?width=1200',
+      title: 'Pulau Lengkuas & Mercusuar Belitung',
     },
   ],
   sumba: [
     {
-      url: 'https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?auto=format&fit=crop&w=1200&q=80',
-      title: 'Savana Warinding & Laguna Danau Weekuri',
+      url: 'https://commons.wikimedia.org/wiki/Special:FilePath/Bukit_Wairinding,_Sumba_Timur.jpg?width=1200',
+      title: 'Perbukitan Savana Wairinding Sumba',
     },
   ],
 };
@@ -252,6 +248,14 @@ export default function TripDetailPage() {
     gallery = destinationGalleries.nusapenida;
   } else if (destKey.includes('toba')) {
     gallery = destinationGalleries.danautoba;
+  } else if (destKey.includes('derawan')) {
+    gallery = destinationGalleries.derawan;
+  } else if (destKey.includes('toraja')) {
+    gallery = destinationGalleries.toraja;
+  } else if (destKey.includes('belitung')) {
+    gallery = destinationGalleries.belitung;
+  } else if (destKey.includes('sumba')) {
+    gallery = destinationGalleries.sumba;
   }
 
   // Fallback: if no multi gallery, ensure at least the primary image is present
