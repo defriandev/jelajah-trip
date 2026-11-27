@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
-import { Eye, EyeOff, Loader2, AlertCircle, CheckCircle2, Sparkles } from 'lucide-react';
+import { Eye, EyeOff, Loader2, AlertCircle, CheckCircle2, Sparkles, ArrowLeft } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import BrandLogo from '../../components/BrandLogo';
 
@@ -71,7 +71,7 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="flex-1 min-h-[calc(100vh-4rem)] bg-[#FCFCFA] flex flex-col lg:flex-row">
+    <div className="flex-1 min-h-screen bg-[#FCFCFA] flex flex-col lg:flex-row">
       {/* Left decorative brand panel */}
       <div className="hidden lg:flex lg:w-1/2 bg-[#08261E] text-white flex-col justify-between p-12 lg:p-16 relative overflow-hidden">
         {/* Subtle geometric circles */}
@@ -83,7 +83,9 @@ export default function RegisterPage() {
 
         {/* Top: Artisan Brand Logo */}
         <div className="relative z-10">
-          <BrandLogo inverted size="large" />
+          <Link to="/" className="inline-block hover:opacity-90 transition-opacity">
+            <BrandLogo inverted size="large" />
+          </Link>
         </div>
 
         {/* Middle content */}
@@ -123,6 +125,18 @@ export default function RegisterPage() {
       {/* Right form panel */}
       <div className="w-full lg:w-1/2 flex items-center justify-center px-4 sm:px-8 py-10 lg:py-16 my-auto">
         <div className="w-full max-w-md">
+          <div className="flex items-center justify-between mb-6">
+            <Link to="/" className="lg:hidden inline-block">
+              <BrandLogo />
+            </Link>
+            <Link
+              to="/"
+              className="inline-flex items-center gap-1.5 text-xs font-medium text-[#64748B] hover:text-[#08261E] transition-colors ml-auto lg:ml-0"
+            >
+              <ArrowLeft className="w-3.5 h-3.5" />
+              <span>Kembali ke Beranda</span>
+            </Link>
+          </div>
           <div className="bg-white/95 backdrop-blur-xl border border-[#EAE7DF] rounded-3xl p-7 sm:p-9 shadow-xl shadow-[#08261E]/4">
             {/* Eyebrow & Title */}
             <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#C5A059] mb-1.5">
