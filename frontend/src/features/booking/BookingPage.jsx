@@ -110,11 +110,11 @@ export default function BookingPage() {
 
         {/* Page heading */}
         <div className="mb-8">
-          <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#C5A059] mb-1">RESERVASI EKSKLUSIF</p>
-          <h1 className="text-2xl sm:text-4xl font-serif font-normal text-[#08261E]">
+          <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#9A7532] mb-1">RESERVASI EKSKLUSIF</p>
+          <h1 className="text-2xl sm:text-4xl font-serif font-medium text-[#08261E]">
             Formulir Reservasi Perjalanan
           </h1>
-          <p className="text-sm text-[#64748B] mt-1 font-light">
+          <p className="text-sm text-[#475569] mt-1.5 font-normal">
             Lengkapi data pemesanan di bawah untuk konfirmasi jadwal terjamin.
           </p>
         </div>

@@ -132,12 +132,12 @@ export default function BookingForm({ trip, user, onSuccess, onFormChange }) {
     >
       {/* Section header */}
       <div>
-        <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-[#C5A059] mb-1.5">
+        <div className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.2em] text-[#9A7532] mb-1.5">
           <Sparkles className="w-3.5 h-3.5 text-[#C5A059]" />
           <span>Langkah 1 Dari 2</span>
         </div>
         <h2 className="font-serif text-2xl font-bold text-[#08261E]">Data Pemesan & Jadwal</h2>
-        <p className="text-xs text-[#64748B] mt-1 font-light">
+        <p className="text-sm text-[#475569] mt-1 font-normal">
           Pastikan kontak aktif untuk pengiriman voucher resmi dan koordinasi pemandu via WhatsApp.
         </p>
       </div>
@@ -161,7 +161,7 @@ export default function BookingForm({ trip, user, onSuccess, onFormChange }) {
             placeholder="Contoh: Budi Santoso"
             value={formData.customer_name}
             onChange={handleChange}
-            className="bg-[#FCFCFA] border border-[#EAE7DF] focus:border-[#08261E] focus:outline-none focus:ring-1 focus:ring-[#08261E] rounded-2xl text-[#111827] px-4 py-3 w-full text-xs placeholder:text-[#64748B]/40 transition-all font-medium"
+            className="bg-[#FCFCFA] border border-[#EAE7DF] focus:border-[#08261E] focus:outline-none focus:ring-1 focus:ring-[#08261E] rounded-2xl text-[#111827] px-4 py-3 w-full text-sm placeholder:text-[#94A3B8] transition-all font-medium"
           />
           {errors.customer_name && (
             <p className="text-xs text-rose-600 mt-1">{errors.customer_name}</p>
@@ -179,7 +179,7 @@ export default function BookingForm({ trip, user, onSuccess, onFormChange }) {
             placeholder="Contoh: budi@example.com"
             value={formData.customer_email}
             onChange={handleChange}
-            className="bg-[#FCFCFA] border border-[#EAE7DF] focus:border-[#08261E] focus:outline-none focus:ring-1 focus:ring-[#08261E] rounded-2xl text-[#111827] px-4 py-3 w-full text-xs placeholder:text-[#64748B]/40 transition-all font-medium"
+            className="bg-[#FCFCFA] border border-[#EAE7DF] focus:border-[#08261E] focus:outline-none focus:ring-1 focus:ring-[#08261E] rounded-2xl text-[#111827] px-4 py-3 w-full text-sm placeholder:text-[#94A3B8] transition-all font-medium"
           />
           {errors.customer_email && (
             <p className="text-xs text-rose-600 mt-1">{errors.customer_email}</p>
@@ -197,12 +197,12 @@ export default function BookingForm({ trip, user, onSuccess, onFormChange }) {
             placeholder="Contoh: 081234567890"
             value={formData.customer_phone}
             onChange={handleChange}
-            className="bg-[#FCFCFA] border border-[#EAE7DF] focus:border-[#08261E] focus:outline-none focus:ring-1 focus:ring-[#08261E] rounded-2xl text-[#111827] px-4 py-3 w-full text-xs placeholder:text-[#64748B]/40 transition-all font-medium"
+            className="bg-[#FCFCFA] border border-[#EAE7DF] focus:border-[#08261E] focus:outline-none focus:ring-1 focus:ring-[#08261E] rounded-2xl text-[#111827] px-4 py-3 w-full text-sm placeholder:text-[#94A3B8] transition-all font-medium"
           />
           {errors.customer_phone ? (
             <p className="text-xs text-rose-600 mt-1">{errors.customer_phone}</p>
           ) : (
-            <p className="text-[11px] text-[#64748B]/70 mt-1">
+            <p className="text-xs text-[#475569] mt-1.5">
               Nomor ini digunakan tim kurator untuk membuat grup koordinasi penjemputan bandara.
             </p>
           )}

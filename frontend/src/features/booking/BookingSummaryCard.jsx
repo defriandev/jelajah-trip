@@ -44,7 +44,7 @@ export default function BookingSummaryCard({ trip, pax, travelDate }) {
       </h3>
 
       {/* Details list */}
-      <ul className="space-y-3.5 text-xs text-[#64748B]">
+      <ul className="space-y-3.5 text-sm text-[#475569]">
         <li className="flex items-start gap-2.5">
           <MapPin className="w-4 h-4 text-[#C5A059] flex-shrink-0 mt-0.5" />
           <span className="font-medium text-[#111827]">{trip?.destination || '—'}</span>
@@ -55,11 +55,11 @@ export default function BookingSummaryCard({ trip, pax, travelDate }) {
         </li>
         <li className="flex items-start gap-2.5">
           <Calendar className="w-4 h-4 text-[#C5A059] flex-shrink-0 mt-0.5" />
-          <span>{travelDate ? formatDate(travelDate) : <em className="opacity-50 not-italic">Belum ditentukan</em>}</span>
+          <span>{travelDate ? formatDate(travelDate) : <em className="text-[#64748B] not-italic">Belum ditentukan</em>}</span>
         </li>
         <li className="flex items-start gap-2.5">
           <Users className="w-4 h-4 text-[#C5A059] flex-shrink-0 mt-0.5" />
-          <span>{pax ? `${pax} peserta` : <em className="opacity-50 not-italic">Belum ditentukan</em>}</span>
+          <span>{pax ? `${pax} peserta` : <em className="text-[#64748B] not-italic">Belum ditentukan</em>}</span>
         </li>
       </ul>
 
@@ -67,25 +67,25 @@ export default function BookingSummaryCard({ trip, pax, travelDate }) {
       <div className="border-t border-[#EAE7DF]/70 pt-5 space-y-3">
         {hasSelection ? (
           <>
-            <div className="flex justify-between text-xs text-[#64748B]">
+            <div className="flex justify-between text-xs text-[#475569]">
               <span>Tarif per orang</span>
               <span className="tabular-nums font-semibold text-[#111827]">{formatIDR(pricePerPax)}</span>
             </div>
-            <div className="flex justify-between text-xs text-[#64748B]">
+            <div className="flex justify-between text-xs text-[#475569]">
               <span>Kuantitas ({pax} peserta)</span>
               <span className="tabular-nums font-semibold text-[#111827]">{formatIDR(subtotal)}</span>
             </div>
-            <div className="flex justify-between text-xs text-[#64748B]">
+            <div className="flex justify-between text-xs text-[#475569]">
               <span>Biaya Layanan & Asuransi</span>
               <span className="text-[#08261E] font-bold">Termasuk</span>
             </div>
             <div className="border-t border-[#EAE7DF]/70 pt-4 flex justify-between items-baseline">
-              <span className="text-xs uppercase tracking-wider font-bold text-[#64748B]">Total Pembayaran</span>
+              <span className="text-xs uppercase tracking-wider font-bold text-[#475569]">Total Pembayaran</span>
               <span className="text-2xl font-extrabold tabular-nums text-[#08261E] font-sans">{formatIDR(subtotal)}</span>
             </div>
           </>
         ) : (
-          <p className="text-xs text-[#64748B]/70 italic text-center py-2 font-light">
+          <p className="text-xs text-[#475569] italic text-center py-2 font-normal">
             Lengkapi data formulir untuk menghitung kalkulasi biaya
           </p>
         )}
