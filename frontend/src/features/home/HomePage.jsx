@@ -1,13 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import {
   ArrowUpRight, ShieldCheck, Star, Users, MapPin,
   Calendar, CheckCircle2, Search, Award, Check, MessageCircle, Phone,
   Sparkles, Compass, Globe, Compass as CompassIcon
 } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useScroll, useTransform, useSpring } from 'framer-motion';
 import { tripService } from '../../services/api';
 import TripCard from '../trip/TripCard';
+
+const LUXURY_EASE = [0.22, 1, 0.36, 1];
 
 export default function HomePage() {
   const [featuredTrips, setFeaturedTrips] = useState([]);
@@ -20,6 +22,21 @@ export default function HomePage() {
   const [searchPax, setSearchPax] = useState(2);
 
   const navigate = useNavigate();
+  const heroRef = useRef(null);
+
+  // Global editorial scroll progress indicator
+  const { scrollYProgress: pageProgress } = useScroll();
+  const smoothProgress = useSpring(pageProgress, { stiffness: 140, damping: 24, restDelta: 0.001 });
+
+  // Scroll-linked hero parallax
+  const { scrollYProgress: heroProgress } = useScroll({
+    target: heroRef,
+    offset: ['start start', 'end start'],
+  });
+  const heroImgY = useTransform(heroProgress, [0, 1], ['0%', '16%']);
+  const heroImgScale = useTransform(heroProgress, [0, 1], [1.05, 1.14]);
+  const heroTextY = useTransform(heroProgress, [0, 1], [0, -28]);
+  const heroTextOpacity = useTransform(heroProgress, [0, 0.85], [1, 0.25]);
 
   useEffect(() => {
     const fetchTrips = async () => {
@@ -75,55 +92,84 @@ export default function HomePage() {
 
   return (
     <div className="bg-[#FCFCFA] text-[#111827] overflow-x-hidden">
-      {/* 1. HERO SECTION (Minimalist Luxury Atelier Stage with Search Below Image) */}
-      <section className="relative px-4 sm:px-6 lg:px-8 pt-2 pb-10 lg:pb-14 max-w-7xl mx-auto space-y-6 sm:space-y-8">
+      {/* Razor-thin Editorial Scroll Progress Bar */}
+      <motion.div
+        style={{ scaleX: smoothProgress }}
+        className="fixed top-0 left-0 right-0 h-[2.5px] bg-gradient-to-r from-[#08261E] via-[#C5A059] to-[#F5E4BE] origin-left z-[60] pointer-events-none"
+      />
+
+      {/* 1. HERO SECTION (Minimalist Luxury Atelier Stage with Scroll Parallax & Masked Reveal) */}
+      <section ref={heroRef} className="relative px-4 sm:px-6 lg:px-8 pt-2 pb-10 lg:pb-14 max-w-7xl mx-auto space-y-6 sm:space-y-8">
         {/* Subtle Ambient Radial Backlight */}
-        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-gradient-to-r from-[#C5A059]/15 via-[#08261E]/20 to-[#C5A059]/15 blur-3xl -z-10 rounded-full pointer-events-none" />
+        <motion.div
+          animate={{ scale: [1, 1.06, 1], opacity: [0.65, 0.9, 0.65] }}
+          transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
+          className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-gradient-to-r from-[#C5A059]/15 via-[#08261E]/20 to-[#C5A059]/15 blur-3xl -z-10 rounded-full pointer-events-none"
+        />
 
         {/* The Clean Panoramic Showcase Frame (Gambar di Tengah dengan Gradasi Tembus Pandang) */}
-        <div className="relative rounded-[2rem] sm:rounded-[2.5rem] lg:rounded-[3rem] overflow-hidden border border-[#EAE7DF] bg-[#08261E] shadow-[0_20px_60px_-15px_rgba(8,38,30,0.22)] min-h-[380px] sm:min-h-[440px] lg:min-h-[480px] flex flex-col justify-center items-center py-16 sm:py-20 px-6 sm:px-10 lg:px-12 text-center">
-          
-          {/* Panoramic Hero Photo (Wayag, Raja Ampat) */}
-          <img
+        <motion.div
+          initial={{ opacity: 0, scale: 0.98 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.9, ease: LUXURY_EASE }}
+          className="relative rounded-[2rem] sm:rounded-[2.5rem] lg:rounded-[3rem] overflow-hidden border border-[#EAE7DF] bg-[#08261E] shadow-[0_20px_60px_-15px_rgba(8,38,30,0.22)] min-h-[380px] sm:min-h-[440px] lg:min-h-[480px] flex flex-col justify-center items-center py-16 sm:py-20 px-6 sm:px-10 lg:px-12 text-center"
+        >
+          {/* Panoramic Hero Photo with Scroll-Linked Parallax */}
+          <motion.img
+            style={{ y: heroImgY, scale: heroImgScale }}
             src="https://images.unsplash.com/photo-1516690561799-46d8f74f9abf?auto=format&fit=crop&w=2400&q=85"
             alt="Kepulauan Wayag Raja Ampat"
-            className="absolute inset-0 w-full h-full object-cover object-center scale-105 transition-transform duration-1000 ease-out"
+            className="absolute inset-0 w-full h-full object-cover object-center will-change-transform"
           />
 
           {/* GRADIASI TEMBUS PANDANG (Atmospheric Translucent Scrim) */}
           <div className="absolute inset-0 bg-gradient-to-t from-[#08261E]/90 via-[#08261E]/55 to-[#08261E]/40 pointer-events-none" />
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_transparent_35%,_rgba(8,38,30,0.6)_100%)] pointer-events-none" />
 
-          {/* CENTER TYPOGRAPHY (Inside the Image with Translucent Gradient) */}
-          <div className="relative z-10 max-w-3xl mx-auto space-y-4">
-            <motion.h1
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              className="font-serif text-3xl sm:text-5xl lg:text-6xl font-normal leading-[1.12] text-white tracking-tight drop-shadow-sm"
-            >
-              Kemurnian Alam Indonesia,{' '}
-              <span className="italic font-serif font-light text-[#C5A059] block sm:inline">
-                Disusun Sempurna.
+          {/* CENTER TYPOGRAPHY (Masked Line-by-Line Reveal + Scroll Lift) */}
+          <motion.div
+            style={{ y: heroTextY, opacity: heroTextOpacity }}
+            className="relative z-10 max-w-3xl mx-auto space-y-4 will-change-transform"
+          >
+            <h1 className="font-serif text-3xl sm:text-5xl lg:text-6xl font-normal leading-[1.12] text-white tracking-tight drop-shadow-sm">
+              <span className="block overflow-hidden pb-1">
+                <motion.span
+                  initial={{ y: '110%', opacity: 0 }}
+                  animate={{ y: '0%', opacity: 1 }}
+                  transition={{ duration: 0.85, ease: LUXURY_EASE, delay: 0.1 }}
+                  className="block"
+                >
+                  Kemurnian Alam Indonesia,
+                </motion.span>
               </span>
-            </motion.h1>
+              <span className="block overflow-hidden pb-1">
+                <motion.span
+                  initial={{ y: '110%', opacity: 0 }}
+                  animate={{ y: '0%', opacity: 1 }}
+                  transition={{ duration: 0.85, ease: LUXURY_EASE, delay: 0.24 }}
+                  className="italic font-serif font-light text-[#C5A059] block"
+                >
+                  Disusun Sempurna.
+                </motion.span>
+              </span>
+            </h1>
 
             <motion.p
-              initial={{ opacity: 0, y: 10 }}
+              initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.1 }}
+              transition={{ duration: 0.8, delay: 0.4, ease: LUXURY_EASE }}
               className="text-xs sm:text-sm lg:text-base leading-relaxed text-white/80 max-w-lg mx-auto font-normal"
             >
               Biro perjalanan butik ke pulau-pulau rahasia, puncak kaldera fajar, dan warisan budaya nusantara.
             </motion.p>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
 
         {/* DI BAWAH GAMBAR: SEARCH CAPSULE (Sitting cleanly below the image) */}
         <motion.div
-          initial={{ opacity: 0, y: 15 }}
+          initial={{ opacity: 0, y: 22 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
+          transition={{ duration: 0.75, delay: 0.48, ease: LUXURY_EASE }}
           className="w-full max-w-5xl mx-auto px-2"
         >
           <form
@@ -231,7 +277,13 @@ export default function HomePage() {
       {/* 3. KOLEKSI DESTINASI UNGGULAN (CINEMATIC TILES) */}
       <section className="py-20 border-b border-[#EAE7DF]/70">
         <div className="max-w-7xl mx-auto px-6 lg:px-10 space-y-10">
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.4 }}
+            transition={{ duration: 0.7, ease: LUXURY_EASE }}
+            className="flex flex-col sm:flex-row sm:items-end justify-between gap-4"
+          >
             <div>
               <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#C5A059]">
                 Wilayah Pilihan Nusantara
@@ -242,12 +294,12 @@ export default function HomePage() {
             </div>
             <Link
               to="/trips"
-              className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#08261E] hover:text-[#C5A059] transition-colors"
+              className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#08261E] hover:text-[#C5A059] transition-colors group"
             >
               <span>Eksplorasi Seluruh Wilayah</span>
-              <ArrowUpRight className="w-4 h-4 text-[#C5A059]" />
+              <ArrowUpRight className="w-4 h-4 text-[#C5A059] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
             </Link>
-          </div>
+          </motion.div>
 
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
             {[
@@ -357,47 +409,103 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 5. EDITORIAL TRAVELER STORIES (TESTIMONIALS) */}
-      <section className="py-20 bg-white border-b border-[#EAE7DF]/70">
+      {/* 5. EDITORIAL TRAVELER STORIES (INFINITE SMOOTH MARQUEE) */}
+      <section className="py-20 bg-white border-b border-[#EAE7DF]/70 overflow-hidden">
         <div className="max-w-7xl mx-auto px-6 lg:px-10 space-y-12">
-          <div className="text-center max-w-xl mx-auto space-y-2">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.4 }}
+            transition={{ duration: 0.7, ease: LUXURY_EASE }}
+            className="text-center max-w-xl mx-auto space-y-2"
+          >
             <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#C5A059]">
               Catatan Pengalaman Otentik
             </p>
             <h2 className="font-serif text-3xl sm:text-4xl font-normal text-[#08261E]">
               Ulasan Pelancong Kami
             </h2>
-          </div>
+          </motion.div>
+        </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {/* Seamless Marquee Track with Side Fade Masks (Pause on Hover) */}
+        <div
+          className="relative mt-10 w-full overflow-hidden"
+          style={{
+            maskImage: 'linear-gradient(to right, transparent, black 8%, black 92%, transparent)',
+            WebkitMaskImage: 'linear-gradient(to right, transparent, black 8%, black 92%, transparent)',
+          }}
+        >
+          <div className="animate-marquee gap-6 py-3">
             {[
-              {
-                text: '"Jadwal sailing di Labuan Bajo sangat rapi dan personal. Pemandu lokal menguasai rute trekking Pulau Padar dengan aman saat fajar, dan makanan di kapal sangat segar."',
-                name: 'Budi Santoso',
-                meta: 'Raja Ampat Wayag • 4D3N',
-                initial: 'B',
-              },
-              {
-                text: '"Sangat mengapresiasi sistem tracking pemesanan instan tanpa registrasi berbelit. Pengalaman sunrise Bromo sangat memuaskan dan tenang."',
-                name: 'Dian Permatasari',
-                meta: 'Labuan Bajo Liveaboard • 3D2N',
-                initial: 'D',
-              },
-              {
-                text: '"Dokumentasi drone dan perlengkapan snorkeling sudah termasuk tanpa tagihan tersembunyi di lapangan. Sangat direkomendasikan untuk liburan keluarga berkesan."',
-                name: 'Andi Wijaya',
-                meta: 'Bromo Sunrise & Madakaripura • 2D1N',
-                initial: 'A',
-              },
+              ...[
+                {
+                  text: '"Jadwal sailing di Labuan Bajo sangat rapi dan personal. Pemandu lokal menguasai rute trekking Pulau Padar dengan aman saat fajar, dan makanan di kapal sangat segar."',
+                  name: 'Budi Santoso',
+                  meta: 'Raja Ampat Wayag • 4D3N',
+                  initial: 'B',
+                },
+                {
+                  text: '"Sangat mengapresiasi sistem tracking pemesanan instan tanpa registrasi berbelit. Pengalaman sunrise Bromo sangat memuaskan dan tenang."',
+                  name: 'Dian Permatasari',
+                  meta: 'Labuan Bajo Liveaboard • 3D2N',
+                  initial: 'D',
+                },
+                {
+                  text: '"Dokumentasi drone dan perlengkapan snorkeling sudah termasuk tanpa tagihan tersembunyi di lapangan. Sangat direkomendasikan untuk liburan keluarga berkesan."',
+                  name: 'Andi Wijaya',
+                  meta: 'Bromo Sunrise & Madakaripura • 2D1N',
+                  initial: 'A',
+                },
+                {
+                  text: '"Nusa Penida terasa seperti pulau pribadi karena kurator mengatur jam kunjungan sebelum ramai wisatawan lain tiba. Benar-benar luxury service."',
+                  name: 'Clarissa Gunawan',
+                  meta: 'Nusa Penida Karst • 2D1N',
+                  initial: 'C',
+                },
+                {
+                  text: '"Menginap di water cottage Maratua dan berenang di Kakaban bersama ubur-ubur tanpa sengat jadi momen terbaik sepanjang tahun 2026 kami."',
+                  name: 'Rafi Pratama',
+                  meta: 'Derawan & Maratua • 4D3N',
+                  initial: 'R',
+                },
+              ],
+              ...[
+                {
+                  text: '"Jadwal sailing di Labuan Bajo sangat rapi dan personal. Pemandu lokal menguasai rute trekking Pulau Padar dengan aman saat fajar, dan makanan di kapal sangat segar."',
+                  name: 'Budi Santoso',
+                  meta: 'Raja Ampat Wayag • 4D3N',
+                  initial: 'B',
+                },
+                {
+                  text: '"Sangat mengapresiasi sistem tracking pemesanan instan tanpa registrasi berbelit. Pengalaman sunrise Bromo sangat memuaskan dan tenang."',
+                  name: 'Dian Permatasari',
+                  meta: 'Labuan Bajo Liveaboard • 3D2N',
+                  initial: 'D',
+                },
+                {
+                  text: '"Dokumentasi drone dan perlengkapan snorkeling sudah termasuk tanpa tagihan tersembunyi di lapangan. Sangat direkomendasikan untuk liburan keluarga berkesan."',
+                  name: 'Andi Wijaya',
+                  meta: 'Bromo Sunrise & Madakaripura • 2D1N',
+                  initial: 'A',
+                },
+                {
+                  text: '"Nusa Penida terasa seperti pulau pribadi karena kurator mengatur jam kunjungan sebelum ramai wisatawan lain tiba. Benar-benar luxury service."',
+                  name: 'Clarissa Gunawan',
+                  meta: 'Nusa Penida Karst • 2D1N',
+                  initial: 'C',
+                },
+                {
+                  text: '"Menginap di water cottage Maratua dan berenang di Kakaban bersama ubur-ubur tanpa sengat jadi momen terbaik sepanjang tahun 2026 kami."',
+                  name: 'Rafi Pratama',
+                  meta: 'Derawan & Maratua • 4D3N',
+                  initial: 'R',
+                },
+              ],
             ].map((t, idx) => (
-              <motion.div
+              <div
                 key={idx}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: idx * 0.1, duration: 0.5 }}
-                whileHover={{ y: -6 }}
-                className="p-8 rounded-3xl bg-[#FCFCFA] border border-[#EAE7DF] space-y-6 flex flex-col justify-between shadow-xs hover:shadow-xl hover:border-[#C5A059]/40 transition-all"
+                className="w-[320px] sm:w-[370px] shrink-0 p-7 rounded-3xl bg-[#FCFCFA] border border-[#EAE7DF] space-y-5 flex flex-col justify-between shadow-xs hover:shadow-xl hover:border-[#C5A059]/50 hover:-translate-y-1.5 transition-all duration-300"
               >
                 <div className="space-y-4">
                   <div className="flex items-center space-x-1 text-[#C5A059]">
@@ -418,7 +526,7 @@ export default function HomePage() {
                     <span className="text-[11px] text-[#64748B]">{t.meta}</span>
                   </div>
                 </div>
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>
@@ -426,8 +534,12 @@ export default function HomePage() {
 
       {/* 6. EDITORIAL CALL TO ACTION BANNER (DEEP FOREST NIGHT) */}
       <section className="py-24 bg-[#08261E] text-white relative overflow-hidden">
-        {/* Subtle Ambient Gold Gradient */}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#C5A059]/15 via-transparent to-transparent pointer-events-none" />
+        {/* Breathing Ambient Gold Gradient */}
+        <motion.div
+          animate={{ scale: [1, 1.15, 1], opacity: [0.14, 0.24, 0.14] }}
+          transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut' }}
+          className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#C5A059]/30 via-transparent to-transparent pointer-events-none"
+        />
 
         <motion.div
           initial={{ opacity: 0, scale: 0.96 }}
